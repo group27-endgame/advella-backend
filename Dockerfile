@@ -24,4 +24,4 @@ ARG DEPENDENCY=/server/target/dependency
 COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=prepare-production ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.advella.advellabackend.BackendApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","com.advella.advella-backend.BackendApplication"]
