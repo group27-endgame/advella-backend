@@ -17,10 +17,10 @@ jobs:
       with:
         java-version: '17'
 
-    - name: Test and maybe build
-      run: |
-        mvn test -Dtest="com.advella.**"
-        mvn clean install
+    - name: Test
+      run: mvn test -Dtest="com.advella.**"
+    - name: Build
+      run: mvn clean install
 
   deploy:
     runs-on: ubuntu-latest
