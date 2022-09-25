@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          connect_timeout: 200m
+          command_timeout: 200m
           script: |
             sudo chmod +x /opt/deploy.sh
             sh /opt/deploy.sh
