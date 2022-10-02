@@ -13,4 +13,5 @@ public class Service {
     public String location;
     public int numberOfBids;
     public int numberOfLikes;
+
 }
