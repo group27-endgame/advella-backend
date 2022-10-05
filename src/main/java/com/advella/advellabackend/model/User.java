@@ -7,5 +7,5 @@ public class User {
     public String username;
     public String description;
     public String location;
-    public int rating;
+    public float rating;
 }
