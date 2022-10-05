@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM maven:3.8.5-eclipse-temurin-17 AS builder
+FROM maven:3.8.5-eclipse-temurin-17 AS builder
 WORKDIR /server
 COPY pom.xml /server/pom.xml
 RUN mvn dependency:go-offline
