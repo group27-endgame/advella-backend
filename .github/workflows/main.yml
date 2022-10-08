@@ -8,6 +8,12 @@ on:
     
 jobs:
   build-and-test:
+    env:
+      MSSQL_DB_IP: ${{ secrets.MSSQL_DB_IP }}
+      MSSQL_DB_NAME: ${{ secrets.MSSQL_DB_NAME }}
+      MSSQL_DB_USERNAME: ${{ MSSQL_DB_USERNAME }}
+      MSSQL_DB_PASSWORD: ${{ MSSQL_DB_PASSWORD }}
+      
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
