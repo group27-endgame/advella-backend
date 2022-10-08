@@ -1,6 +1,7 @@
 package com.advella.advellabackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
@@ -38,4 +39,8 @@ public class Product {
     private int numberOfBids;
     @ManyToMany(mappedBy = "products")
     private List<User> users;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="category_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    private ProductCategory productCategory;
 }

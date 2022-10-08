@@ -18,4 +18,6 @@ public class ServiceCategory {
     private int serviceCategoryId;
     @Column(name = "category_title")
     private String title;
+    @OneToMany(mappedBy = "serviceCategory")
+    private List<Service> services;
 }
