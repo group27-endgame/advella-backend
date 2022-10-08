@@ -1,0 +1,20 @@
+package com.advella.advellabackend.services;
+
+import com.advella.advellabackend.model.Role;
+import com.advella.advellabackend.repositories.IRoleRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class RoleService {
+    private final IRoleRepository roleRepository;
+
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
+    }
+}

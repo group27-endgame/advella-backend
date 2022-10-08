@@ -15,11 +15,11 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Chats_Product")
-public class ChatProduct {
+@Table(name = "Roles")
+public class Role {
     @Id
-    @Column(name = "chat_id")
-    private int chatId;
-    @Column(name = "chat_message")
-    private String message;
+    @Column(name = "role_id")
+    private int roleId;
+    @Column(name = "role_name")
+    private String name;
 }

@@ -1,6 +1,21 @@
 package com.advella.advellabackend.model;
 
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "Categories_Service")
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class ServiceCategory {
-    public int serviceCategoryId;
-    public String title;
+    @Id
+    @Column(name = "category_id")
+    private int serviceCategoryId;
+    @Column(name = "category_title")
+    private String title;
 }
