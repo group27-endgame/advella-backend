@@ -55,4 +55,6 @@ public class Service {
     @JoinColumn(name="users_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private User posted;
+    @OneToMany(mappedBy = "service")
+    private List<ChatService> chatServices;
 }
