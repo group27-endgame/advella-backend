@@ -51,4 +51,8 @@ public class Service {
     private ServiceCategory serviceCategory;
     @OneToMany(mappedBy = "reportedService")
     private List<ReportedService> reportedServices;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="users_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    private User posted;
 }

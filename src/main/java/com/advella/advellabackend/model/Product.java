@@ -45,4 +45,8 @@ public class Product {
     private ProductCategory productCategory;
     @OneToMany(mappedBy = "reportedProduct")
     private List<ReportedProduct> reportedProducts;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="users_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    private User posted;
 }
