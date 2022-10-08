@@ -49,4 +49,6 @@ public class Service {
     @JoinColumn(name="category_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private ServiceCategory serviceCategory;
+    @OneToMany(mappedBy = "reportedService")
+    private List<ReportedService> reportedServices;
 }

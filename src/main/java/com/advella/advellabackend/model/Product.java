@@ -43,4 +43,6 @@ public class Product {
     @JoinColumn(name="category_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private ProductCategory productCategory;
+    @OneToMany(mappedBy = "reportedProduct")
+    private List<ReportedProduct> reportedProducts;
 }

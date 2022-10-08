@@ -54,4 +54,8 @@ public class User {
     private List<Contact> contact;
     @OneToMany(mappedBy = "ratingUser")
     private List<Rating> ratings;
+    @OneToMany(mappedBy = "productReportUser")
+    private List<ReportedProduct> reportedProducts;
+    @OneToMany(mappedBy = "serviceReportUser")
+    private List<ReportedService> reportedServices;
 }

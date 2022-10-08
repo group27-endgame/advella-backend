@@ -1,14 +1,12 @@
 package com.advella.advellabackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Getter
@@ -25,4 +23,12 @@ public class ReportedService {
     private Date reportedDateTime;
     @Column(name = "reason")
     private String reason;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="service_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    private Service reportedService;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="users_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    private User serviceReportUser;
 }
