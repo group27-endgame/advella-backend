@@ -49,4 +49,6 @@ public class Product {
     @JoinColumn(name="users_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private User posted;
+    @OneToMany(mappedBy = "product")
+    private List<ChatProduct> chatProducts;
 }
