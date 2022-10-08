@@ -27,8 +27,6 @@ jobs:
       run: |
         ls -l ${GITHUB_WORKSPACE}
         mkdir -p ${GITHUB_WORKSPACE}/src/main/resources && touch ${GITHUB_WORKSPACE}/src/main/resources/application.properties
-        ls -l ${GITHUB_WORKSPACE}/src/main/resources
-        echo ${{ secrets.CONFIG_FILE }} > ${GITHUB_WORKSPACE}/src/main/resources/application.properties
 
     - name: Test
       run: mvn test -Dtest="com.advella.**"
