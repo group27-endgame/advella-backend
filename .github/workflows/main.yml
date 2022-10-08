@@ -22,6 +22,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: '17'
+        
+    - name: Create config
+      run: |
+        mkdir -p ${GITHUB_WORKSPACE}/src/main/resources && touch ${GITHUB_WORKSPACE}/src/main/resources/application.properties
+        echo ${{ secrets.CONFIG_FILE }} > ${GITHUB_WORKSPACE}/src/main/resources/application.properties
 
     - name: Test
       run: mvn test -Dtest="com.advella.**"
