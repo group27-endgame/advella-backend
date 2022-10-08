@@ -1,5 +1,11 @@
 name: Build, Test and Deploy
 
+env:
+  MSSQL_DB_IP: ${{ secrets.MSSQL_DB_IP }}
+  MSSQL_DB_NAME: ${{ secrets.MSSQL_DB_NAME }}
+  MSSQL_DB_USERNAME: ${{ secrets.MSSQL_DB_USERNAME }}
+  MSSQL_DB_PASSWORD: ${{ secrets.MSSQL_DB_PASSWORD }}
+
 on:
   push:
     branches: [ "main" ]
@@ -9,12 +15,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    env:
-      MSSQL_DB_IP: ${{ secrets.MSSQL_DB_IP }}
-      MSSQL_DB_NAME: ${{ secrets.MSSQL_DB_NAME }}
-      MSSQL_DB_USERNAME: ${{ MSSQL_DB_USERNAME }}
-      MSSQL_DB_PASSWORD: ${{ MSSQL_DB_PASSWORD }}
-      
     steps:
     - uses: actions/checkout@v3
     
