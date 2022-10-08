@@ -39,4 +39,8 @@ public class User {
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
+    @OneToMany(mappedBy = "contactUser")
+    private List<Contact> contact;
+    @OneToMany(mappedBy = "ratingUser")
+    private List<Rating> ratings;
 }

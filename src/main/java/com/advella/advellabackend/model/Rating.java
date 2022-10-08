@@ -1,11 +1,9 @@
 package com.advella.advellabackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -22,4 +20,8 @@ public class Rating {
     private float rating;
     @Column(name = "votes")
     private int votes;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="users_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    private User ratingUser;
 }
