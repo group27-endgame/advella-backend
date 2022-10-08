@@ -1,9 +1,12 @@
 package com.advella.advellabackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,6 +15,9 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "serviceId")
 public class Service {
     @Id
     @Column(name = "service_id")
@@ -36,4 +42,6 @@ public class Service {
     private int numberOfLikes;
     @Column(name = "service_status")
     private String serviceStatus;
+    @ManyToMany(mappedBy = "services")
+    private List<User> users;
 }

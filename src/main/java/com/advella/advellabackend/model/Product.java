@@ -1,5 +1,7 @@
 package com.advella.advellabackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,6 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "Products")
 @EqualsAndHashCode
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "productId")
 public class Product {
     @Id
     @Column(name = "product_id")
@@ -31,4 +36,6 @@ public class Product {
     private Date deadline;
     @Column(name = "product_number_of_bids")
     private int numberOfBids;
+    @ManyToMany(mappedBy = "products")
+    private List<User> users;
 }
