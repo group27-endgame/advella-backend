@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class ServiceCategory {
+public class ServiceCategory extends Category{
     @Id
     @Column(name = "category_id")
     private int serviceCategoryId;

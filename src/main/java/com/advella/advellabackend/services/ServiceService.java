@@ -16,4 +16,12 @@ public class ServiceService {
     public List<com.advella.advellabackend.model.Service> getServices() {
         return serviceRepository.findAll();
     }
+
+    public List<com.advella.advellabackend.model.Service> getServicesByLocation(String location) {
+        return serviceRepository.getServicesByLocation(location);
+    }
+
+    public List<com.advella.advellabackend.model.Service> getFiveLatestServices() {
+        return serviceRepository.getFiveLatestServices();
+    }
 }

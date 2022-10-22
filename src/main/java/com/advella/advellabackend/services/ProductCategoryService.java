@@ -17,4 +17,16 @@ public class ProductCategoryService {
     public List<ProductCategory> getProductCategories() {
         return productCategoryRepository.findAll();
     }
+
+    public void deleteProductCategory(int id) {
+        productCategoryRepository.deleteById(id);
+    }
+
+    public void addNewProductCategory(ProductCategory productCategory) {
+        productCategoryRepository.save(productCategory);
+    }
+
+    public void updateNewProductCategory(ProductCategory productCategory) {
+        productCategoryRepository.save(productCategory);
+    }
 }

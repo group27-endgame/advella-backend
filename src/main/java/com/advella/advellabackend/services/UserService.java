@@ -21,6 +21,14 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public List<User> getFiveLatestUsers() {
+        return userRepository.getFiveLatestUsers();
+    }
+
+    public List<User> getUsersByLocation(String location) {
+        return userRepository.getUsersByLocation(location);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;

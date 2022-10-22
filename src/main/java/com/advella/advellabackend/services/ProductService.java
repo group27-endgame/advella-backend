@@ -17,4 +17,12 @@ public class ProductService {
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
+
+    public List<Product> getProductsByLocation(String location) {
+        return productRepository.getProductsByLocation(location);
+    }
+
+    public List<Product> getFiveLatestProducts() {
+        return productRepository.getFiveLatestProducts();
+    }
 }
