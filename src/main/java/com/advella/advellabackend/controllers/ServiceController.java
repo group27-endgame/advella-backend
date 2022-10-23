@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,5 +35,10 @@ public class ServiceController {
     @GetMapping("/services/count")
     public ResponseEntity<Integer> getServiceCount() {
         return ResponseEntity.ok(serviceService.getServicesCount());
+    }
+
+    @GetMapping("/services/open/{startDate}/{endDate}")
+    public ResponseEntity<Integer> getOpenServices(@PathVariable long startDate, long endDate) {
+        return ResponseEntity.ok(serviceService.getServicesCount(new Date(startDate), new Date(endDate)));
     }
 }

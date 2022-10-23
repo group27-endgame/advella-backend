@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,5 +29,9 @@ public class ProductService {
 
     public int getProductCount() {
         return productRepository.getProductCount();
+    }
+
+    public int getProductCount(Date startDate, Date endDate) {
+        return productRepository.getProductCount(startDate, endDate);
     }
 }
