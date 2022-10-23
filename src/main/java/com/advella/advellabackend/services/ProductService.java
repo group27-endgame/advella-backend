@@ -22,7 +22,11 @@ public class ProductService {
         return productRepository.getProductsByLocation(location);
     }
 
-    public List<Product> getFiveLatestProducts() {
-        return productRepository.getFiveLatestProducts();
+    public List<Product> getFiveLatestProducts(int amount) {
+        return productRepository.getFiveLatestProducts(amount);
+    }
+
+    public int getProductCount() {
+        return productRepository.getProductCount();
     }
 }

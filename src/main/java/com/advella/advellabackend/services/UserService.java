@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,8 +22,8 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public List<User> getFiveLatestUsers() {
-        return userRepository.getFiveLatestUsers();
+    public List<User> getFiveLatestUsers(int amount) {
+        return userRepository.getFiveLatestUsers(amount);
     }
 
     public List<User> getUsersByLocation(String location) {
@@ -32,5 +33,9 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
+    }
+
+    public int registeredUsers(Date fromDate, Date toDate) {
+        return userRepository.registeredUsers(fromDate, toDate);
     }
 }

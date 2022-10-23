@@ -3,6 +3,7 @@ package com.advella.advellabackend.controllers;
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +23,17 @@ public class ProductController {
     }
 
     @GetMapping("/products/latest")
-    public ResponseEntity<List<Product>> getFiveLatestProducts() {
-        return ResponseEntity.ok(productService.getFiveLatestProducts());
+    public ResponseEntity<List<Product>> getFiveLatestProducts(@RequestParam(required = false, defaultValue = "5") int amount) {
+        return ResponseEntity.ok(productService.getFiveLatestProducts(amount));
     }
 
     @GetMapping("/products/{location}")
     public ResponseEntity<List<Product>> getProductsByLocation(@PathVariable String location) {
         return ResponseEntity.ok(productService.getProductsByLocation(location));
+    }
+
+    @GetMapping("/products/count")
+    public ResponseEntity<Integer> getProductCount() {
+        return ResponseEntity.ok(productService.getProductCount());
     }
 }
