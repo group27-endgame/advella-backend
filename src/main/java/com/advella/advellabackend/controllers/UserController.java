@@ -3,8 +3,6 @@ package com.advella.advellabackend.controllers;
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +20,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getUsers());
     }
 
+    @GetMapping("/users/currentUser")
+    public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(userService.getUserFromHeader(token));
+    }
+
     @GetMapping("/users/latest")
     public ResponseEntity<List<User>> getFiveLatestUsers(@RequestParam(required = false, defaultValue = "5") int amount) {
         return ResponseEntity.ok(userService.getFiveLatestUsers(amount));
@@ -35,5 +38,10 @@ public class UserController {
     @GetMapping("/users/registered/{fromDate}/{toDate}")
     public ResponseEntity<Integer> getRegisteredUsers(@PathVariable long fromDate, @PathVariable long toDate) {
         return ResponseEntity.ok(userService.registeredUsers(new Date(fromDate), new Date(toDate)));
+    }
+
+    @PostMapping("/users/register")
+    public ResponseEntity<Void> registerUser(@RequestBody User userToRegister) {
+        return userService.registerUser(userToRegister);
     }
 }

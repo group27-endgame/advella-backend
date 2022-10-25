@@ -30,6 +30,10 @@ public class ServiceService {
         return serviceRepository.getServiceCount();
     }
 
+    public int getClosedServiceTotalValue(Date startDate, Date endDate) {
+        return serviceRepository.getClosedServiceTotalValue(startDate, endDate);
+    }
+
     public int getServicesCount(Date startDate, Date endDate) {
         return serviceRepository.getServiceCount(startDate, endDate);
     }

@@ -22,4 +22,7 @@ public interface IServiceRepository extends JpaRepository<Service,Integer> {
 
     @Query(value = "SELECT COUNT(*) FROM Task_Services WHERE service_deadline >= CURDATE AND service_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
     int getServiceCount(Date fromDate, Date toDate);
+
+    @Query(value = "SELECT SUM(service_money_amount) FROM Task_Services WHERE service_deadline >= CURDATE AND service_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
+    int getClosedServiceTotalValue(Date fromDate, Date toDate);
 }

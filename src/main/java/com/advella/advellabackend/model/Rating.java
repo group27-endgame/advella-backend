@@ -14,6 +14,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class Rating {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rating_id")
     private int ratingId;
     @Column(name = "rating")

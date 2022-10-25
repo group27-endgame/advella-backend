@@ -19,4 +19,7 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT * FROM Users WHERE registration_datetime BETWEEN :fromDate AND :toDate ORDER BY registration_datetime DESC", nativeQuery = true)
     int registeredUsers(Date fromDate, Date toDate);
+
+    @Query(value = "SELECT * FROM Users WHERE username = :username", nativeQuery = true)
+    User findByUsername(String username);
 }

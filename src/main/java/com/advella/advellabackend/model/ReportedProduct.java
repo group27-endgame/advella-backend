@@ -17,6 +17,7 @@ import java.sql.Date;
 @Table(name = "Reported_Products")
 public class ReportedProduct {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reported_product_id")
     private int reportedProductId;
     @Column(name = "reported_datetime")

@@ -14,6 +14,7 @@ import java.util.List;
 @EqualsAndHashCode
 public class ProductCategory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private int productCategoryId;
     @Column(name = "category_title")

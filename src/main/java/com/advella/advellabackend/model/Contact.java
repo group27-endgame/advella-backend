@@ -15,6 +15,7 @@ import java.sql.Date;
 @AllArgsConstructor
 public class Contact {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contact_us_id")
     private int contactId;
     @Column(name = "message_datetime")

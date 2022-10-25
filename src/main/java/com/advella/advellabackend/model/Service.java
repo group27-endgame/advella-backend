@@ -21,6 +21,7 @@ import java.util.List;
         property = "serviceId")
 public class Service {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "service_id")
     private int serviceId;
     @Column(name = "service_title")

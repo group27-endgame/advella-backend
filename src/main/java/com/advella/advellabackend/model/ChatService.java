@@ -16,6 +16,7 @@ import javax.persistence.*;
 @Table(name = "Chats_Service")
 public class ChatService {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chat_id")
     private int chatId;
     @Column(name = "chat_message")
