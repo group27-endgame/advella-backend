@@ -9,7 +9,7 @@ ENV DB_HOST=db \
     DB_PASS=pass
 
 COPY src /server/src
-RUN mvn install
+RUN mvn -Dmaven.test.skip=true clean package
 
 # install Docker tools (cli, buildx, compose)
 COPY --from=gloursdocker/docker / /
