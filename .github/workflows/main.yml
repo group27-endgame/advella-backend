@@ -46,5 +46,12 @@ jobs:
           port: ${{ secrets.PORT }}
           command_timeout: 200m
           script: |
-            sudo chmod +x /opt/deploy.sh
-            sh /opt/deploy.sh
+            docker build https://github.com/group27-endgame/advella-backend.git#main -t advella-backend
+            
+            docker run \
+            --name=advella-backend \
+            --network=advella \
+            -p 3000:80 \
+            --restart unless-stopped \
+            advella-backend
+            
