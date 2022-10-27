@@ -48,10 +48,13 @@ jobs:
           script: |
             docker build https://github.com/group27-endgame/advella-backend.git#main -t advella-backend
             
-            docker run \
+            docker rm -f advella-backend
+            
+            docker run -d \
             --name=advella-backend \
             --network=advella \
-            -p 3000:80 \
+            -p 3002:80 \
             --restart unless-stopped \
+            -v /home/containers/advella-backend:/app
             advella-backend
             
