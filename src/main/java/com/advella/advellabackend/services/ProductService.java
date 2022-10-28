@@ -32,6 +32,10 @@ public class ProductService {
         return productRepository.getProductCount();
     }
 
+    public Product getProductById(int productID) {
+        return productRepository.getReferenceById(productID);
+    }
+
     public int getClosedProductTotalValue(Date startDate, Date endDate) {
         return productRepository.getTotalClosedProductValue(startDate, endDate);
     }

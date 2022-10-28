@@ -1,5 +1,6 @@
 package com.advella.advellabackend.services;
 
+import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.repositories.IRoleRepository;
@@ -21,6 +22,8 @@ import java.util.*;
 @RequiredArgsConstructor
 @Transactional
 public class UserService implements UserDetailsService {
+    private final ProductService productService;
+    private final ServiceService serviceService;
     private final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -39,6 +42,20 @@ public class UserService implements UserDetailsService {
 
     public int registeredUsers(Date fromDate, Date toDate) {
         return userRepository.registeredUsers(fromDate, toDate);
+    }
+
+    public void bidOnProduct(int productId, String token) {
+        User user = getUserFromHeader(token);
+        Product productToBidTo = productService.getProductById(productId);
+        user.getProducts().add(productToBidTo);
+        userRepository.save(user);
+    }
+
+    public void bidOnService(int serviceId, String token) {
+        User user = getUserFromHeader(token);
+        com.advella.advellabackend.model.Service serviceToBidTo = serviceService.getServiceByID(serviceId);
+        user.getServices().add(serviceToBidTo);
+        userRepository.save(user);
     }
 
     public ResponseEntity<Void> registerUser(User userToRegister) {

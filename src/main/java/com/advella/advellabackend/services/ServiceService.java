@@ -30,6 +30,10 @@ public class ServiceService {
         return serviceRepository.getServiceCount();
     }
 
+    public com.advella.advellabackend.model.Service getServiceByID(int serviceId) {
+        return serviceRepository.getReferenceById(serviceId);
+    }
+
     public int getClosedServiceTotalValue(Date startDate, Date endDate) {
         return serviceRepository.getClosedServiceTotalValue(startDate, endDate);
     }

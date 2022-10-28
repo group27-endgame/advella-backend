@@ -44,4 +44,16 @@ public class UserController {
     public ResponseEntity<Void> registerUser(@RequestBody User userToRegister) {
         return userService.registerUser(userToRegister);
     }
+
+    @PostMapping("/users/bid/product")
+    public ResponseEntity<Void> bidOnProduct(@RequestParam int productID, @RequestHeader("Authorization") String token) {
+        userService.bidOnProduct(productID, token);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/users/bid/service")
+    public ResponseEntity<Void> bidOnService(@RequestParam int serviceId, @RequestHeader("Authorization") String token) {
+        userService.bidOnService(serviceId, token);
+        return ResponseEntity.ok().build();
+    }
 }
