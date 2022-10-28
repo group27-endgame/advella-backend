@@ -16,7 +16,7 @@ public class ProductCategoryController {
 
     private final ProductCategoryService productCategoryService;
 
-    @GetMapping("/product-categories")
+    @GetMapping("/product-categories/all")
     public ResponseEntity<List<ProductCategory>> getProductCategories() {
         return ResponseEntity.ok(productCategoryService.getProductCategories());
     }

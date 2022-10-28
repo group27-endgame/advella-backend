@@ -34,6 +34,10 @@ public class ServiceService {
         return serviceRepository.getClosedServiceTotalValue(startDate, endDate);
     }
 
+    public void addNewService(com.advella.advellabackend.model.Service newService) {
+        serviceRepository.save(newService);
+    }
+
     public int getServicesCount(Date startDate, Date endDate) {
         return serviceRepository.getServiceCount(startDate, endDate);
     }

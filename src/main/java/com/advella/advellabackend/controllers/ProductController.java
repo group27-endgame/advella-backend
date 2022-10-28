@@ -42,4 +42,10 @@ public class ProductController {
     public ResponseEntity<Integer> getOpenProducts(@PathVariable long startDate, long endDate) {
         return ResponseEntity.ok(productService.getProductCount(new Date(startDate), new Date(endDate)));
     }
+
+    @PostMapping("/products/new")
+    public ResponseEntity<Void> addNewProduct(@RequestBody Product newProduct) {
+        productService.addNewProduct(newProduct);
+        return ResponseEntity.ok().build();
+    }
 }

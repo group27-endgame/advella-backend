@@ -3,6 +3,7 @@ package com.advella.advellabackend.services;
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.repositories.IProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -33,6 +34,10 @@ public class ProductService {
 
     public int getClosedProductTotalValue(Date startDate, Date endDate) {
         return productRepository.getTotalClosedProductValue(startDate, endDate);
+    }
+
+    public void addNewProduct(Product newProduct) {
+        productRepository.save(newProduct);
     }
 
     public int getProductCount(Date startDate, Date endDate) {

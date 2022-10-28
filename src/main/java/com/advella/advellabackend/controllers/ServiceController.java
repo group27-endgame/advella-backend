@@ -41,4 +41,10 @@ public class ServiceController {
     public ResponseEntity<Integer> getOpenServices(@PathVariable long startDate, long endDate) {
         return ResponseEntity.ok(serviceService.getServicesCount(new Date(startDate), new Date(endDate)));
     }
+
+    @PostMapping("/services/new")
+    public ResponseEntity<Void> addNewService(@RequestBody Service newService) {
+        serviceService.addNewService(newService);
+        return ResponseEntity.ok().build();
+    }
 }
