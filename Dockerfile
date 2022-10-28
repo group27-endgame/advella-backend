@@ -3,9 +3,13 @@ WORKDIR /server
 COPY pom.xml /server/pom.xml
 RUN mvn dependency:go-offline
 
-COPY src /server/src
-RUN mvn install
+ENV DB_HOST=db \
+    DB_NAME=name \
+    DB_USER=user \
+    DB_PASS=pass
 
+COPY src /server/src
+RUN mvn -Dmaven.test.skip=true clean package
 
 # install Docker tools (cli, buildx, compose)
 COPY --from=gloursdocker/docker / /
