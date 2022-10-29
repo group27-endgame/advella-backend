@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,9 @@ public class ProductService {
         List<Product> products = productRepository.getFiveLatestProducts(amount);
         for (Product product : products) {
             product.setPosted(null);
-            product.getProductCategory().setProducts(null);
+            if (product.getProductCategory() != null) {
+                product.getProductCategory().setProducts(new ArrayList<>());
+            }
         }
         return products;
     }

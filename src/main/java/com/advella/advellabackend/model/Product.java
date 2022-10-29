@@ -36,6 +36,8 @@ public class Product {
     private Date postedDateTime;
     @Column(name = "product_deadline")
     private Date deadline;
+    @Column(name = "product_status")
+    private String productStatus;
     @Column(name = "product_number_of_bids")
     private Integer numberOfBids;
     @ManyToMany(mappedBy = "products")

@@ -26,7 +26,9 @@ public class ServiceService {
         List<com.advella.advellabackend.model.Service> services = serviceRepository.getFiveLatestServices(amount);
         for (com.advella.advellabackend.model.Service service : services) {
             service.setPosted(null);
-            service.getServiceCategory().setServices(null);
+            if (service.getServiceCategory() != null) {
+                service.getServiceCategory().setServices(null);
+            }
         }
         return services;
     }
