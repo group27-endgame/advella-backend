@@ -40,6 +40,10 @@ public class ProductService {
         return productRepository.getTotalClosedProductValue(startDate, endDate);
     }
 
+    public int getAllProductTotalValue(Date startDate, Date endDate) {
+        return productRepository.getTotalProductValue(startDate, endDate);
+    }
+
     public void addNewProduct(Product newProduct) {
         productRepository.save(newProduct);
     }

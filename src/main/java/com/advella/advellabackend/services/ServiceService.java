@@ -38,6 +38,10 @@ public class ServiceService {
         return serviceRepository.getClosedServiceTotalValue(startDate, endDate);
     }
 
+    public int getAllServiceTotalValue(Date startDate, Date endDate) {
+        return serviceRepository.getServiceTotalValue(startDate, endDate);
+    }
+
     public void addNewService(com.advella.advellabackend.model.Service newService) {
         serviceRepository.save(newService);
     }
