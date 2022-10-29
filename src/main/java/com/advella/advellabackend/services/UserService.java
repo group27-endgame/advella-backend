@@ -33,7 +33,13 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getFiveLatestUsers(int amount) {
-        return userRepository.getFiveLatestUsers(amount);
+        List<User> usersToReturn = userRepository.getFiveLatestUsers(amount);
+        for (User userToReturn : usersToReturn) {
+            for (Role userRole : userToReturn.getRoles()) {
+                userRole.setUsers(null);
+            }
+        }
+        return usersToReturn;
     }
 
     public List<User> getUsersByLocation(String location) {
