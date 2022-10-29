@@ -26,7 +26,7 @@ public class ServiceService {
         return serviceRepository.getFiveLatestServices(amount);
     }
 
-    public int getServicesCount() {
+    public Integer getServicesCount() {
         return serviceRepository.getServiceCount();
     }
 
@@ -34,11 +34,11 @@ public class ServiceService {
         return serviceRepository.getReferenceById(serviceId);
     }
 
-    public int getClosedServiceTotalValue(Date startDate, Date endDate) {
+    public Integer getClosedServiceTotalValue(Date startDate, Date endDate) {
         return serviceRepository.getClosedServiceTotalValue(startDate, endDate);
     }
 
-    public int getAllServiceTotalValue(Date startDate, Date endDate) {
+    public Integer getAllServiceTotalValue(Date startDate, Date endDate) {
         return serviceRepository.getServiceTotalValue(startDate, endDate);
     }
 
@@ -46,7 +46,7 @@ public class ServiceService {
         serviceRepository.save(newService);
     }
 
-    public int getServicesCount(Date startDate, Date endDate) {
+    public Integer getServicesCount(Date startDate, Date endDate) {
         return serviceRepository.getServiceCount(startDate, endDate);
     }
 }
