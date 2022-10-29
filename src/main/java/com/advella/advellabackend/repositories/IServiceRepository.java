@@ -18,14 +18,14 @@ public interface IServiceRepository extends JpaRepository<Service,Integer> {
     List<Service> getServicesByLocation(String location);
 
     @Query(value = "SELECT COUNT(*) FROM Task_Services", nativeQuery = true)
-    int getServiceCount();
+    Integer getServiceCount();
 
     @Query(value = "SELECT COUNT(*) FROM Task_Services WHERE service_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
-    int getServiceCount(Date fromDate, Date toDate);
+    Integer getServiceCount(Date fromDate, Date toDate);
 
     @Query(value = "SELECT SUM(service_money_amount) FROM Task_Services WHERE service_deadline >= GETDATE() AND service_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
-    int getClosedServiceTotalValue(Date fromDate, Date toDate);
+    Integer getClosedServiceTotalValue(Date fromDate, Date toDate);
 
     @Query(value = "SELECT SUM(service_money_amount) FROM Task_Services WHERE service_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
-    int getServiceTotalValue(Date fromDate, Date toDate);
+    Integer getServiceTotalValue(Date fromDate, Date toDate);
 }

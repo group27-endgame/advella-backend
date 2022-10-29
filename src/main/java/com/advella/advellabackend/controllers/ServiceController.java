@@ -37,7 +37,7 @@ public class ServiceController {
         return ResponseEntity.ok(serviceService.getServicesCount());
     }
 
-    @GetMapping("/services/open/{startDate}/{endDate}")
+    @GetMapping("/services/{startDate}/{endDate}")
     public ResponseEntity<Integer> getServicesBetweenDate(@PathVariable long startDate, @PathVariable long endDate) {
         return ResponseEntity.ok(serviceService.getServicesCount(new Date(startDate), new Date(endDate)));
     }

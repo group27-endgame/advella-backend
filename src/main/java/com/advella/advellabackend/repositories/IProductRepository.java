@@ -19,14 +19,14 @@ public interface IProductRepository extends JpaRepository<Product,Integer> {
     List<Product> getProductsByLocation(String location);
 
     @Query(value = "SELECT COUNT(*) FROM Products", nativeQuery = true)
-    int getProductCount();
+    Integer getProductCount();
 
     @Query(value = "SELECT COUNT(*) FROM Products WHERE product_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
-    int getProductCount(Date fromDate, Date toDate);
+    Integer getProductCount(Date fromDate, Date toDate);
 
     @Query(value = "SELECT SUM(product_money_amount) FROM Products WHERE product_deadline >= GETDATE() AND product_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
-    int getTotalClosedProductValue(Date fromDate, Date toDate);
+    Integer getTotalClosedProductValue(Date fromDate, Date toDate);
 
     @Query(value = "SELECT SUM(product_money_amount) FROM Products WHERE product_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
-    int getTotalProductValue(Date fromDate, Date toDate);
+    Integer getTotalProductValue(Date fromDate, Date toDate);
 }

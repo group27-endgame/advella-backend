@@ -46,8 +46,12 @@ public class UserService implements UserDetailsService {
         return userRepository.getUsersByLocation(location);
     }
 
-    public int registeredUsers(Date fromDate, Date toDate) {
-        return userRepository.registeredUsers(fromDate, toDate);
+    public Integer registeredUsers(Date fromDate, Date toDate) {
+        Integer returnValue = userRepository.registeredUsers(fromDate, toDate);
+        if (returnValue == null) {
+            return 0;
+        }
+        return returnValue;
     }
 
     public void bidOnProduct(int productId, String token) {
