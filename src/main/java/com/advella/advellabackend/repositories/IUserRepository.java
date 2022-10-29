@@ -17,7 +17,7 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
     @Query(value = "SELECT * FROM Users WHERE user_location = :location", nativeQuery = true)
     List<User> getUsersByLocation(String location);
 
-    @Query(value = "SELECT COUNT(*) FROM Users WHERE registration_datetime >= :fromDate AND registration_datetime <= :toDate ORDER BY registration_datetime DESC", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM Users WHERE registration_datetime >= :fromDate AND registration_datetime <= :toDate", nativeQuery = true)
     Integer registeredUsers(Date fromDate, Date toDate);
 
     @Query(value = "SELECT * FROM Users WHERE username = :username", nativeQuery = true)
