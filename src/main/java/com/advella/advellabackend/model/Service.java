@@ -29,9 +29,9 @@ public class Service {
     @Column(name = "service_detail")
     private String detail;
     @Column(name = "service_money_amount")
-    private float moneyAmount;
+    private Float moneyAmount;
     @Column(name = "service_duration")
-    private int duration;
+    private Integer duration;
     @Column(name = "service_posted_datetime")
     private Date postedDateTime;
     @Column(name = "service_deadline")
@@ -39,9 +39,9 @@ public class Service {
     @Column(name = "service_location")
     private String location;
     @Column(name = "service_number_of_bids")
-    private int numberOfBids;
+    private Integer numberOfBids;
     @Column(name = "service_number_of_likes")
-    private int numberOfLikes;
+    private Integer numberOfLikes;
     @Column(name = "service_status")
     private String serviceStatus;
     @ManyToMany(mappedBy = "services")

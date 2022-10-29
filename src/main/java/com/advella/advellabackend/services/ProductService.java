@@ -25,7 +25,12 @@ public class ProductService {
     }
 
     public List<Product> getFiveLatestProducts(int amount) {
-        return productRepository.getFiveLatestProducts(amount);
+        List<Product> products = productRepository.getFiveLatestProducts(amount);
+        for (Product product : products) {
+            product.setPosted(null);
+            product.getProductCategory().setProducts(null);
+        }
+        return products;
     }
 
     public Integer getProductCount() {

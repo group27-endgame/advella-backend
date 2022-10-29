@@ -29,7 +29,7 @@ public class Product {
     @Column(name = "product_detail")
     private String detail;
     @Column(name = "product_money_amount")
-    private float moneyAmount;
+    private Float moneyAmount;
     @Column(name = "product_pick_up_location")
     private String pickUpLocation;
     @Column(name = "product_posted_datetime")
@@ -37,7 +37,7 @@ public class Product {
     @Column(name = "product_deadline")
     private Date deadline;
     @Column(name = "product_number_of_bids")
-    private int numberOfBids;
+    private Integer numberOfBids;
     @ManyToMany(mappedBy = "products")
     private List<User> users;
     @ManyToOne(fetch=FetchType.LAZY)

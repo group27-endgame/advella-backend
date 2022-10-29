@@ -23,7 +23,12 @@ public class ServiceService {
     }
 
     public List<com.advella.advellabackend.model.Service> getFiveLatestServices(int amount) {
-        return serviceRepository.getFiveLatestServices(amount);
+        List<com.advella.advellabackend.model.Service> services = serviceRepository.getFiveLatestServices(amount);
+        for (com.advella.advellabackend.model.Service service : services) {
+            service.setPosted(null);
+            service.getServiceCategory().setServices(null);
+        }
+        return services;
     }
 
     public Integer getServicesCount() {
