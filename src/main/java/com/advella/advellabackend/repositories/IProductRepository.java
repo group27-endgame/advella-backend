@@ -21,9 +21,9 @@ public interface IProductRepository extends JpaRepository<Product,Integer> {
     @Query(value = "SELECT COUNT(*) FROM Products", nativeQuery = true)
     int getProductCount();
 
-    @Query(value = "SELECT COUNT(*) FROM Products WHERE product_deadline >= CURDATE AND product_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM Products WHERE product_deadline >= GETDATE() AND product_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
     int getProductCount(Date fromDate, Date toDate);
 
-    @Query(value = "SELECT SUM(product_money_amount) FROM Products WHERE product_deadline >= CURDATE AND product_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
+    @Query(value = "SELECT SUM(product_money_amount) FROM Products WHERE product_deadline >= GETDATE() AND product_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
     int getTotalClosedProductValue(Date fromDate, Date toDate);
 }

@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/open/{startDate}/{endDate}")
-    public ResponseEntity<Integer> getOpenProducts(@PathVariable long startDate, long endDate) {
+    public ResponseEntity<Integer> getOpenProducts(@PathVariable long startDate, @PathVariable long endDate) {
         return ResponseEntity.ok(productService.getProductCount(new Date(startDate), new Date(endDate)));
     }
 
