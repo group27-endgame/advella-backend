@@ -28,7 +28,7 @@ public class ProductService {
         return productRepository.getFiveLatestProducts(amount);
     }
 
-    public int getProductCount() {
+    public Integer getProductCount() {
         return productRepository.getProductCount();
     }
 
@@ -36,19 +36,27 @@ public class ProductService {
         return productRepository.getReferenceById(productID);
     }
 
-    public int getClosedProductTotalValue(Date startDate, Date endDate) {
-        return productRepository.getTotalClosedProductValue(startDate, endDate);
+    public Integer getClosedProductTotalValue(Date startDate, Date endDate) {
+        Integer returnValue = productRepository.getTotalClosedProductValue(startDate, endDate);
+        if (returnValue == null) {
+            return 0;
+        }
+        return returnValue;
     }
 
-    public int getAllProductTotalValue(Date startDate, Date endDate) {
-        return productRepository.getTotalProductValue(startDate, endDate);
+    public Integer getAllProductTotalValue(Date startDate, Date endDate) {
+        Integer returnValue = productRepository.getTotalProductValue(startDate, endDate);
+        if (returnValue == null) {
+            return 0;
+        }
+        return returnValue;
     }
 
     public void addNewProduct(Product newProduct) {
         productRepository.save(newProduct);
     }
 
-    public int getProductCount(Date startDate, Date endDate) {
+    public Integer getProductCount(Date startDate, Date endDate) {
         return productRepository.getProductCount(startDate, endDate);
     }
 }

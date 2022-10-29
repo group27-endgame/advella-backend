@@ -35,11 +35,19 @@ public class ServiceService {
     }
 
     public Integer getClosedServiceTotalValue(Date startDate, Date endDate) {
-        return serviceRepository.getClosedServiceTotalValue(startDate, endDate);
+        Integer returnValue = serviceRepository.getClosedServiceTotalValue(startDate, endDate);
+        if (returnValue == null) {
+            return 0;
+        }
+        return returnValue;
     }
 
     public Integer getAllServiceTotalValue(Date startDate, Date endDate) {
-        return serviceRepository.getServiceTotalValue(startDate, endDate);
+        Integer returnValue = serviceRepository.getServiceTotalValue(startDate, endDate);
+        if (returnValue == null) {
+            return 0;
+        }
+        return returnValue;
     }
 
     public void addNewService(com.advella.advellabackend.model.Service newService) {
