@@ -38,8 +38,8 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductCount());
     }
 
-    @GetMapping("/products/open/{startDate}/{endDate}")
-    public ResponseEntity<Integer> getOpenProducts(@PathVariable long startDate, @PathVariable long endDate) {
+    @GetMapping("/products/{startDate}/{endDate}")
+    public ResponseEntity<Integer> getProductsBetweenDates(@PathVariable long startDate, @PathVariable long endDate) {
         return ResponseEntity.ok(productService.getProductCount(new Date(startDate), new Date(endDate)));
     }
 
