@@ -40,8 +40,6 @@ public class Service {
     private String location;
     @Column(name = "service_number_of_bids")
     private Integer numberOfBids;
-    @Column(name = "service_number_of_likes")
-    private Integer numberOfLikes;
     @Column(name = "service_status")
     private String serviceStatus;
     @ManyToMany(mappedBy = "services")
