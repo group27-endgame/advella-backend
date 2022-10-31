@@ -41,19 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests().antMatchers("/api/users/login", "/api/users/register", "/swagger-ui/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/productsAndServices/**", "/api/users/registered/**",
-                "/api/services/open/**",
-                "/api/services/count",
-                "/api/products/count",
-                "/api/users/latest",
-                "/api/users/**",
-                "/api/products/**",
-                "/api/services/**",
-                "/api/product-categories",
-                "/api/service-categories",
-                "/api/products/latest",
-                "/api/services/latest",
-                "/api/products/open/**").hasAuthority(ADMIN_ROLE);
+        http.authorizeRequests().antMatchers("/api/productsAndServices/dash-board/**",
+                "/api/users/dash-board/**",
+                "/api/services/dash-board/**",
+                "/api/products/dash-board/**",
+                "/api/product-categories/dash-board/**",
+                "/api/service-categories/dash-board/**").hasAuthority(ADMIN_ROLE);
 
         http.authorizeRequests().antMatchers("/api").authenticated();
         http.addFilter(customAuthenticationFilter);

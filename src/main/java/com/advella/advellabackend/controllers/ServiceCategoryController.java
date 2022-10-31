@@ -15,7 +15,7 @@ public class ServiceCategoryController {
 
     private final ServiceCategoryService serviceCategoryService;
 
-    @GetMapping("/service-categories/all")
+    @GetMapping("/service-categories/dash-board/all")
     public ResponseEntity<List<ServiceCategory>> getServiceCategories() {
         return ResponseEntity.ok(serviceCategoryService.getServiceCategories());
     }
