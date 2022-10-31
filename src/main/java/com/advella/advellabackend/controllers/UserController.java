@@ -25,21 +25,6 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserFromHeader(token));
     }
 
-    @GetMapping("/users/latest")
-    public ResponseEntity<List<User>> getFiveLatestUsers(@RequestParam(required = false, defaultValue = "5") int amount) {
-        return ResponseEntity.ok(userService.getFiveLatestUsers(amount));
-    }
-
-    @GetMapping("/users/{location}")
-    public ResponseEntity<List<User>> getUsersByLocation(@PathVariable String location) {
-        return ResponseEntity.ok(userService.getUsersByLocation(location));
-    }
-
-    @GetMapping("/users/registered/{fromDate}/{toDate}")
-    public ResponseEntity<Integer> getRegisteredUsers(@PathVariable long fromDate, @PathVariable long toDate) {
-        return ResponseEntity.ok(userService.registeredUsers(new Date(fromDate), new Date(toDate)));
-    }
-
     @PostMapping("/users/register")
     public ResponseEntity<Void> registerUser(@RequestBody User userToRegister) {
         return userService.registerUser(userToRegister);
@@ -55,5 +40,20 @@ public class UserController {
     public ResponseEntity<Void> bidOnService(@RequestParam int serviceId, @RequestHeader("Authorization") String token) {
         userService.bidOnService(serviceId, token);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/users/dash-board/latest")
+    public ResponseEntity<List<User>> getFiveLatestUsers(@RequestParam(required = false, defaultValue = "5") int amount) {
+        return ResponseEntity.ok(userService.getFiveLatestUsers(amount));
+    }
+
+    @GetMapping("/users/dash-board/{location}")
+    public ResponseEntity<List<User>> getUsersByLocation(@PathVariable String location) {
+        return ResponseEntity.ok(userService.getUsersByLocation(location));
+    }
+
+    @GetMapping("/users/dash-board/registered/{fromDate}/{toDate}")
+    public ResponseEntity<Integer> getRegisteredUsers(@PathVariable long fromDate, @PathVariable long toDate) {
+        return ResponseEntity.ok(userService.registeredUsers(new Date(fromDate), new Date(toDate)));
     }
 }

@@ -20,13 +20,13 @@ public class ProductsAndServicesController {
     private final ProductService productService;
     private final ServiceService serviceService;
 
-    @GetMapping("/productsAndServices/closed/{startDate}/{endDate}")
+    @GetMapping("/productsAndServices/dash-board/closed/{startDate}/{endDate}")
     public ResponseEntity<Integer> getClosedProductsAndServices(@PathVariable long startDate, @PathVariable long endDate) {
         Integer totalValue = productService.getClosedProductTotalValue(new Date(startDate), new Date(endDate)) + serviceService.getClosedServiceTotalValue(new Date(startDate), new Date(endDate));
         return ResponseEntity.ok(totalValue);
     }
 
-    @GetMapping("/productsAndServices/{startDate}/{endDate}")
+    @GetMapping("/productsAndServices/dash-board/{startDate}/{endDate}")
     public ResponseEntity<Integer> getAllProductsAndServicesValue(@PathVariable long startDate, @PathVariable long endDate) {
         Integer totalValue = productService.getAllProductTotalValue(new Date(startDate), new Date(endDate)) + serviceService.getAllServiceTotalValue(new Date(startDate), new Date(endDate));
         return ResponseEntity.ok(totalValue);

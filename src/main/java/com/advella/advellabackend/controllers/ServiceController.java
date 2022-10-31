@@ -22,29 +22,29 @@ public class ServiceController {
         return ResponseEntity.ok(serviceService.getServices());
     }
 
-    @GetMapping("/services/latest")
-    public ResponseEntity<List<Service>> getFiveLatestServices(@RequestParam(required = false, defaultValue = "5") int amount) {
-        return ResponseEntity.ok(serviceService.getFiveLatestServices(amount));
-    }
-
-    @GetMapping("/services/{location}")
-    public ResponseEntity<List<Service>> getServicesByLocation(@PathVariable String location) {
-        return ResponseEntity.ok(serviceService.getServicesByLocation(location));
-    }
-
-    @GetMapping("/services/count")
-    public ResponseEntity<Integer> getServiceCount() {
-        return ResponseEntity.ok(serviceService.getServicesCount());
-    }
-
-    @GetMapping("/services/{startDate}/{endDate}")
-    public ResponseEntity<Integer> getServicesBetweenDate(@PathVariable long startDate, @PathVariable long endDate) {
-        return ResponseEntity.ok(serviceService.getServicesCount(new Date(startDate), new Date(endDate)));
-    }
-
     @PostMapping("/services/new")
     public ResponseEntity<Void> addNewService(@RequestBody Service newService) {
         serviceService.addNewService(newService);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/services/dash-board/latest")
+    public ResponseEntity<List<Service>> getFiveLatestServices(@RequestParam(required = false, defaultValue = "5") int amount) {
+        return ResponseEntity.ok(serviceService.getFiveLatestServices(amount));
+    }
+
+    @GetMapping("/services/dash-board/{location}")
+    public ResponseEntity<List<Service>> getServicesByLocation(@PathVariable String location) {
+        return ResponseEntity.ok(serviceService.getServicesByLocation(location));
+    }
+
+    @GetMapping("/services/dash-board/count")
+    public ResponseEntity<Integer> getServiceCount() {
+        return ResponseEntity.ok(serviceService.getServicesCount());
+    }
+
+    @GetMapping("/services/dash-board/{startDate}/{endDate}")
+    public ResponseEntity<Integer> getServicesBetweenDate(@PathVariable long startDate, @PathVariable long endDate) {
+        return ResponseEntity.ok(serviceService.getServicesCount(new Date(startDate), new Date(endDate)));
     }
 }

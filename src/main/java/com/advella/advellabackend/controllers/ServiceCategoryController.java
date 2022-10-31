@@ -20,19 +20,19 @@ public class ServiceCategoryController {
         return ResponseEntity.ok(serviceCategoryService.getServiceCategories());
     }
 
-    @PostMapping("/service-categories")
-    public ResponseEntity<Void> addNewServiceCategory(@RequestBody ServiceCategory serviceCategoryToAdd) {
-        serviceCategoryService.addNewServiceCategory(serviceCategoryToAdd);
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("/service-categories/{id}")
+    @DeleteMapping("/service-categories/dash-board/{id}")
     public ResponseEntity<Void> deleteServiceCategory(@PathVariable int id) {
         serviceCategoryService.deleteServiceCategory(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/service-categories")
+    @PostMapping("/service-categories/dash-board")
+    public ResponseEntity<Void> addNewServiceCategory(@RequestBody ServiceCategory serviceCategoryToAdd) {
+        serviceCategoryService.addNewServiceCategory(serviceCategoryToAdd);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/service-categories/dash-board")
     public ResponseEntity<Void> updateServiceCategory(@RequestBody ServiceCategory serviceCategoryToAdd) {
         serviceCategoryService.updateServiceCategory(serviceCategoryToAdd);
         return ResponseEntity.noContent().build();

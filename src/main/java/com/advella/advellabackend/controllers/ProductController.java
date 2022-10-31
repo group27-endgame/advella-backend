@@ -23,29 +23,29 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProducts());
     }
 
-    @GetMapping("/products/latest")
-    public ResponseEntity<List<Product>> getFiveLatestProducts(@RequestParam(required = false, defaultValue = "5") int amount) {
-        return ResponseEntity.ok(productService.getFiveLatestProducts(amount));
-    }
-
-    @GetMapping("/products/{location}")
-    public ResponseEntity<List<Product>> getProductsByLocation(@PathVariable String location) {
-        return ResponseEntity.ok(productService.getProductsByLocation(location));
-    }
-
-    @GetMapping("/products/count")
-    public ResponseEntity<Integer> getProductCount() {
-        return ResponseEntity.ok(productService.getProductCount());
-    }
-
-    @GetMapping("/products/{startDate}/{endDate}")
-    public ResponseEntity<Integer> getProductsBetweenDates(@PathVariable long startDate, @PathVariable long endDate) {
-        return ResponseEntity.ok(productService.getProductCount(new Date(startDate), new Date(endDate)));
-    }
-
     @PostMapping("/products/new")
     public ResponseEntity<Void> addNewProduct(@RequestBody Product newProduct) {
         productService.addNewProduct(newProduct);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/products/dash-board/{location}")
+    public ResponseEntity<List<Product>> getProductsByLocation(@PathVariable String location) {
+        return ResponseEntity.ok(productService.getProductsByLocation(location));
+    }
+
+    @GetMapping("/products/dash-board/latest")
+    public ResponseEntity<List<Product>> getFiveLatestProducts(@RequestParam(required = false, defaultValue = "5") int amount) {
+        return ResponseEntity.ok(productService.getFiveLatestProducts(amount));
+    }
+
+    @GetMapping("/products/dash-board/count")
+    public ResponseEntity<Integer> getProductCount() {
+        return ResponseEntity.ok(productService.getProductCount());
+    }
+
+    @GetMapping("/products/dash-board/{startDate}/{endDate}")
+    public ResponseEntity<Integer> getProductsBetweenDates(@PathVariable long startDate, @PathVariable long endDate) {
+        return ResponseEntity.ok(productService.getProductCount(new Date(startDate), new Date(endDate)));
     }
 }

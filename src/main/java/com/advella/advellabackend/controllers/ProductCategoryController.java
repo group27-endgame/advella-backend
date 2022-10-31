@@ -16,24 +16,24 @@ public class ProductCategoryController {
 
     private final ProductCategoryService productCategoryService;
 
-    @GetMapping("/product-categories/all")
+    @GetMapping("/product-categories/dash-board/all")
     public ResponseEntity<List<ProductCategory>> getProductCategories() {
         return ResponseEntity.ok(productCategoryService.getProductCategories());
     }
 
-    @PostMapping("/product-categories")
+    @PostMapping("/product-categories/dash-board")
     public ResponseEntity<Void> addProductCategory(@RequestBody ProductCategory newProductCategory) {
         productCategoryService.addNewProductCategory(newProductCategory);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/product-categories/{id}")
+    @DeleteMapping("/product-categories/dash-board/{id}")
     public ResponseEntity<Void> deleteProductCategory(@PathVariable int id) {
         productCategoryService.deleteProductCategory(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/product-categories")
+    @PutMapping("/product-categories/dash-board")
     public ResponseEntity<Void> updateProductCategory(@RequestBody ProductCategory productCategoryToUpdate) {
         productCategoryService.updateNewProductCategory(productCategoryToUpdate);
         return ResponseEntity.noContent().build();
