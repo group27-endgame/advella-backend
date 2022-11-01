@@ -22,6 +22,10 @@ public class ServiceService {
         return serviceRepository.getServicesWithCategory(categoryId);
     }
 
+    public List<com.advella.advellabackend.model.Service> getServicesPostedByUser(Integer userId, int amount) {
+        return serviceRepository.getServicesPostedByUser(userId, amount);
+    }
+
     public List<com.advella.advellabackend.model.Service> getServicesByLocation(String location) {
         return serviceRepository.getServicesByLocation(location);
     }

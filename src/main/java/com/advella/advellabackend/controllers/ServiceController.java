@@ -27,6 +27,11 @@ public class ServiceController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/services/user/{userId}")
+    public ResponseEntity<List<Service>> getServicesInPostedByUser(@PathVariable("userId") Integer userId, @RequestParam int amount) {
+        return ResponseEntity.ok(serviceService.getServicesPostedByUser(userId, amount));
+    }
+
     @GetMapping("/services/category/{categoryId}")
     public ResponseEntity<List<Service>> getServicesInCategory(@PathVariable("categoryId") Integer categoryId) {
         return ResponseEntity.ok(serviceService.getAllServicesWithCategoryId(categoryId));

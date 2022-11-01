@@ -39,6 +39,10 @@ public class ProductService {
         return productRepository.findByTitleContaining(searchedQuery);
     }
 
+    public List<Product> getProductsInPostedByUser(Integer userId, int amount) {
+        return productRepository.getProductsPostedByUser(userId, amount);
+    }
+
     public List<Product> getAllProductsWithCategoryId(Integer categoryId) {
         return productRepository.getProductsWithCategory(categoryId);
     }

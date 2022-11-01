@@ -35,4 +35,7 @@ public interface IProductRepository extends JpaRepository<Product,Integer> {
 
     @Query(value = "SELECT * FROM Products WHERE category_id = :categoryId", nativeQuery = true)
     List<Product> getProductsWithCategory(Integer categoryId);
+
+    @Query(value = "SELECT TOP (:amount) * FROM Products WHERE users_id = :userId ORDER BY product_posted_datetime DESC", nativeQuery = true)
+    List<Product> getProductsPostedByUser(Integer userId, int amount);
 }

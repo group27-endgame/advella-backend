@@ -26,6 +26,11 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProductsWithCategoryId(categoryId));
     }
 
+    @GetMapping("/products/user/{userId}")
+    public ResponseEntity<List<Product>> getProductsInPostedByUser(@PathVariable("userId") Integer userId, @RequestParam int amount) {
+        return ResponseEntity.ok(productService.getProductsInPostedByUser(userId, amount));
+    }
+
     @PostMapping("/products/new")
     public ResponseEntity<Void> addNewProduct(@RequestBody Product newProduct) {
         productService.addNewProduct(newProduct);
