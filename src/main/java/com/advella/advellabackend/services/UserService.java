@@ -42,6 +42,10 @@ public class UserService implements UserDetailsService {
         return usersToReturn;
     }
 
+    public void deleteUserById(Integer userId) {
+        userRepository.deleteById(userId);
+    }
+
     public User getUserById(Integer userId) {
         return userRepository.getReferenceById(userId);
     }

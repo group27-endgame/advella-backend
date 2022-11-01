@@ -44,6 +44,12 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductCount());
     }
 
+    @DeleteMapping("/products/dash-board/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {
+        productService.deleteProductById(productId);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/products/dash-board/{startDate}/{endDate}")
     public ResponseEntity<Integer> getProductsBetweenDates(@PathVariable long startDate, @PathVariable long endDate) {
         return ResponseEntity.ok(productService.getProductCount(new Date(startDate), new Date(endDate)));

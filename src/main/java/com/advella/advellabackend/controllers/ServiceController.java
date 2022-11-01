@@ -43,6 +43,12 @@ public class ServiceController {
         return ResponseEntity.ok(serviceService.getServicesCount());
     }
 
+    @DeleteMapping("/services/dash-board/{serviceId}")
+    public ResponseEntity<Void> deleteService(@PathVariable Integer serviceId) {
+        serviceService.deleteServiceById(serviceId);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/services/dash-board/{startDate}/{endDate}")
     public ResponseEntity<Integer> getServicesBetweenDate(@PathVariable long startDate, @PathVariable long endDate) {
         return ResponseEntity.ok(serviceService.getServicesCount(new Date(startDate), new Date(endDate)));

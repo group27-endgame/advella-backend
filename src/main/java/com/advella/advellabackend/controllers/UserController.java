@@ -62,6 +62,12 @@ public class UserController {
         return ResponseEntity.ok(userService.registeredUsers(new Date(fromDate), new Date(toDate)));
     }
 
+    @DeleteMapping("/services/dash-board/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer userId) {
+        userService.deleteUserById(userId);
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping("/users/dash-board")
     public ResponseEntity<Void> changeUserRole(@RequestParam Integer userId) {
         return userService.changeUserRole(userId);

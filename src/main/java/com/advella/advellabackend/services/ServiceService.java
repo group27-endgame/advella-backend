@@ -33,6 +33,10 @@ public class ServiceService {
         return services;
     }
 
+    public void deleteServiceById(Integer serviceId) {
+        serviceRepository.deleteById(serviceId);
+    }
+
     public Integer getServicesCount() {
         return serviceRepository.getServiceCount();
     }
