@@ -57,8 +57,8 @@ public class UserController {
         return ResponseEntity.ok(userService.registeredUsers(new Date(fromDate), new Date(toDate)));
     }
 
-    @PutMapping("/users/dash-board/")
-    public ResponseEntity<Void> changeUserRole(@RequestParam String username) {
-        return userService.changeUserRole(username);
+    @PutMapping("/users/dash-board")
+    public ResponseEntity<Void> changeUserRole(@RequestParam Integer userId) {
+        return userService.changeUserRole(userId);
     }
 }
