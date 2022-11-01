@@ -61,6 +61,10 @@ public class ServiceService {
         return returnValue;
     }
 
+    public List<com.advella.advellabackend.model.Service> getSearchedService(String searchQuery) {
+        return serviceRepository.findByTitleContaining(searchQuery);
+    }
+
     public void addNewService(com.advella.advellabackend.model.Service newService) {
         serviceRepository.save(newService);
     }

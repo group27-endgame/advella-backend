@@ -37,4 +37,9 @@ public class ProductsAndServicesController {
     public ResponseEntity<Collection<Object>> getLatestProductsAndServices(@RequestParam(required = false, defaultValue = "5") int amount) {
         return ResponseEntity.ok(productAndServiceService.getLatestProductsAndServices(amount));
     }
+
+    @GetMapping("/productsAndServices/search")
+    public ResponseEntity<Collection<Object>> getSearchedProductsAndServices(@RequestParam String searchedQuery) {
+        return ResponseEntity.ok(productAndServiceService.getProductsAndServicesWithSearchedQuery(searchedQuery));
+    }
 }

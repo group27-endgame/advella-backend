@@ -1,5 +1,6 @@
 package com.advella.advellabackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,5 +21,6 @@ public class ServiceCategory {
     @Column(name = "category_title")
     private String title;
     @OneToMany(mappedBy = "serviceCategory")
+    @JsonIgnore
     private List<Service> services;
 }

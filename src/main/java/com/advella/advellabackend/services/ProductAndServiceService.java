@@ -31,6 +31,14 @@ public class ProductAndServiceService {
                     throw new RuntimeException("illegal type");
                 }))
                 .forEach(objects::add);
-        return objects.subList(0,amount);
+        return objects.subList(0, amount);
+    }
+
+    public List<Object> getProductsAndServicesWithSearchedQuery(String searchedQuery) {
+        List<Object> objects = new ArrayList<>();
+        objects.addAll(serviceService.getSearchedService(searchedQuery));
+        objects.addAll(productService.getSearchedProducts(searchedQuery));
+
+        return objects;
     }
 }

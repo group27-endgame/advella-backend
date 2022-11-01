@@ -28,4 +28,6 @@ public interface IServiceRepository extends JpaRepository<Service,Integer> {
 
     @Query(value = "SELECT SUM(service_money_amount) FROM Task_Services WHERE service_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
     Integer getServiceTotalValue(Date fromDate, Date toDate);
+
+    List<Service> findByTitleContaining(String title);
 }

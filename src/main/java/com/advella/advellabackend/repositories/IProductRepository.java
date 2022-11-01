@@ -1,6 +1,7 @@
 package com.advella.advellabackend.repositories;
 
 import com.advella.advellabackend.model.Product;
+import com.advella.advellabackend.model.Service;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,4 +30,6 @@ public interface IProductRepository extends JpaRepository<Product,Integer> {
 
     @Query(value = "SELECT SUM(product_money_amount) FROM Products WHERE product_posted_datetime BETWEEN :fromDate AND :toDate", nativeQuery = true)
     Integer getTotalProductValue(Date fromDate, Date toDate);
+
+    List<Product> findByTitleContaining(String title);
 }

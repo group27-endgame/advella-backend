@@ -1,5 +1,6 @@
 package com.advella.advellabackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,5 +32,6 @@ public class ReportedService {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="users_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    @JsonIgnore
     private User serviceReportUser;
 }
