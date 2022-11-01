@@ -39,6 +39,10 @@ public class ProductService {
         return productRepository.findByTitleContaining(searchedQuery);
     }
 
+    public List<Product> getAllProductsWithCategoryId(Integer categoryId) {
+        return productRepository.getProductsWithCategory(categoryId);
+    }
+
     public void deleteProductById(Integer productId) {
         productRepository.deleteById(productId);
     }

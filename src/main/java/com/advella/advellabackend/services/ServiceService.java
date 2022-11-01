@@ -18,6 +18,10 @@ public class ServiceService {
         return serviceRepository.findAll();
     }
 
+    public List<com.advella.advellabackend.model.Service> getAllServicesWithCategoryId(Integer categoryId) {
+        return serviceRepository.getServicesWithCategory(categoryId);
+    }
+
     public List<com.advella.advellabackend.model.Service> getServicesByLocation(String location) {
         return serviceRepository.getServicesByLocation(location);
     }

@@ -1,5 +1,6 @@
 package com.advella.advellabackend.controllers;
 
+import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.Service;
 import com.advella.advellabackend.services.ServiceService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,11 @@ public class ServiceController {
     public ResponseEntity<Void> addNewService(@RequestBody Service newService) {
         serviceService.addNewService(newService);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/services/category/{categoryId}")
+    public ResponseEntity<List<Service>> getServicesInCategory(@PathVariable("categoryId") Integer categoryId) {
+        return ResponseEntity.ok(serviceService.getAllServicesWithCategoryId(categoryId));
     }
 
     @GetMapping("/services/latest")

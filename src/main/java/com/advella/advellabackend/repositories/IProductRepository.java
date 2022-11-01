@@ -32,4 +32,7 @@ public interface IProductRepository extends JpaRepository<Product,Integer> {
     Integer getTotalProductValue(Date fromDate, Date toDate);
 
     List<Product> findByTitleContaining(String title);
+
+    @Query(value = "SELECT * FROM Products WHERE category_id = :categoryId", nativeQuery = true)
+    List<Product> getProductsWithCategory(Integer categoryId);
 }

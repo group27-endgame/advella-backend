@@ -1,5 +1,6 @@
 package com.advella.advellabackend.repositories;
 
+import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.Service;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,4 +31,7 @@ public interface IServiceRepository extends JpaRepository<Service,Integer> {
     Integer getServiceTotalValue(Date fromDate, Date toDate);
 
     List<Service> findByTitleContaining(String title);
+
+    @Query(value = "SELECT * FROM Task_Services WHERE category_id = :categoryId", nativeQuery = true)
+    List<Service> getServicesWithCategory(Integer categoryId);
 }
