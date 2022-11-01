@@ -15,6 +15,6 @@ public interface IContactRepository extends JpaRepository<Contact, Integer> {
     Integer getUnseenContacts();
 
     @Modifying
-    @Query(value = "UPDATE Contact_Us SET seen = 1")
+    @Query(value = "UPDATE Contact_Us SET seen = 1", nativeQuery = true)
     void setAllUnseenToSeen();
 }
