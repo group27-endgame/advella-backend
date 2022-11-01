@@ -62,7 +62,7 @@ public class UserController {
         return ResponseEntity.ok(userService.registeredUsers(new Date(fromDate), new Date(toDate)));
     }
 
-    @DeleteMapping("/services/dash-board/{userId}")
+    @DeleteMapping("/users/dash-board/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer userId) {
         userService.deleteUserById(userId);
         return ResponseEntity.ok().build();
