@@ -42,6 +42,10 @@ public class UserService implements UserDetailsService {
         return usersToReturn;
     }
 
+    public User getUserById(Integer userId) {
+        return userRepository.getReferenceById(userId);
+    }
+
     public List<User> getUsersByLocation(String location) {
         return userRepository.getUsersByLocation(location);
     }

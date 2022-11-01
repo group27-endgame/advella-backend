@@ -42,6 +42,11 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/users/dash-board/{id}")
+    public ResponseEntity<User> getFiveLatestUsers(@PathVariable Integer userId) {
+        return ResponseEntity.ok(userService.getUserById(userId));
+    }
+
     @GetMapping("/users/dash-board/latest")
     public ResponseEntity<List<User>> getFiveLatestUsers(@RequestParam(required = false, defaultValue = "5") int amount) {
         return ResponseEntity.ok(userService.getFiveLatestUsers(amount));
