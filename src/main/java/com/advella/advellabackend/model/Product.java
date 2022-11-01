@@ -1,6 +1,7 @@
 package com.advella.advellabackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
@@ -41,16 +42,17 @@ public class Product {
     @Column(name = "product_number_of_bids")
     private Integer numberOfBids;
     @ManyToMany(mappedBy = "products")
+    @JsonIgnore
     private List<User> users;
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="category_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private ProductCategory productCategory;
     @OneToMany(mappedBy = "reportedProduct")
     private List<ReportedProduct> reportedProducts;
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="users_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id")
+    @JsonIgnore
     private User posted;
     @OneToMany(mappedBy = "product")
     private List<ChatProduct> chatProducts;

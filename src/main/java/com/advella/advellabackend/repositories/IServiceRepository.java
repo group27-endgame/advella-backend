@@ -11,8 +11,8 @@ public interface IServiceRepository extends JpaRepository<Service,Integer> {
     @Override
     List<Service> findAll();
 
-    @Query(value = "SELECT TOP (:amount) * FROM Task_Services ORDER BY service_id DESC", nativeQuery = true)
-    List<Service> getFiveLatestServices(int amount);
+    @Query(value = "SELECT TOP (:amount) * FROM Task_Services ORDER BY service_posted_datetime DESC", nativeQuery = true)
+    List<Service> getLatestServices(int amount);
 
     @Query(value = "SELECT * FROM Task_Services WHERE service_location = :location", nativeQuery = true)
     List<Service> getServicesByLocation(String location);

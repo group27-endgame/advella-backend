@@ -3,7 +3,6 @@ package com.advella.advellabackend.services;
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.repositories.IProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,8 +24,8 @@ public class ProductService {
         return productRepository.getProductsByLocation(location);
     }
 
-    public List<Product> getFiveLatestProducts(int amount) {
-        List<Product> products = productRepository.getFiveLatestProducts(amount);
+    public List<Product> getLatestProducts(int amount) {
+        List<Product> products = productRepository.getLatestProducts(amount);
         for (Product product : products) {
             product.setPosted(null);
             if (product.getProductCategory() != null) {

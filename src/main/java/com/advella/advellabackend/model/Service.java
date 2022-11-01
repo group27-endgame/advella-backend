@@ -1,6 +1,7 @@
 package com.advella.advellabackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
@@ -43,6 +44,7 @@ public class Service {
     @Column(name = "service_status")
     private String serviceStatus;
     @ManyToMany(mappedBy = "services")
+    @JsonIgnore
     private List<User> users;
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="category_id")
@@ -52,7 +54,7 @@ public class Service {
     private List<ReportedService> reportedServices;
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="users_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    @JsonIgnore
     private User posted;
     @OneToMany(mappedBy = "service")
     private List<ChatService> chatServices;

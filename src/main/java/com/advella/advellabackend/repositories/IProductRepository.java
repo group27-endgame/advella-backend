@@ -12,8 +12,8 @@ public interface IProductRepository extends JpaRepository<Product,Integer> {
     @Override
     List<Product> findAll();
 
-    @Query(value = "SELECT TOP (:amount) * FROM Products ORDER BY product_id DESC", nativeQuery = true)
-    List<Product> getFiveLatestProducts(@Param("amount") int amount);
+    @Query(value = "SELECT TOP (:amount) * FROM Products ORDER BY product_posted_datetime DESC", nativeQuery = true)
+    List<Product> getLatestProducts(@Param("amount") int amount);
 
     @Query(value = "SELECT * FROM Products WHERE product_pick_up_location = :location", nativeQuery = true)
     List<Product> getProductsByLocation(String location);

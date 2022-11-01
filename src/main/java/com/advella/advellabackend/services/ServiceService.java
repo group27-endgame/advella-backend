@@ -22,8 +22,8 @@ public class ServiceService {
         return serviceRepository.getServicesByLocation(location);
     }
 
-    public List<com.advella.advellabackend.model.Service> getFiveLatestServices(int amount) {
-        List<com.advella.advellabackend.model.Service> services = serviceRepository.getFiveLatestServices(amount);
+    public List<com.advella.advellabackend.model.Service> getLatestServices(int amount) {
+        List<com.advella.advellabackend.model.Service> services = serviceRepository.getLatestServices(amount);
         for (com.advella.advellabackend.model.Service service : services) {
             service.setPosted(null);
             if (service.getServiceCategory() != null) {
