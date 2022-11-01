@@ -17,4 +17,16 @@ public class ContactService {
     public List<Contact> getAllContacts() {
         return contactRepository.findAll();
     }
+
+    public Integer getUnseenContacts() {
+        return contactRepository.getUnseenContacts();
+    }
+
+    public void deleteContact(Integer contactId) {
+        contactRepository.deleteById(contactId);
+    }
+
+    public void setAllUnseenContactsToSeen() {
+        contactRepository.setAllUnseenToSeen();
+    }
 }
