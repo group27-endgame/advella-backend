@@ -68,6 +68,25 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public ResponseEntity<Void> changeUserRole(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            List<Role> userRoles = user.getRoles();
+            for (Role role : userRoles) {
+                if (role.getName().equals("admin")) {
+                    userRoles.remove(role);
+                    userRepository.save(user);
+                    return ResponseEntity.ok().build();
+                }
+            }
+
+            userRoles.add(roleRepository.findByRoleName("admin"));
+            userRepository.save(user);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     public ResponseEntity<Void> registerUser(User userToRegister) {
         if (userRepository.findByUsername(userToRegister.getUsername()) == null) {
             userToRegister.setRoles(Collections.singletonList(roleRepository.findByRoleName("user")));
