@@ -32,7 +32,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductsByLocation(location));
     }
 
-    @GetMapping("/products/dash-board/latest")
+    @GetMapping("/products/latest")
     public ResponseEntity<List<Product>> getFiveLatestProducts(@RequestParam(required = false, defaultValue = "5") int amount) {
         return ResponseEntity.ok(productService.getLatestProducts(amount));
     }

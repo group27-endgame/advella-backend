@@ -26,7 +26,7 @@ public class ServiceController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/services/dash-board/latest")
+    @GetMapping("/services/latest")
     public ResponseEntity<List<Service>> getFiveLatestServices(@RequestParam(required = false, defaultValue = "5") int amount) {
         return ResponseEntity.ok(serviceService.getLatestServices(amount));
     }
