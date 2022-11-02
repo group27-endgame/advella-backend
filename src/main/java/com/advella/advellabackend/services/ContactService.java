@@ -3,6 +3,7 @@ package com.advella.advellabackend.services;
 import com.advella.advellabackend.model.Contact;
 import com.advella.advellabackend.repositories.IContactRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +11,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class ContactService {
     private final IContactRepository contactRepository;
 
