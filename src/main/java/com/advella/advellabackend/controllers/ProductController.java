@@ -31,7 +31,7 @@ public class ProductController {
 
     @ApiOperation(value = "Get products posted by user", notes = "Gets requested number of products posted by user")
     @GetMapping("/products/user/{userId}")
-    public ResponseEntity<List<Product>> getProductsInPostedByUser(@PathVariable("userId") Integer userId, @RequestParam int amount) {
+    public ResponseEntity<List<Product>> getProductsInPostedByUser(@PathVariable("userId") int userId, @RequestParam int amount) {
         return productService.getProductsInPostedByUser(userId, amount);
     }
 
