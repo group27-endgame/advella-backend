@@ -23,13 +23,12 @@ jobs:
       with:
         java-version: '17'
         
-    - name: Create .env
+    - name: Replace secrets
       run: |
-        touch ${GITHUB_WORKSPACE}/.env
-        echo "DB_HOST=${{ secrets.DB_HOST }}" > ${GITHUB_WORKSPACE}/.env
-        echo "DB_NAME=${{ secrets.DB_NAME }}" > ${GITHUB_WORKSPACE}/.env
-        echo "DB_PASS=${{ secrets.DB_PASS }}" > ${GITHUB_WORKSPACE}/.env
-        echo "DB_USER=${{ secrets.DB_USER }}" > ${GITHUB_WORKSPACE}/.env
+        sed -i -e 's/${DB_HOST}/${{ secrets.DB_HOST }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
+        sed -i -e 's/${DB_NAME}/${{ secrets.DB_NAME }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
+        sed -i -e 's/${DB_PASS}/${{ secrets.DB_PASS }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
+        sed -i -e 's/${DB_USER}/${{ secrets.DB_USER }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
 
     - name: Test
       run: mvn test -Dtest="com.advella.**"
