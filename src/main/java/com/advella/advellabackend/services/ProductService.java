@@ -3,6 +3,7 @@ package com.advella.advellabackend.services;
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.repositories.IProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,8 +21,12 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public List<Product> getProductsByLocation(String location) {
-        return productRepository.getProductsByLocation(location);
+    public ResponseEntity<List<Product>> getProductsByLocation(String location) {
+        List<Product> products = productRepository.getProductsByLocation(location);
+        if (products.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(products);
     }
 
     public List<Product> getLatestProducts(int amount) {
@@ -39,16 +44,28 @@ public class ProductService {
         return productRepository.findByTitleContaining(searchedQuery);
     }
 
-    public List<Product> getProductsInPostedByUser(Integer userId, int amount) {
-        return productRepository.getProductsPostedByUser(userId, amount);
+    public ResponseEntity<List<Product>> getProductsInPostedByUser(Integer userId, int amount) {
+        List<Product> userProducts = productRepository.getProductsPostedByUser(userId, amount);
+        if (userProducts.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(userProducts);
     }
 
-    public List<Product> getAllProductsWithCategoryId(Integer categoryId) {
-        return productRepository.getProductsWithCategory(categoryId);
+    public ResponseEntity<List<Product>> getAllProductsWithCategoryId(Integer categoryId) {
+        List<Product> products = productRepository.getProductsWithCategory(categoryId);
+        if (products.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(products);
     }
 
-    public void deleteProductById(Integer productId) {
+    public ResponseEntity<Void> deleteProductById(Integer productId) {
+        if (productRepository.getReferenceById(productId) == null) {
+            return ResponseEntity.notFound().build();
+        }
         productRepository.deleteById(productId);
+        return ResponseEntity.ok().build();
     }
 
     public Integer getProductCount() {
@@ -81,5 +98,9 @@ public class ProductService {
 
     public Integer getProductCount(Date startDate, Date endDate) {
         return productRepository.getProductCount(startDate, endDate);
+    }
+
+    public boolean doesProductExist(int productId) {
+        return productRepository.getReferenceById(productId) != null;
     }
 }

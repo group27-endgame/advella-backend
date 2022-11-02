@@ -2,6 +2,7 @@ package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.services.UserService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,59 +16,67 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
+    @ApiOperation(value = "Get users", notes = "Gets all the users")
     @GetMapping("/users/dash-board")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userService.getUsers());
     }
 
+    @ApiOperation(value = "Get current user", notes = "Returns current user by token")
     @GetMapping("/users/currentUser")
     public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(userService.getUserFromHeader(token));
     }
 
+    @ApiOperation(value = "Register user", notes = "Registers user")
     @PostMapping("/users/register")
     public ResponseEntity<Void> registerUser(@RequestBody User userToRegister) {
         return userService.registerUser(userToRegister);
     }
 
+    @ApiOperation(value = "Bid on product", notes = "Bid on product by productId and token")
     @PostMapping("/users/bid/product")
     public ResponseEntity<Void> bidOnProduct(@RequestParam int productID, @RequestHeader("Authorization") String token) {
-        userService.bidOnProduct(productID, token);
-        return ResponseEntity.ok().build();
+        return userService.bidOnProduct(productID, token);
     }
 
+    @ApiOperation(value = "Bid on service", notes = "Bid on service by serviceId and token")
     @PostMapping("/users/bid/service")
     public ResponseEntity<Void> bidOnService(@RequestParam int serviceId, @RequestHeader("Authorization") String token) {
-        userService.bidOnService(serviceId, token);
-        return ResponseEntity.ok().build();
+        return userService.bidOnService(serviceId, token);
     }
 
+    @ApiOperation(value = "Get user by Id", notes = "Gets user by userId")
     @GetMapping("/users/dash-board/{id}")
-    public ResponseEntity<User> getFiveLatestUsers(@PathVariable Integer userId) {
-        return ResponseEntity.ok(userService.getUserById(userId));
+    public ResponseEntity<User> getUserById(@PathVariable Integer userId) {
+        return userService.getUserById(userId);
     }
 
+    @ApiOperation(value = "Get latest users", notes = "Gets requested amount of latest users")
     @GetMapping("/users/dash-board/latest")
-    public ResponseEntity<List<User>> getFiveLatestUsers(@RequestParam(required = false, defaultValue = "5") int amount) {
+    public ResponseEntity<List<User>> getLatestUsers(@RequestParam(required = false, defaultValue = "5") int amount) {
         return ResponseEntity.ok(userService.getFiveLatestUsers(amount));
     }
 
+    @ApiOperation(value = "Get users by location", notes = "Gets users by location")
     @GetMapping("/users/dash-board/{location}")
     public ResponseEntity<List<User>> getUsersByLocation(@PathVariable String location) {
         return ResponseEntity.ok(userService.getUsersByLocation(location));
     }
 
-    @GetMapping("/users/dash-board/registered/{fromDate}/{toDate}")
-    public ResponseEntity<Integer> getRegisteredUsers(@PathVariable long fromDate, @PathVariable long toDate) {
-        return ResponseEntity.ok(userService.registeredUsers(new Date(fromDate), new Date(toDate)));
+    @ApiOperation(value = "Get registered users", notes = "Gets users registered from startDate to endDate")
+    @GetMapping("/users/dash-board/registered/{startDate}/{endDate}")
+    public ResponseEntity<Integer> getRegisteredUsers(@PathVariable long startDate, @PathVariable long endDate) {
+        return ResponseEntity.ok(userService.registeredUsers(new Date(startDate), new Date(endDate)));
     }
 
+    @ApiOperation(value = "Delete user", notes = "Deletes user by userId")
     @DeleteMapping("/users/dash-board/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer userId) {
-        userService.deleteUserById(userId);
-        return ResponseEntity.ok().build();
+        return userService.deleteUserById(userId);
     }
 
+    @ApiOperation(value = "Change user role", notes = "Changes user role if the user was admin it is no longer, if the user is not admin then he will be set as one")
     @PutMapping("/users/dash-board")
     public ResponseEntity<Void> changeUserRole(@RequestParam Integer userId) {
         return userService.changeUserRole(userId);

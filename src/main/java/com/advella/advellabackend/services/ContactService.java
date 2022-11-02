@@ -3,6 +3,7 @@ package com.advella.advellabackend.services;
 import com.advella.advellabackend.model.Contact;
 import com.advella.advellabackend.repositories.IContactRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,8 +23,12 @@ public class ContactService {
         return contactRepository.getUnseenContacts();
     }
 
-    public void deleteContact(Integer contactId) {
+    public ResponseEntity<Void> deleteContact(Integer contactId) {
+        if (contactRepository.getReferenceById(contactId) == null) {
+            return ResponseEntity.notFound().build();
+        }
         contactRepository.deleteById(contactId);
+        return ResponseEntity.ok().build();
     }
 
     public void setAllUnseenContactsToSeen() {

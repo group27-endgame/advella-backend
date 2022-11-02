@@ -42,12 +42,19 @@ public class UserService implements UserDetailsService {
         return usersToReturn;
     }
 
-    public void deleteUserById(Integer userId) {
+    public ResponseEntity<Void> deleteUserById(Integer userId) {
+        if (!doesUserExist(userId)) {
+            return ResponseEntity.notFound().build();
+        }
         userRepository.deleteById(userId);
+        return ResponseEntity.ok().build();
     }
 
-    public User getUserById(Integer userId) {
-        return userRepository.getReferenceById(userId);
+    public ResponseEntity<User> getUserById(Integer userId) {
+        if (!doesUserExist(userId)) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(userRepository.getReferenceById(userId));
     }
 
     public List<User> getUsersByLocation(String location) {
@@ -62,18 +69,26 @@ public class UserService implements UserDetailsService {
         return returnValue;
     }
 
-    public void bidOnProduct(int productId, String token) {
+    public ResponseEntity<Void> bidOnProduct(int productId, String token) {
+        if (!productService.doesProductExist(productId)) {
+            return ResponseEntity.notFound().build();
+        }
         User user = getUserFromHeader(token);
         Product productToBidTo = productService.getProductById(productId);
         user.getProducts().add(productToBidTo);
         userRepository.save(user);
+        return ResponseEntity.ok().build();
     }
 
-    public void bidOnService(int serviceId, String token) {
+    public ResponseEntity<Void> bidOnService(int serviceId, String token) {
+        if (!serviceService.doesServiceExist(serviceId)) {
+            return ResponseEntity.notFound().build();
+        }
         User user = getUserFromHeader(token);
         com.advella.advellabackend.model.Service serviceToBidTo = serviceService.getServiceByID(serviceId);
         user.getServices().add(serviceToBidTo);
         userRepository.save(user);
+        return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<Void> changeUserRole(Integer userId) {
@@ -93,6 +108,10 @@ public class UserService implements UserDetailsService {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    public boolean doesUserExist(int userId) {
+        return userRepository.getReferenceById(userId) != null;
     }
 
     public ResponseEntity<Void> registerUser(User userToRegister) {

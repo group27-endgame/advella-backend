@@ -2,6 +2,7 @@ package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.ProductCategory;
 import com.advella.advellabackend.services.ProductCategoryService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,26 +17,28 @@ public class ProductCategoryController {
 
     private final ProductCategoryService productCategoryService;
 
+    @ApiOperation(value = "Get product categories", notes = "Gets all product categories")
     @GetMapping("/product-categories/all")
     public ResponseEntity<List<ProductCategory>> getProductCategories() {
         return ResponseEntity.ok(productCategoryService.getProductCategories());
     }
 
+    @ApiOperation(value = "Add product category", notes = "Adds a product category")
     @PostMapping("/product-categories/dash-board")
     public ResponseEntity<Void> addProductCategory(@RequestBody ProductCategory newProductCategory) {
         productCategoryService.addNewProductCategory(newProductCategory);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Delete product category", notes = "Deletes product category")
     @DeleteMapping("/product-categories/dash-board/{id}")
     public ResponseEntity<Void> deleteProductCategory(@PathVariable int id) {
-        productCategoryService.deleteProductCategory(id);
-        return ResponseEntity.noContent().build();
+        return productCategoryService.deleteProductCategory(id);
     }
 
+    @ApiOperation(value = "Update product category", notes = "Updates product category")
     @PutMapping("/product-categories/dash-board")
     public ResponseEntity<Void> updateProductCategory(@RequestBody ProductCategory productCategoryToUpdate) {
-        productCategoryService.updateNewProductCategory(productCategoryToUpdate);
-        return ResponseEntity.noContent().build();
+        return productCategoryService.updateNewProductCategory(productCategoryToUpdate);
     }
 }

@@ -3,6 +3,7 @@ package com.advella.advellabackend.services;
 import com.advella.advellabackend.model.ServiceCategory;
 import com.advella.advellabackend.repositories.IServiceCategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,11 +23,19 @@ public class ServiceCategoryService {
         serviceCategoryRepository.save(newServiceCategory);
     }
 
-    public void deleteServiceCategory(int id) {
+    public ResponseEntity<Void> deleteServiceCategory(int id) {
+        if (serviceCategoryRepository.getReferenceById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
         serviceCategoryRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 
-    public void updateServiceCategory(ServiceCategory newServiceCategory) {
+    public ResponseEntity<Void> updateServiceCategory(ServiceCategory newServiceCategory) {
+        if (serviceCategoryRepository.getReferenceById(newServiceCategory.getServiceCategoryId()) == null) {
+            return ResponseEntity.notFound().build();
+        }
         serviceCategoryRepository.save(newServiceCategory);
+        return ResponseEntity.ok().build();
     }
 }

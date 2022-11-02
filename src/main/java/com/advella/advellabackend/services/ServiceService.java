@@ -2,6 +2,7 @@ package com.advella.advellabackend.services;
 
 import com.advella.advellabackend.repositories.IServiceRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,16 +19,28 @@ public class ServiceService {
         return serviceRepository.findAll();
     }
 
-    public List<com.advella.advellabackend.model.Service> getAllServicesWithCategoryId(Integer categoryId) {
-        return serviceRepository.getServicesWithCategory(categoryId);
+    public ResponseEntity<List<com.advella.advellabackend.model.Service>> getAllServicesWithCategoryId(Integer categoryId) {
+        List<com.advella.advellabackend.model.Service> services = serviceRepository.getServicesWithCategory(categoryId);
+        if (services.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(services);
     }
 
-    public List<com.advella.advellabackend.model.Service> getServicesPostedByUser(Integer userId, int amount) {
-        return serviceRepository.getServicesPostedByUser(userId, amount);
+    public ResponseEntity<List<com.advella.advellabackend.model.Service>> getServicesPostedByUser(Integer userId, int amount) {
+        List<com.advella.advellabackend.model.Service> services = serviceRepository.getServicesPostedByUser(userId, amount);
+        if (services.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(services);
     }
 
-    public List<com.advella.advellabackend.model.Service> getServicesByLocation(String location) {
-        return serviceRepository.getServicesByLocation(location);
+    public ResponseEntity<List<com.advella.advellabackend.model.Service>> getServicesByLocation(String location) {
+        List<com.advella.advellabackend.model.Service> services = serviceRepository.getServicesByLocation(location);
+        if (services.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(services);
     }
 
     public List<com.advella.advellabackend.model.Service> getLatestServices(int amount) {
@@ -41,8 +54,12 @@ public class ServiceService {
         return services;
     }
 
-    public void deleteServiceById(Integer serviceId) {
+    public ResponseEntity<Void> deleteServiceById(Integer serviceId) {
+        if (serviceRepository.getReferenceById(serviceId) == null) {
+            return ResponseEntity.notFound().build();
+        }
         serviceRepository.deleteById(serviceId);
+        return ResponseEntity.ok().build();
     }
 
     public Integer getServicesCount() {
@@ -79,5 +96,9 @@ public class ServiceService {
 
     public Integer getServicesCount(Date startDate, Date endDate) {
         return serviceRepository.getServiceCount(startDate, endDate);
+    }
+
+    public boolean doesServiceExist(int serviceId) {
+        return serviceRepository.getReferenceById(serviceId) != null;
     }
 }
