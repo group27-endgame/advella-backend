@@ -1,5 +1,6 @@
 package com.advella.advellabackend.controllers;
 
+import com.advella.advellabackend.model.ProductCategory;
 import com.advella.advellabackend.model.ServiceCategory;
 import com.advella.advellabackend.services.ServiceCategoryService;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +33,13 @@ public class ServiceCategoryController {
     @PostMapping("/service-categories/dash-board")
     public ResponseEntity<Void> addNewServiceCategory(@RequestBody ServiceCategory serviceCategoryToAdd) {
         serviceCategoryService.addNewServiceCategory(serviceCategoryToAdd);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "Get service category", notes = "Gets a product service by service id")
+    @GetMapping("/service-categories/{serviceId}")
+    public ResponseEntity<ServiceCategory> getServiceCategory(@PathVariable int serviceId) {
+        return serviceCategoryService.getServiceCategoryById(serviceId);
     }
 
     @ApiOperation(value = "Update service category", notes = "Updates service category")

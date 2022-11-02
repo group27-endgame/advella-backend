@@ -31,6 +31,13 @@ public class ServiceCategoryService {
         return ResponseEntity.ok().build();
     }
 
+    public ResponseEntity<ServiceCategory> getServiceCategoryById(int categoryId) {
+        if (serviceCategoryRepository.getReferenceById(categoryId) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(serviceCategoryRepository.getReferenceById(categoryId));
+    }
+
     public ResponseEntity<Void> updateServiceCategory(ServiceCategory newServiceCategory) {
         if (serviceCategoryRepository.getReferenceById(newServiceCategory.getServiceCategoryId()) == null) {
             return ResponseEntity.notFound().build();
