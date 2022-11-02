@@ -55,13 +55,13 @@ public class UserController {
     @ApiOperation(value = "Get latest users", notes = "Gets requested amount of latest users")
     @GetMapping("/users/dash-board/latest")
     public ResponseEntity<List<User>> getLatestUsers(@RequestParam(required = false, defaultValue = "5") int amount) {
-        return ResponseEntity.ok(userService.getFiveLatestUsers(amount));
+        return ResponseEntity.ok(userService.getLatestUsers(amount));
     }
 
     @ApiOperation(value = "Get users by location", notes = "Gets users by location")
     @GetMapping("/users/dash-board/location/{location}")
     public ResponseEntity<List<User>> getUsersByLocation(@PathVariable String location) {
-        return ResponseEntity.ok(userService.getUsersByLocation(location));
+        return userService.getUsersByLocation(location);
     }
 
     @ApiOperation(value = "Get registered users", notes = "Gets users registered from startDate to endDate")

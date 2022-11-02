@@ -5,7 +5,6 @@ import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.repositories.IRoleRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
-import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,11 +31,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public List<User> getFiveLatestUsers(int amount) {
-        List<User> usersToReturn = userRepository.getFiveLatestUsers(amount);
+    public List<User> getLatestUsers(int amount) {
+        List<User> usersToReturn = userRepository.getLatestUsers(amount);
         for (User userToReturn : usersToReturn) {
-            for (Role userRole : userToReturn.getRoles()) {
-                userRole.setUsers(null);
+            if (userToReturn.getRoles() != null) {
+                for (Role userRole : userToReturn.getRoles()) {
+                    userRole.setUsers(null);
+                }
             }
         }
         return usersToReturn;
@@ -57,8 +58,11 @@ public class UserService implements UserDetailsService {
         return ResponseEntity.ok(userRepository.getReferenceById(userId));
     }
 
-    public List<User> getUsersByLocation(String location) {
-        return userRepository.getUsersByLocation(location);
+    public ResponseEntity<List<User>> getUsersByLocation(String location) {
+        if (userRepository.getUsersByLocation(location).isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(userRepository.getUsersByLocation(location));
     }
 
     public Integer registeredUsers(Date fromDate, Date toDate) {

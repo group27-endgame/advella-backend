@@ -12,7 +12,7 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
     List<User> findAll();
 
     @Query(value = "SELECT TOP (:amount) * FROM Users ORDER BY users_id DESC", nativeQuery = true)
-    List<User> getFiveLatestUsers(int amount);
+    List<User> getLatestUsers(int amount);
 
     @Query(value = "SELECT * FROM Users WHERE user_location = :location", nativeQuery = true)
     List<User> getUsersByLocation(String location);
