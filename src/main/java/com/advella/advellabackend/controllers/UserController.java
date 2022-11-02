@@ -47,8 +47,8 @@ public class UserController {
     }
 
     @ApiOperation(value = "Get user by Id", notes = "Gets user by userId")
-    @GetMapping("/users/dash-board/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Integer userId) {
+    @GetMapping("/users/dash-board/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable int userId) {
         return userService.getUserById(userId);
     }
 
@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "Get users by location", notes = "Gets users by location")
-    @GetMapping("/users/dash-board/{location}")
+    @GetMapping("/users/dash-board/location/{location}")
     public ResponseEntity<List<User>> getUsersByLocation(@PathVariable String location) {
         return ResponseEntity.ok(userService.getUsersByLocation(location));
     }
