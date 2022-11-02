@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/api/users/dash-board/**",
                 "/api/services/dash-board/**",
                 "/api/products/dash-board/**",
+                "/api/contacts/dash-board/**",
                 "/api/product-categories/dash-board/**",
                 "/api/service-categories/dash-board/**").hasAuthority(ADMIN_ROLE);
 
