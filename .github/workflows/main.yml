@@ -13,25 +13,28 @@ on:
     branches: [ "main" ]
     
 jobs:
-#   build-and-test:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v3
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
     
-#     - name: Set up Java version
-#       uses: actions/setup-java@v1
-#       with:
-#         java-version: '17'
+    - name: Set up Java version
+      uses: actions/setup-java@v1
+      with:
+        java-version: '17'
         
-#     - name: Create config
-#       run: |
-#         mkdir -p ${GITHUB_WORKSPACE}/src/main/resources && touch ${GITHUB_WORKSPACE}/src/main/resources/application.properties
-#         echo "${{ secrets.CONFIG_FILE }}" > ${GITHUB_WORKSPACE}/src/main/resources/application.properties
+    - name: Create .env
+      run: |
+        touch ${GITHUB_WORKSPACE}/.env
+        echo "${{ secrets.DB_HOST }}" > DB_HOST=${GITHUB_WORKSPACE}/.env
+        echo "${{ secrets.DB_NAME }}" > DB_NAME=${GITHUB_WORKSPACE}/.env
+        echo "${{ secrets.DB_PASS }}" > DB_PASS=${GITHUB_WORKSPACE}/.env
+        echo "${{ secrets.DB_USER }}" > DB_USER=${GITHUB_WORKSPACE}/.env
 
-#     - name: Test
-#       run: mvn test -Dtest="com.advella.**"
-#     - name: Build
-#       run: mvn clean install
+    - name: Test
+      run: mvn test -Dtest="com.advella.**"
+    - name: Build
+      run: mvn clean install
 
   deploy:
     runs-on: ubuntu-latest
