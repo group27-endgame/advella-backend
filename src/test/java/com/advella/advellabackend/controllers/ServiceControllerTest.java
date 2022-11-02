@@ -1,11 +1,8 @@
 package com.advella.advellabackend.controllers;
 
-import com.advella.advellabackend.model.Contact;
-import com.advella.advellabackend.model.Product;
-import com.advella.advellabackend.model.ProductCategory;
-import com.advella.advellabackend.model.User;
-import com.advella.advellabackend.repositories.IContactRepository;
+import com.advella.advellabackend.model.*;
 import com.advella.advellabackend.repositories.IProductRepository;
+import com.advella.advellabackend.repositories.IServiceRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -29,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
-class ProductControllerTest {
+class ServiceControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -37,20 +34,20 @@ class ProductControllerTest {
     ObjectMapper objectMapper;
 
     @MockBean
-    private IProductRepository productRepository;
+    private IServiceRepository serviceRepository;
 
-    Product PRODUCT1 = new Product(1, "First", "Detail", Float.valueOf(100.0f), "England", null, null, null, null, null, null, null, null, null);
-    Product PRODUCT2 = new Product(2, "Second", "Detail", null, null, null, null, null, null, null, null, null, null, null);
-    Product PRODUCT3 = new Product(3, "Third", "Detail", null, null, null, null, null, null, null, new ProductCategory(20, null, null), null, new User(10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), null);
+    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, null, null, null, null, null, null, null, null, null, null);
+    Service SERVICE2 = new Service(2, "Second", "Detail", null, null, null, null, null, null, null, null, null, null, null, null);
+    Service SERVICE3 = new Service(3, "Third", "Detail", null, null, null, null, null, null, null, null, new ServiceCategory(20, null, null), null, new User(10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), null);
 
     @Test
-    void getAllProducts_Multiple() throws Exception {
-        List<Product> products = new ArrayList<>(Arrays.asList(PRODUCT1, PRODUCT2, PRODUCT3));
+    void getAllServices_Multiple() throws Exception {
+        List<Service> services = new ArrayList<>(Arrays.asList(SERVICE1, SERVICE2, SERVICE3));
 
-        Mockito.when(productRepository.findAll()).thenReturn(products);
+        Mockito.when(serviceRepository.findAll()).thenReturn(services);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products")
+                        .get("/api/services")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -60,96 +57,96 @@ class ProductControllerTest {
     }
 
     @Test
-    void getAllProducts_Empty() throws Exception {
-        List<Product> products = new ArrayList<>();
+    void getAllServices_Empty() throws Exception {
+        List<Service> services = new ArrayList<>();
 
-        Mockito.when(productRepository.findAll()).thenReturn(products);
+        Mockito.when(serviceRepository.findAll()).thenReturn(services);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products")
+                        .get("/api/services")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
     @Test
-    void getProductsInCategory_One() throws Exception {
-        Mockito.when(productRepository.getProductsWithCategory(PRODUCT3.getProductCategory().getProductCategoryId())).thenReturn(Collections.singletonList(PRODUCT3));
+    void getServicesInCategory_One() throws Exception {
+        Mockito.when(serviceRepository.getServicesWithCategory(SERVICE3.getServiceCategory().getServiceCategoryId())).thenReturn(Collections.singletonList(SERVICE3));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products/category/20")
+                        .get("/api/services/category/20")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)));
     }
 
     @Test
-    void getProductsInCategory_Empty() throws Exception {
-        Mockito.when(productRepository.getProductsWithCategory(PRODUCT3.getProductCategory().getProductCategoryId())).thenReturn(Collections.emptyList());
+    void getServicesInCategory_Empty() throws Exception {
+        Mockito.when(serviceRepository.getServicesWithCategory(SERVICE3.getServiceCategory().getServiceCategoryId())).thenReturn(Collections.emptyList());
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products/category/20")
+                        .get("/api/services/category/20")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
     @Test
-    void getProductsInPostedByUser_One() throws Exception {
-        Mockito.when(productRepository.getProductsPostedByUser(10, 1)).thenReturn(Collections.singletonList(PRODUCT3));
+    void getServicesInPostedByUser_One() throws Exception {
+        Mockito.when(serviceRepository.getServicesPostedByUser(10, 1)).thenReturn(Collections.singletonList(SERVICE3));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products/user/10?amount=1")
+                        .get("/api/services/user/10?amount=1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title", Matchers.is("Third")));
     }
 
     @Test
-    void getProductsInPostedByUser_Empty() throws Exception {
-        Mockito.when(productRepository.getProductsPostedByUser(10, 1)).thenReturn(Collections.emptyList());
+    void getServicesInPostedByUser_Empty() throws Exception {
+        Mockito.when(serviceRepository.getServicesPostedByUser(10, 1)).thenReturn(Collections.emptyList());
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products/user/10?amount=1")
+                        .get("/api/services/user/10?amount=1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
     @Test
-    void addNewProduct() throws Exception {
+    void addNewService() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/api/products/new")
-                        .content(this.objectMapper.writeValueAsString(PRODUCT3))
+                        .post("/api/services/new")
+                        .content(this.objectMapper.writeValueAsString(SERVICE3))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void getProductsByLocation_Success() throws Exception {
-        Mockito.when(productRepository.getProductsByLocation("England")).thenReturn(Collections.singletonList(PRODUCT1));
+    void getServicesByLocation_Success() throws Exception {
+        Mockito.when(serviceRepository.getServicesByLocation("England")).thenReturn(Collections.singletonList(SERVICE1));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products/dash-board/England")
+                        .get("/api/services/dash-board/England")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title", Matchers.is("First")));
     }
 
     @Test
-    void getProductsByLocation_Failure() throws Exception {
-        Mockito.when(productRepository.getProductsByLocation("England")).thenReturn(Collections.emptyList());
+    void getServicesByLocation_Failure() throws Exception {
+        Mockito.when(serviceRepository.getServicesByLocation("England")).thenReturn(Collections.emptyList());
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products/dash-board/England")
+                        .get("/api/services/dash-board/England")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
     @Test
-    void getLatestProducts_Multiple() throws Exception {
-        Mockito.when(productRepository.getLatestProducts(3)).thenReturn(Arrays.asList(PRODUCT1, PRODUCT2, PRODUCT3));
+    void getLatestServices_Multiple() throws Exception {
+        Mockito.when(serviceRepository.getLatestServices(3)).thenReturn(Arrays.asList(SERVICE1, SERVICE2, SERVICE3));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products/latest?amount=3")
+                        .get("/api/services/latest?amount=3")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title", Matchers.is("First")))
@@ -158,54 +155,54 @@ class ProductControllerTest {
     }
 
     @Test
-    void getLatestProducts_Empty() throws Exception {
-        Mockito.when(productRepository.getLatestProducts(3)).thenReturn(Collections.emptyList());
+    void getLatestServices_Empty() throws Exception {
+        Mockito.when(serviceRepository.getLatestServices(3)).thenReturn(Collections.emptyList());
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products/latest?amount=3")
+                        .get("/api/services/latest?amount=3")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void getProductCount() throws Exception {
-        Mockito.when(productRepository.getProductCount()).thenReturn(3);
+    void getServiceCount() throws Exception {
+        Mockito.when(serviceRepository.getServiceCount()).thenReturn(3);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products/dash-board/count")
+                        .get("/api/services/dash-board/count")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.is(3)));
     }
 
     @Test
-    void deleteProduct_Success() throws Exception {
-        Mockito.when(productRepository.getReferenceById(PRODUCT1.getProductId())).thenReturn(PRODUCT1);
+    void deleteService_Success() throws Exception {
+        Mockito.when(serviceRepository.getReferenceById(SERVICE1.getServiceId())).thenReturn(SERVICE1);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/products/dash-board/1")
+                        .delete("/api/services/dash-board/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void deleteProduct_Failure() throws Exception {
-        Mockito.when(productRepository.getReferenceById(PRODUCT1.getProductId())).thenReturn(null);
+    void deleteService_Failure() throws Exception {
+        Mockito.when(serviceRepository.getReferenceById(SERVICE1.getServiceId())).thenReturn(null);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/products/dash-board/1")
+                        .delete("/api/services/dash-board/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void getProductsBetweenDates() throws Exception {
+    void getServicesBetweenDates() throws Exception {
         Date startDate = new Date(1667390291L);
         Date endDate = new Date(1667390391L);
-        Mockito.when(productRepository.getProductCount(startDate, endDate)).thenReturn(1);
+        Mockito.when(serviceRepository.getServiceCount(startDate, endDate)).thenReturn(1);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/products/dash-board/1667390291/1667390391")
+                        .get("/api/services/dash-board/1667390291/1667390391")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.is(1)));
