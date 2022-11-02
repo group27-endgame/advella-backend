@@ -103,6 +103,27 @@ class ProductCategoryControllerTest {
     }
 
     @Test
+    void getProductCategory_Success() throws Exception {
+        Mockito.when(productCategoryRepository.getReferenceById(CATEGORY_1.getProductCategoryId())).thenReturn(CATEGORY_1);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/product-categories/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", Matchers.is("Books")));
+    }
+
+    @Test
+    void getProductCategory_Failure() throws Exception {
+        Mockito.when(productCategoryRepository.getReferenceById(CATEGORY_1.getProductCategoryId())).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/product-categories/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     void updateProductCategory_Success() throws Exception {
         Mockito.when(productCategoryRepository.getReferenceById(CATEGORY_1.getProductCategoryId())).thenReturn(CATEGORY_1);
 

@@ -30,6 +30,12 @@ public class ProductCategoryController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Get product category", notes = "Gets a product category by category id")
+    @GetMapping("/product-categories/{categoryId}")
+    public ResponseEntity<ProductCategory> getProductCategory(@PathVariable int categoryId) {
+        return productCategoryService.getProductCategoryById(categoryId);
+    }
+
     @ApiOperation(value = "Delete product category", notes = "Deletes product category")
     @DeleteMapping("/product-categories/dash-board/{id}")
     public ResponseEntity<Void> deleteProductCategory(@PathVariable int id) {

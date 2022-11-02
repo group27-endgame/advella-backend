@@ -27,6 +27,13 @@ public class ProductCategoryService {
         return ResponseEntity.ok().build();
     }
 
+    public ResponseEntity<ProductCategory> getProductCategoryById(int categoryId) {
+        if (productCategoryRepository.getReferenceById(categoryId) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(productCategoryRepository.getReferenceById(categoryId));
+    }
+
     public void addNewProductCategory(ProductCategory productCategory) {
         productCategoryRepository.save(productCategory);
     }
