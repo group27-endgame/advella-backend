@@ -46,9 +46,9 @@ class ProductCategoryControllerTest {
 
     @Test
     void getAllProductCategories_Multiple() throws Exception {
-        List<ProductCategory> contacts = new ArrayList<>(Arrays.asList(CATEGORY_1, CATEGORY_2, CATEGORY_3));
+        List<ProductCategory> productCategories = new ArrayList<>(Arrays.asList(CATEGORY_1, CATEGORY_2, CATEGORY_3));
 
-        Mockito.when(productCategoryRepository.findAll()).thenReturn(contacts);
+        Mockito.when(productCategoryRepository.findAll()).thenReturn(productCategories);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/product-categories/all")

@@ -44,9 +44,9 @@ class ServiceCategoryControllerTest {
 
     @Test
     void getAllServiceCategories_Multiple() throws Exception {
-        List<ServiceCategory> contacts = new ArrayList<>(Arrays.asList(CATEGORY_1, CATEGORY_2, CATEGORY_3));
+        List<ServiceCategory> serviceCategories = new ArrayList<>(Arrays.asList(CATEGORY_1, CATEGORY_2, CATEGORY_3));
 
-        Mockito.when(serviceCategoryRepository.findAll()).thenReturn(contacts);
+        Mockito.when(serviceCategoryRepository.findAll()).thenReturn(serviceCategories);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/service-categories/all")
