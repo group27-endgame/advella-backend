@@ -2,6 +2,7 @@ package com.advella.advellabackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +21,13 @@ public class ReportedService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reported_service_id")
+    @ApiModelProperty(notes = "Reported service Id", example = "1", required = true)
     private int reportedServiceId;
     @Column(name = "reported_datetime")
+    @ApiModelProperty(notes = "Reported datetime", example = "1667477849")
     private Date reportedDateTime;
     @Column(name = "reason")
+    @ApiModelProperty(notes = "Reason", example = "Fake")
     private String reason;
     @ManyToOne
     @JoinColumn(name="service_id")

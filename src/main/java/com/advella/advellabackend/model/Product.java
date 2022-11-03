@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,22 +25,31 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
+    @ApiModelProperty(notes = "Product Id", example = "1", required = true)
     private int productId;
     @Column(name = "product_title")
+    @ApiModelProperty(notes = "Product title", example = "New Product")
     private String title;
     @Column(name = "product_detail")
+    @ApiModelProperty(notes = "Detail of product", example = "Vacuum cleaner")
     private String detail;
     @Column(name = "product_money_amount")
+    @ApiModelProperty(notes = "Money amount", example = "100.0")
     private Float moneyAmount;
     @Column(name = "product_pick_up_location")
+    @ApiModelProperty(notes = "Pickup location", example = "Horsens, Midtjylland")
     private String pickUpLocation;
     @Column(name = "product_posted_datetime")
+    @ApiModelProperty(notes = "Posted datetime", example = "1667477849")
     private Date postedDateTime;
     @Column(name = "product_deadline")
+    @ApiModelProperty(notes = "Product deadline", example = "1667477849")
     private Date deadline;
     @Column(name = "product_status")
+    @ApiModelProperty(notes = "Product status", example = "open")
     private String productStatus;
     @Column(name = "product_number_of_bids")
+    @ApiModelProperty(notes = "Number of bids", example = "10")
     private Integer numberOfBids;
     @ManyToMany(mappedBy = "products")
     @JsonIgnore

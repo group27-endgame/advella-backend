@@ -1,6 +1,7 @@
 package com.advella.advellabackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,8 +18,10 @@ public class ServiceCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
+    @ApiModelProperty(notes = "Category Id", example = "1", required = true)
     private int serviceCategoryId;
     @Column(name = "category_title")
+    @ApiModelProperty(notes = "Category title", example = "Artistic jobs")
     private String title;
     @OneToMany(mappedBy = "serviceCategory")
     @JsonIgnore
