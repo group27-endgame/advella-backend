@@ -66,6 +66,14 @@ public class ServiceService {
         return serviceRepository.getServiceCount();
     }
 
+    public ResponseEntity<com.advella.advellabackend.model.Service> getServiceByIDResponse(int serviceId) {
+        com.advella.advellabackend.model.Service service = serviceRepository.getReferenceById(serviceId);
+        if (service == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(service);
+    }
+
     public com.advella.advellabackend.model.Service getServiceByID(int serviceId) {
         return serviceRepository.getReferenceById(serviceId);
     }

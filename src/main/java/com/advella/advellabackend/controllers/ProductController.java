@@ -60,6 +60,12 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductCount());
     }
 
+    @ApiOperation(value = "Get product by Id", notes = "Gets a product by its productId")
+    @GetMapping("/products/{productId}")
+    public ResponseEntity<Product> getProductById(@PathVariable Integer productId) {
+        return productService.getProductByIdResponse(productId);
+    }
+
     @ApiOperation(value = "Delete product", notes = "Deletes product by its productId")
     @DeleteMapping("/products/dash-board/{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {

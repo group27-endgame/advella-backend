@@ -72,6 +72,14 @@ public class ProductService {
         return productRepository.getProductCount();
     }
 
+    public ResponseEntity<Product> getProductByIdResponse(int productID) {
+        Product product = productRepository.getReferenceById(productID);
+        if (product == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(product);
+    }
+
     public Product getProductById(int productID) {
         return productRepository.getReferenceById(productID);
     }

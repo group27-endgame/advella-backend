@@ -30,6 +30,12 @@ public class ServiceController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Get service by Id", notes = "Gets a service by its serviceId")
+    @GetMapping("/services/{serviceId}")
+    public ResponseEntity<Service> getServiceById(@PathVariable Integer serviceId) {
+        return serviceService.getServiceByIDResponse(serviceId);
+    }
+
     @ApiOperation(value = "Get services posted by user", notes = "Gets requested amount of services posted by user")
     @GetMapping("/services/user/{userId}")
     public ResponseEntity<List<Service>> getServicesInPostedByUser(@PathVariable("userId") Integer userId, @RequestParam int amount) {
