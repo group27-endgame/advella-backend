@@ -1,6 +1,8 @@
 package com.advella.advellabackend.controllers;
 
+import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.User;
+import com.advella.advellabackend.repositories.IRoleRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
 import com.advella.advellabackend.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,18 +44,22 @@ class UserControllerTest {
     @MockBean
     private ProductService productService;
 
+    @MockBean
+    private IRoleRepository roleRepository;
+
     User USER1 = new User(1, null, "password", "Nick", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     User USER2 = new User(2, null, "password1234", "Bob", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     User USER3 = new User(3, null, "password4321", "Dan", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
     @Test
-    void getUsers_Multiple() throws Exception {
+    void getUsersByRole_Multiple() throws Exception {
         List<User> users = new ArrayList<>(Arrays.asList(USER1, USER2, USER3));
 
-        Mockito.when(userRepository.findAll()).thenReturn(users);
+        Mockito.when(roleRepository.findByRoleName("user")).thenReturn(new Role(1, "user", null));
+        Mockito.when(userRepository.getUsersByRole(1)).thenReturn(users);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/users/dash-board")
+                        .get("/api/users/dash-board?role=user")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -63,16 +69,16 @@ class UserControllerTest {
     }
 
     @Test
-    void getUsers_Empty() throws Exception {
+    void getUsersByRole_Empty() throws Exception {
         List<User> users = new ArrayList<>(Collections.EMPTY_LIST);
 
-        Mockito.when(userRepository.findAll()).thenReturn(users);
+        Mockito.when(roleRepository.findByRoleName("user")).thenReturn(new Role(1, "user", null));
+        Mockito.when(userRepository.getUsersByRole(1)).thenReturn(users);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/users/dash-board")
+                        .get("/api/users/dash-board?role=user")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(status().isNoContent());
     }
 
     @Test

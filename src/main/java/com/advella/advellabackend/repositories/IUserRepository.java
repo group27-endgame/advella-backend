@@ -11,6 +11,9 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
     @Override
     List<User> findAll();
 
+    @Query(value = "SELECT * FROM Users WHERE users_id IN (SELECT users_id FROM Users_Roles WHERE role_id = :roleId)", nativeQuery = true)
+    List<User> getUsersByRole(Integer roleId);
+
     @Query(value = "SELECT TOP (:amount) * FROM Users ORDER BY users_id DESC", nativeQuery = true)
     List<User> getLatestUsers(int amount);
 
