@@ -24,11 +24,11 @@ public class ReportedProduct {
     private Date reportedDateTime;
     @Column(name = "reason")
     private String reason;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="product_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Product reportedProduct;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="users_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private User productReportUser;

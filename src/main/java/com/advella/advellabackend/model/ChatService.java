@@ -27,16 +27,16 @@ public class ChatService {
     private int chatId;
     @Column(name = "chat_message")
     private String message;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="service_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Service service;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="users_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     @JsonIgnore
     private User userBidder;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="users_id" ,insertable = false, updatable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     @JsonIgnore

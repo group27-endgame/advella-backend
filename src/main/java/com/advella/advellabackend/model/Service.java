@@ -46,13 +46,13 @@ public class Service {
     @ManyToMany(mappedBy = "services")
     @JsonIgnore
     private List<User> users;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="category_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private ServiceCategory serviceCategory;
     @OneToMany(mappedBy = "reportedService")
     private List<ReportedService> reportedServices;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="users_id")
     @JsonIgnore
     private User posted;

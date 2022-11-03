@@ -21,15 +21,15 @@ public class ChatProduct {
     private int chatId;
     @Column(name = "chat_message")
     private String message;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="product_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Product product;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="users_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private User userBidder;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="users_id" ,insertable = false, updatable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private User userPoster;

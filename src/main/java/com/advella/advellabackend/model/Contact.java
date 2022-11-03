@@ -24,7 +24,7 @@ public class Contact {
     private String content;
     @Column(name = "seen")
     private Boolean isSeen;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="users_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private User contactUser;

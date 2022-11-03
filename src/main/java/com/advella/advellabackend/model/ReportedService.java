@@ -25,11 +25,11 @@ public class ReportedService {
     private Date reportedDateTime;
     @Column(name = "reason")
     private String reason;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="service_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Service reportedService;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="users_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     @JsonIgnore
