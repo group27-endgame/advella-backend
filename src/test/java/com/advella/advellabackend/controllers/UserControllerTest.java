@@ -55,11 +55,10 @@ class UserControllerTest {
     void getUsersByRole_Multiple() throws Exception {
         List<User> users = new ArrayList<>(Arrays.asList(USER1, USER2, USER3));
 
-        Mockito.when(roleRepository.findByRoleName("user")).thenReturn(new Role(1, "user", null));
-        Mockito.when(userRepository.getUsersByRole(1)).thenReturn(users);
+        Mockito.when(userRepository.findAll()).thenReturn(users);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/users/dash-board?role=user")
+                        .get("/api/users/dash-board")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -72,13 +71,12 @@ class UserControllerTest {
     void getUsersByRole_Empty() throws Exception {
         List<User> users = new ArrayList<>(Collections.EMPTY_LIST);
 
-        Mockito.when(roleRepository.findByRoleName("user")).thenReturn(new Role(1, "user", null));
-        Mockito.when(userRepository.getUsersByRole(1)).thenReturn(users);
+        Mockito.when(userRepository.findAll()).thenReturn(users);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/users/dash-board?role=user")
+                        .get("/api/users/dash-board")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
     }
 
     @Test
