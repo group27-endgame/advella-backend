@@ -27,16 +27,8 @@ public class UserService implements UserDetailsService {
     private final IRoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<List<User>> getUsersByRole(String role) {
-        Role requestedRole = roleRepository.findByRoleName(role);
-        if (requestedRole == null) {
-            return ResponseEntity.notFound().build();
-        }
-        List<User> users = userRepository.getUsersByRole(requestedRole.getRoleId());
-        if (users.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(users);
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     public List<User> getLatestUsers(int amount) {

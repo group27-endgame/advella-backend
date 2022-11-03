@@ -18,7 +18,7 @@ import java.util.List;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "userId")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "roles", "products", "services"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "products", "services"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

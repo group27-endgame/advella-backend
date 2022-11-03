@@ -16,10 +16,10 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @ApiOperation(value = "Get users", notes = "Gets users by role")
+    @ApiOperation(value = "Get users", notes = "Gets all users")
     @GetMapping("/users/dash-board")
-    public ResponseEntity<List<User>> getUsers(@RequestParam String role) {
-        return userService.getUsersByRole(role);
+    public ResponseEntity<List<User>> getUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @ApiOperation(value = "Get current user", notes = "Returns current user by token")
