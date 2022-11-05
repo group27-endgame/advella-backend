@@ -31,7 +31,7 @@ public class ServiceController {
     }
 
     @ApiOperation(value = "Get service by Id", notes = "Gets a service by its serviceId")
-    @GetMapping("/services/{serviceId}")
+    @GetMapping("/services/dash-board/{serviceId}")
     public ResponseEntity<Service> getServiceById(@PathVariable Integer serviceId) {
         return serviceService.getServiceByIDResponse(serviceId);
     }
@@ -55,7 +55,7 @@ public class ServiceController {
     }
 
     @ApiOperation(value = "Get services by location", notes = "Gets services by location")
-    @GetMapping("/services/dash-board/{location}")
+    @GetMapping("/services/dash-board/location/{location}")
     public ResponseEntity<List<Service>> getServicesByLocation(@PathVariable String location) {
         return serviceService.getServicesByLocation(location);
     }

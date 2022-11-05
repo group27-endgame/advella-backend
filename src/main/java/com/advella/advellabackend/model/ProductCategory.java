@@ -23,7 +23,7 @@ public class ProductCategory {
     @Column(name = "category_title")
     @ApiModelProperty(notes = "Category title", example = "Books")
     private String title;
-    @OneToMany(mappedBy = "productCategory")
+    @OneToMany(mappedBy = "productCategory",orphanRemoval = true)
     @JsonIgnore
     private List<Product> products;
 }

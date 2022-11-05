@@ -9,7 +9,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -58,15 +60,15 @@ public class Service {
     @JsonIgnore
     private List<User> users;
     @ManyToOne
-    @JoinColumn(name="category_id")
+    @JoinColumn(name = "category_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private ServiceCategory serviceCategory;
-    @OneToMany(mappedBy = "reportedService")
+    @OneToMany(mappedBy = "reportedService", orphanRemoval = true)
     private List<ReportedService> reportedServices;
     @ManyToOne
-    @JoinColumn(name="users_id")
+    @JoinColumn(name = "users_id")
     @JsonIgnore
     private User posted;
-    @OneToMany(mappedBy = "service")
+    @OneToMany(mappedBy = "service", orphanRemoval = true)
     private List<ChatService> chatServices;
 }

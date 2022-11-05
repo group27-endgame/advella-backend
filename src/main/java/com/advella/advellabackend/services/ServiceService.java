@@ -1,6 +1,7 @@
 package com.advella.advellabackend.services;
 
 import com.advella.advellabackend.repositories.IServiceRepository;
+import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.List;
 @Transactional
 public class ServiceService {
     private final IServiceRepository serviceRepository;
+    private final IUserRepository userRepository;
 
     public List<com.advella.advellabackend.model.Service> getServices() {
         return serviceRepository.findAll();
@@ -55,10 +57,13 @@ public class ServiceService {
     }
 
     public ResponseEntity<Void> deleteServiceById(Integer serviceId) {
-        if (serviceRepository.getReferenceById(serviceId) == null) {
+        if (!doesServiceExist(serviceId)) {
             return ResponseEntity.notFound().build();
         }
-        serviceRepository.deleteById(serviceId);
+        com.advella.advellabackend.model.Service serviceToDelete = serviceRepository.findById(serviceId).orElseThrow();
+        serviceToDelete.getUsers().forEach(u -> u.getServices().remove(serviceToDelete));
+        userRepository.saveAll(serviceToDelete.getUsers());
+        serviceRepository.delete(serviceToDelete);
         return ResponseEntity.ok().build();
     }
 
@@ -67,10 +72,11 @@ public class ServiceService {
     }
 
     public ResponseEntity<com.advella.advellabackend.model.Service> getServiceByIDResponse(int serviceId) {
-        com.advella.advellabackend.model.Service service = serviceRepository.getReferenceById(serviceId);
-        if (service == null) {
+        if (!doesServiceExist(serviceId)) {
             return ResponseEntity.notFound().build();
         }
+
+        com.advella.advellabackend.model.Service service = serviceRepository.getReferenceById(serviceId);
         return ResponseEntity.ok(service);
     }
 
@@ -107,6 +113,11 @@ public class ServiceService {
     }
 
     public boolean doesServiceExist(int serviceId) {
-        return serviceRepository.getReferenceById(serviceId) != null;
+        try {
+            serviceRepository.findById(serviceId).orElseThrow();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

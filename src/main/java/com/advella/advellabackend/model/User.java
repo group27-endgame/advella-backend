@@ -6,7 +6,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -58,24 +60,24 @@ public class User {
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
     private List<Service> services;
-    @OneToMany(mappedBy = "contactUser")
+    @OneToMany(mappedBy = "contactUser", orphanRemoval = true)
     private List<Contact> contact;
-    @OneToMany(mappedBy = "ratingUser")
+    @OneToMany(mappedBy = "ratingUser", orphanRemoval = true)
     private List<Rating> ratings;
-    @OneToMany(mappedBy = "productReportUser")
+    @OneToMany(mappedBy = "productReportUser", orphanRemoval = true)
     private List<ReportedProduct> reportedProducts;
-    @OneToMany(mappedBy = "serviceReportUser")
+    @OneToMany(mappedBy = "serviceReportUser", orphanRemoval = true)
     private List<ReportedService> reportedServices;
     @OneToMany(mappedBy = "posted")
     private List<Service> postedService;
     @OneToMany(mappedBy = "posted")
     private List<Product> postedProduct;
-    @OneToMany(mappedBy = "userBidder")
+    @OneToMany(mappedBy = "userBidder", orphanRemoval = true)
     private List<ChatService> bidderChatService;
-    @OneToMany(mappedBy = "userPoster")
+    @OneToMany(mappedBy = "userPoster", orphanRemoval = true)
     private List<ChatService> posterChatService;
-    @OneToMany(mappedBy = "userBidder")
+    @OneToMany(mappedBy = "userBidder", orphanRemoval = true)
     private List<ChatProduct> bidderChatProduct;
-    @OneToMany(mappedBy = "userPoster")
+    @OneToMany(mappedBy = "userPoster", orphanRemoval = true)
     private List<ChatProduct> posterChatProduct;
 }

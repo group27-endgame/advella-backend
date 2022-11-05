@@ -57,11 +57,11 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private ProductCategory productCategory;
-    @OneToMany(mappedBy = "reportedProduct")
+    @OneToMany(mappedBy = "reportedProduct", orphanRemoval = true)
     private List<ReportedProduct> reportedProducts;
     @ManyToOne
     @JoinColumn(name = "users_id")
     private User posted;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", orphanRemoval = true)
     private List<ChatProduct> chatProducts;
 }

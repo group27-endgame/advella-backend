@@ -3,7 +3,9 @@ package com.advella.advellabackend.services;
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.User;
+import com.advella.advellabackend.repositories.IProductRepository;
 import com.advella.advellabackend.repositories.IRoleRepository;
+import com.advella.advellabackend.repositories.IServiceRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ import java.util.*;
 public class UserService implements UserDetailsService {
     private final ProductService productService;
     private final ServiceService serviceService;
+    private final IProductRepository productRepository;
+    private final IServiceRepository serviceRepository;
     private final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -47,7 +51,16 @@ public class UserService implements UserDetailsService {
         if (!doesUserExist(userId)) {
             return ResponseEntity.notFound().build();
         }
-        userRepository.deleteById(userId);
+        User userToDelete = userRepository.findById(userId).orElseThrow();
+        userToDelete.getPostedService().forEach(s -> s.setPosted(null));
+        userToDelete.getPostedProduct().forEach(p -> p.setPosted(null));
+        userToDelete.getServices().forEach(s -> s.getUsers().remove(userToDelete));
+        userToDelete.getProducts().forEach(p -> p.getUsers().remove(userToDelete));
+        userToDelete.getRoles().forEach(r -> r.getUsers().remove(userToDelete));
+        productRepository.saveAll(userToDelete.getProducts());
+        serviceRepository.saveAll(userToDelete.getServices());
+        roleRepository.saveAll(userToDelete.getRoles());
+        userRepository.delete(userToDelete);
         return ResponseEntity.ok().build();
     }
 
@@ -115,7 +128,12 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean doesUserExist(int userId) {
-        return userRepository.getReferenceById(userId) != null;
+        try {
+            userRepository.findById(userId).orElseThrow();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     public ResponseEntity<Void> registerUser(User userToRegister) {

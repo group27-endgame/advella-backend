@@ -2,6 +2,7 @@ package com.advella.advellabackend.services;
 
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.repositories.IProductRepository;
+import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.List;
 @Transactional
 public class ProductService {
     private final IProductRepository productRepository;
+    private final IUserRepository userRepository;
 
     public List<Product> getProducts() {
         return productRepository.findAll();
@@ -64,7 +66,10 @@ public class ProductService {
         if (productRepository.getReferenceById(productId) == null) {
             return ResponseEntity.notFound().build();
         }
-        productRepository.deleteById(productId);
+        Product productToDelete = productRepository.findById(productId).orElseThrow();
+        productToDelete.getUsers().forEach(u -> u.getProducts().remove(productToDelete));
+        userRepository.saveAll(productToDelete.getUsers());
+        productRepository.delete(productToDelete);
         return ResponseEntity.ok().build();
     }
 
