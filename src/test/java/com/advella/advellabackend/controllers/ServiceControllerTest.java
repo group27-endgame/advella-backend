@@ -36,7 +36,7 @@ class ServiceControllerTest {
     @MockBean
     private IServiceRepository serviceRepository;
 
-    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, null, null, null, null, null, null, null, null, null, null);
+    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, null, null, null, null, null, new ArrayList<>(), null, null, null, null);
     Service SERVICE2 = new Service(2, "Second", "Detail", null, null, null, null, null, null, null, null, null, null, null, null);
     Service SERVICE3 = new Service(3, "Third", "Detail", null, null, null, null, null, null, null, null, new ServiceCategory(20, null, null), null, new User(10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), null);
 
@@ -125,7 +125,7 @@ class ServiceControllerTest {
         Mockito.when(serviceRepository.getServicesByLocation("England")).thenReturn(Collections.singletonList(SERVICE1));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/services/dash-board/England")
+                        .get("/api/services/dash-board/location/England")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title", Matchers.is("First")));
@@ -136,7 +136,7 @@ class ServiceControllerTest {
         Mockito.when(serviceRepository.getServicesByLocation("England")).thenReturn(Collections.emptyList());
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/services/dash-board/England")
+                        .get("/api/services/dash-board/location/England")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -177,7 +177,7 @@ class ServiceControllerTest {
 
     @Test
     void deleteService_Success() throws Exception {
-        Mockito.when(serviceRepository.getReferenceById(SERVICE1.getServiceId())).thenReturn(SERVICE1);
+        Mockito.when(serviceRepository.findById(SERVICE1.getServiceId())).thenReturn(Optional.of(SERVICE1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/api/services/dash-board/1")

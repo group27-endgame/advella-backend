@@ -1,6 +1,7 @@
 package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.Role;
+import com.advella.advellabackend.model.Service;
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.repositories.IRoleRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
@@ -19,10 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -47,7 +45,7 @@ class UserControllerTest {
     @MockBean
     private IRoleRepository roleRepository;
 
-    User USER1 = new User(1, null, "password", "Nick", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    User USER1 = new User(1, null, "password", "Nick", null, null, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
     User USER2 = new User(2, null, "password1234", "Bob", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     User USER3 = new User(3, null, "password4321", "Dan", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
@@ -103,7 +101,7 @@ class UserControllerTest {
 
     @Test
     void getUserById_Success() throws Exception {
-        Mockito.when(userRepository.getReferenceById(USER1.getUserId())).thenReturn(USER1);
+        Mockito.when(userRepository.findById(USER1.getUserId())).thenReturn(Optional.of(USER1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/users/dash-board/1")
@@ -167,7 +165,7 @@ class UserControllerTest {
 
     @Test
     void deleteUser_Success() throws Exception {
-        Mockito.when(userRepository.getReferenceById(USER1.getUserId())).thenReturn(USER1);
+        Mockito.when(userRepository.findById(USER1.getUserId())).thenReturn(Optional.of(USER1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/api/users/dash-board/1")

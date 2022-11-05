@@ -63,7 +63,7 @@ public class ProductService {
     }
 
     public ResponseEntity<Void> deleteProductById(Integer productId) {
-        if (productRepository.getReferenceById(productId) == null) {
+        if (!doesProductExist(productId)) {
             return ResponseEntity.notFound().build();
         }
         Product productToDelete = productRepository.findById(productId).orElseThrow();
@@ -114,6 +114,11 @@ public class ProductService {
     }
 
     public boolean doesProductExist(int productId) {
-        return productRepository.getReferenceById(productId) != null;
+        try {
+            productRepository.findById(productId).orElseThrow();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

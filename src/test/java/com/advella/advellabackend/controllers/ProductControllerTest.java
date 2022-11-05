@@ -39,7 +39,7 @@ class ProductControllerTest {
     @MockBean
     private IProductRepository productRepository;
 
-    Product PRODUCT1 = new Product(1, "First", "Detail", Float.valueOf(100.0f), "England", null, null, null, null, null, null, null, null, null);
+    Product PRODUCT1 = new Product(1, "First", "Detail", Float.valueOf(100.0f), "England", null, null, null, null, new ArrayList<>(), null, null, null, null);
     Product PRODUCT2 = new Product(2, "Second", "Detail", null, null, null, null, null, null, null, null, null, null, null);
     Product PRODUCT3 = new Product(3, "Third", "Detail", null, null, null, null, null, null, null, new ProductCategory(20, null, null), null, new User(10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), null);
 
@@ -180,7 +180,7 @@ class ProductControllerTest {
 
     @Test
     void deleteProduct_Success() throws Exception {
-        Mockito.when(productRepository.getReferenceById(PRODUCT1.getProductId())).thenReturn(PRODUCT1);
+        Mockito.when(productRepository.findById(PRODUCT1.getProductId())).thenReturn(Optional.of(PRODUCT1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/api/products/dash-board/1")
