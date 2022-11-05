@@ -44,8 +44,15 @@ public class ProductController {
         return ResponseEntity.ok(productService.addNewProduct(newProduct));
     }
 
+    @ApiOperation(value = "Set product picture", notes = "Adds or updated product picture")
     @PutMapping(value = "/products/picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> setProductPicture(@RequestParam int productId, @RequestBody MultipartFile[] picture) {
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "Get product picture", notes = "Gets picture by productId")
+    @GetMapping(value = "/products/picture")
+    public ResponseEntity<Picture> getProductPicture(@RequestParam int productId) {
         return ResponseEntity.ok().build();
     }
 

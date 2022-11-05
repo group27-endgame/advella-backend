@@ -1,5 +1,6 @@
 package com.advella.advellabackend.controllers;
 
+import com.advella.advellabackend.model.Picture;
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.Service;
 import com.advella.advellabackend.services.ServiceService;
@@ -31,9 +32,15 @@ public class ServiceController {
         return ResponseEntity.ok(serviceService.addNewService(newService));
     }
 
-
+    @ApiOperation(value = "Set service picture", notes = "Adds or updated service picture")
     @PutMapping(value = "/services/picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> setServicePicture(@RequestParam int serviceId, @RequestBody MultipartFile[] picture) {
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "Get service picture", notes = "Gets picture by serviceId")
+    @GetMapping(value = "/services/picture")
+    public ResponseEntity<Picture> getServicePicture(@RequestParam int serviceId) {
         return ResponseEntity.ok().build();
     }
 
