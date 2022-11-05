@@ -8,6 +8,7 @@ import com.advella.advellabackend.repositories.IRoleRepository;
 import com.advella.advellabackend.repositories.IServiceRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -23,8 +25,6 @@ import java.util.*;
 @RequiredArgsConstructor
 @Transactional
 public class UserService implements UserDetailsService {
-    private final ProductService productService;
-    private final ServiceService serviceService;
     private final IProductRepository productRepository;
     private final IServiceRepository serviceRepository;
     private final IUserRepository userRepository;
@@ -33,6 +33,10 @@ public class UserService implements UserDetailsService {
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public void saveAllUsers(List<User> usersToSave) {
+        userRepository.saveAll(usersToSave);
     }
 
     public List<User> getLatestUsers(int amount) {
@@ -87,22 +91,27 @@ public class UserService implements UserDetailsService {
     }
 
     public ResponseEntity<Void> bidOnProduct(int productId, String token) {
-        if (!productService.doesProductExist(productId)) {
+        Product productToBidTo;
+
+        try {
+            productToBidTo = productRepository.findById(productId).orElseThrow();
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
         User user = getUserFromHeader(token);
-        Product productToBidTo = productService.getProductById(productId);
         user.getProducts().add(productToBidTo);
         userRepository.save(user);
         return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<Void> bidOnService(int serviceId, String token) {
-        if (!serviceService.doesServiceExist(serviceId)) {
+        com.advella.advellabackend.model.Service serviceToBidTo;
+        try {
+            serviceToBidTo = serviceRepository.findById(serviceId).orElseThrow();
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
         User user = getUserFromHeader(token);
-        com.advella.advellabackend.model.Service serviceToBidTo = serviceService.getServiceByID(serviceId);
         user.getServices().add(serviceToBidTo);
         userRepository.save(user);
         return ResponseEntity.ok().build();

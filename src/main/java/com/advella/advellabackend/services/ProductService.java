@@ -17,7 +17,7 @@ import java.util.List;
 @Transactional
 public class ProductService {
     private final IProductRepository productRepository;
-    private final IUserRepository userRepository;
+    private final UserService userService;
 
     public List<Product> getProducts() {
         return productRepository.findAll();
@@ -68,7 +68,7 @@ public class ProductService {
         }
         Product productToDelete = productRepository.findById(productId).orElseThrow();
         productToDelete.getUsers().forEach(u -> u.getProducts().remove(productToDelete));
-        userRepository.saveAll(productToDelete.getUsers());
+        userService.saveAllUsers(productToDelete.getUsers());
         productRepository.delete(productToDelete);
         return ResponseEntity.ok().build();
     }
@@ -78,15 +78,11 @@ public class ProductService {
     }
 
     public ResponseEntity<Product> getProductByIdResponse(int productID) {
-        Product product = productRepository.getReferenceById(productID);
-        if (product == null) {
+        if (!doesProductExist(productID)) {
             return ResponseEntity.notFound().build();
         }
+        Product product = productRepository.findById(productID).orElseThrow();
         return ResponseEntity.ok(product);
-    }
-
-    public Product getProductById(int productID) {
-        return productRepository.getReferenceById(productID);
     }
 
     public Integer getClosedProductTotalValue(Date startDate, Date endDate) {

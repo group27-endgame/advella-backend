@@ -1,5 +1,6 @@
 package com.advella.advellabackend.services;
 
+import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.repositories.IServiceRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.List;
 @Transactional
 public class ServiceService {
     private final IServiceRepository serviceRepository;
-    private final IUserRepository userRepository;
+    private final UserService userService;
 
     public List<com.advella.advellabackend.model.Service> getServices() {
         return serviceRepository.findAll();
@@ -62,7 +63,7 @@ public class ServiceService {
         }
         com.advella.advellabackend.model.Service serviceToDelete = serviceRepository.findById(serviceId).orElseThrow();
         serviceToDelete.getUsers().forEach(u -> u.getServices().remove(serviceToDelete));
-        userRepository.saveAll(serviceToDelete.getUsers());
+        userService.saveAllUsers(serviceToDelete.getUsers());
         serviceRepository.delete(serviceToDelete);
         return ResponseEntity.ok().build();
     }
@@ -76,12 +77,8 @@ public class ServiceService {
             return ResponseEntity.notFound().build();
         }
 
-        com.advella.advellabackend.model.Service service = serviceRepository.getReferenceById(serviceId);
+        com.advella.advellabackend.model.Service service = serviceRepository.findById(serviceId).orElseThrow();
         return ResponseEntity.ok(service);
-    }
-
-    public com.advella.advellabackend.model.Service getServiceByID(int serviceId) {
-        return serviceRepository.getReferenceById(serviceId);
     }
 
     public Integer getClosedServiceTotalValue(Date startDate, Date endDate) {
