@@ -1,6 +1,5 @@
 package com.advella.advellabackend.services;
 
-import com.advella.advellabackend.repositories.IPictureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ import java.io.IOException;
 @Transactional
 @RequiredArgsConstructor
 public class PictureService {
-    private final IPictureRepository pictureRepository;
 
     public static byte[] toByteArray(BufferedImage bi, String format)
             throws IOException {
