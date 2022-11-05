@@ -67,7 +67,6 @@ public class Service {
     private List<ReportedService> reportedServices;
     @ManyToOne
     @JoinColumn(name = "users_id")
-    @JsonIgnore
     private User posted;
     @OneToMany(mappedBy = "service")
     private List<ChatService> chatServices;
