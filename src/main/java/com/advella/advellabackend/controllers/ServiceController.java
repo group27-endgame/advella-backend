@@ -45,7 +45,7 @@ public class ServiceController {
     }
 
     @ApiOperation(value = "Get service by Id", notes = "Gets a service by its serviceId")
-    @GetMapping("/services/dash-board/{serviceId}")
+    @GetMapping("/services/{serviceId}")
     public ResponseEntity<Service> getServiceById(@PathVariable Integer serviceId) {
         return serviceService.getServiceByIDResponse(serviceId);
     }
