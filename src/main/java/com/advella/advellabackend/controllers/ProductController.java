@@ -37,9 +37,8 @@ public class ProductController {
 
     @ApiOperation(value = "Add new product", notes = "Adds new product")
     @PostMapping("/products/new")
-    public ResponseEntity<Void> addNewProduct(@RequestBody Product newProduct) {
-        productService.addNewProduct(newProduct);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct) {
+        return ResponseEntity.ok(productService.addNewProduct(newProduct));
     }
 
     @ApiOperation(value = "Get products by location", notes = "Gets all products by location")

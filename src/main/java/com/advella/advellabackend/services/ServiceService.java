@@ -101,8 +101,8 @@ public class ServiceService {
         return serviceRepository.findByTitleContaining(searchQuery);
     }
 
-    public void addNewService(com.advella.advellabackend.model.Service newService) {
-        serviceRepository.save(newService);
+    public com.advella.advellabackend.model.Service addNewService(com.advella.advellabackend.model.Service newService) {
+        return serviceRepository.save(newService);
     }
 
     public Integer getServicesCount(Date startDate, Date endDate) {

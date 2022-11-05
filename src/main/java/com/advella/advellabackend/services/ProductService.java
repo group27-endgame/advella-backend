@@ -101,8 +101,8 @@ public class ProductService {
         return returnValue;
     }
 
-    public void addNewProduct(Product newProduct) {
-        productRepository.save(newProduct);
+    public Product addNewProduct(Product newProduct) {
+        return productRepository.save(newProduct);
     }
 
     public Integer getProductCount(Date startDate, Date endDate) {

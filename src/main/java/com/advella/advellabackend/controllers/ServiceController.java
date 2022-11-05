@@ -25,9 +25,8 @@ public class ServiceController {
 
     @ApiOperation(value = "Add new service", notes = "Adds new service")
     @PostMapping("/services/new")
-    public ResponseEntity<Void> addNewService(@RequestBody Service newService) {
-        serviceService.addNewService(newService);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Service> addNewService(@RequestBody Service newService) {
+        return ResponseEntity.ok(serviceService.addNewService(newService));
     }
 
     @ApiOperation(value = "Get service by Id", notes = "Gets a service by its serviceId")
