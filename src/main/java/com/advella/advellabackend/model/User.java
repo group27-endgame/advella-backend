@@ -60,24 +60,24 @@ public class User {
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
     private List<Service> services;
-    @OneToMany(mappedBy = "contactUser", orphanRemoval = true)
+    @OneToMany(mappedBy = "contactUser")
     private List<Contact> contact;
-    @OneToMany(mappedBy = "ratingUser", orphanRemoval = true)
+    @OneToMany(mappedBy = "ratingUser")
     private List<Rating> ratings;
-    @OneToMany(mappedBy = "productReportUser", orphanRemoval = true)
+    @OneToMany(mappedBy = "productReportUser")
     private List<ReportedProduct> reportedProducts;
-    @OneToMany(mappedBy = "serviceReportUser", orphanRemoval = true)
+    @OneToMany(mappedBy = "serviceReportUser")
     private List<ReportedService> reportedServices;
     @OneToMany(mappedBy = "posted")
     private List<Service> postedService;
     @OneToMany(mappedBy = "posted")
     private List<Product> postedProduct;
-    @OneToMany(mappedBy = "userBidder", orphanRemoval = true)
+    @OneToMany(mappedBy = "userBidder")
     private List<ChatService> bidderChatService;
-    @OneToMany(mappedBy = "userPoster", orphanRemoval = true)
+    @OneToMany(mappedBy = "userPoster")
     private List<ChatService> posterChatService;
-    @OneToMany(mappedBy = "userBidder", orphanRemoval = true)
+    @OneToMany(mappedBy = "userBidder")
     private List<ChatProduct> bidderChatProduct;
-    @OneToMany(mappedBy = "userPoster", orphanRemoval = true)
+    @OneToMany(mappedBy = "userPoster")
     private List<ChatProduct> posterChatProduct;
 }

@@ -1,11 +1,14 @@
 package com.advella.advellabackend.controllers;
 
+import com.advella.advellabackend.model.Picture;
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.services.ProductService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -39,6 +42,11 @@ public class ProductController {
     @PostMapping("/products/new")
     public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct) {
         return ResponseEntity.ok(productService.addNewProduct(newProduct));
+    }
+
+    @PutMapping(value = "/products/picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> setProductPicture(@RequestParam int productId, @RequestBody MultipartFile[] picture) {
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "Get products by location", notes = "Gets all products by location")

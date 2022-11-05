@@ -5,8 +5,10 @@ import com.advella.advellabackend.model.Service;
 import com.advella.advellabackend.services.ServiceService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -27,6 +29,12 @@ public class ServiceController {
     @PostMapping("/services/new")
     public ResponseEntity<Service> addNewService(@RequestBody Service newService) {
         return ResponseEntity.ok(serviceService.addNewService(newService));
+    }
+
+
+    @PutMapping(value = "/services/picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> setServicePicture(@RequestParam int serviceId, @RequestBody MultipartFile[] picture) {
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "Get service by Id", notes = "Gets a service by its serviceId")

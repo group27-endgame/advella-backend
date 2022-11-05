@@ -63,12 +63,12 @@ public class Service {
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private ServiceCategory serviceCategory;
-    @OneToMany(mappedBy = "reportedService", orphanRemoval = true)
+    @OneToMany(mappedBy = "reportedService")
     private List<ReportedService> reportedServices;
     @ManyToOne
     @JoinColumn(name = "users_id")
     @JsonIgnore
     private User posted;
-    @OneToMany(mappedBy = "service", orphanRemoval = true)
+    @OneToMany(mappedBy = "service")
     private List<ChatService> chatServices;
 }
