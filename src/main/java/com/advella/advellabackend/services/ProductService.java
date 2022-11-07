@@ -102,6 +102,8 @@ public class ProductService {
         }
         productToDelete.getUsers().forEach(u -> u.getProducts().remove(productToDelete));
         userService.saveAllUsers(productToDelete.getUsers());
+        productToDelete.setUsers(null);
+        productToDelete.setPosted(null);
         productRepository.delete(productToDelete);
         return ResponseEntity.ok().build();
     }
