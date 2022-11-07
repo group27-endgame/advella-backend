@@ -180,7 +180,7 @@ class ServiceControllerTest {
         Mockito.when(serviceRepository.findById(SERVICE1.getServiceId())).thenReturn(Optional.of(SERVICE1));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/services/dash-board/1")
+                        .delete("/api/services/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -190,7 +190,7 @@ class ServiceControllerTest {
         Mockito.when(serviceRepository.getReferenceById(SERVICE1.getServiceId())).thenReturn(null);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/services/dash-board/1")
+                        .delete("/api/services/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

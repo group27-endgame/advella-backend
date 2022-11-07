@@ -183,7 +183,7 @@ class ProductControllerTest {
         Mockito.when(productRepository.findById(PRODUCT1.getProductId())).thenReturn(Optional.of(PRODUCT1));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/products/dash-board/1")
+                        .delete("/api/products/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -193,7 +193,7 @@ class ProductControllerTest {
         Mockito.when(productRepository.getReferenceById(PRODUCT1.getProductId())).thenReturn(null);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/products/dash-board/1")
+                        .delete("/api/products/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

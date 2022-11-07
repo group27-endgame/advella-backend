@@ -81,7 +81,7 @@ public class ServiceController {
     }
 
     @ApiOperation(value = "Delete service", notes = "Deletes service by serviceId")
-    @DeleteMapping("/services/dash-board/{serviceId}")
+    @DeleteMapping("/services/{serviceId}")
     public ResponseEntity<Void> deleteService(@PathVariable Integer serviceId) {
         return serviceService.deleteServiceById(serviceId);
     }

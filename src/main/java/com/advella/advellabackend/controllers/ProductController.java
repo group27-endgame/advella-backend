@@ -81,7 +81,7 @@ public class ProductController {
     }
 
     @ApiOperation(value = "Delete product", notes = "Deletes product by its productId")
-    @DeleteMapping("/products/dash-board/{productId}")
+    @DeleteMapping("/products/{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {
         return productService.deleteProductById(productId);
     }
