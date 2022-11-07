@@ -77,8 +77,6 @@ public class ServiceService {
         }
         serviceToDelete.getUsers().forEach(u -> u.getServices().remove(serviceToDelete));
         userService.saveAllUsers(serviceToDelete.getUsers());
-        serviceToDelete.setUsers(null);
-        serviceToDelete.setPosted(null);
         serviceRepository.delete(serviceToDelete);
         return ResponseEntity.ok().build();
     }

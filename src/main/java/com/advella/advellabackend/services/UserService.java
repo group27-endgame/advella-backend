@@ -176,7 +176,6 @@ public class UserService implements UserDetailsService {
         String[] userArray = payloadDecode.split("\"");
         String userName = userArray[3];
         User user = userRepository.findByUsername(userName);
-        user.setRoles(null);
         return user;
     }
 }
