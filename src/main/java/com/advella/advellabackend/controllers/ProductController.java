@@ -5,6 +5,7 @@ import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.services.ProductService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.patterns.IToken;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +41,8 @@ public class ProductController {
 
     @ApiOperation(value = "Add new product", notes = "Adds new product")
     @PostMapping("/products/new")
-    public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct) {
-        return ResponseEntity.ok(productService.addNewProduct(newProduct));
+    public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct, @RequestHeader("Authorization") String token) {
+        return productService.addNewProduct(newProduct, token);
     }
 
     @ApiOperation(value = "Open product status", notes = "Sets status of this product as open")

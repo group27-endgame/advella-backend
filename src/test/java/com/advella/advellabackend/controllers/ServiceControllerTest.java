@@ -3,6 +3,7 @@ package com.advella.advellabackend.controllers;
 import com.advella.advellabackend.model.*;
 import com.advella.advellabackend.repositories.IProductRepository;
 import com.advella.advellabackend.repositories.IServiceRepository;
+import com.advella.advellabackend.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -109,15 +110,6 @@ class ServiceControllerTest {
                         .get("/api/services/user/10?amount=1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
-    }
-
-    @Test
-    void addNewService() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders
-                        .post("/api/services/new")
-                        .content(this.objectMapper.writeValueAsString(SERVICE3))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
     }
 
     @Test

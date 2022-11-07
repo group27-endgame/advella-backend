@@ -28,8 +28,8 @@ public class ServiceController {
 
     @ApiOperation(value = "Add new service", notes = "Adds new service")
     @PostMapping("/services/new")
-    public ResponseEntity<Service> addNewService(@RequestBody Service newService) {
-        return ResponseEntity.ok(serviceService.addNewService(newService));
+    public ResponseEntity<Service> addNewService(@RequestBody Service newService, @RequestHeader("Authorization") String token) {
+        return serviceService.addNewService(newService, token);
     }
 
     @ApiOperation(value = "Set service picture", notes = "Adds or updated service picture")

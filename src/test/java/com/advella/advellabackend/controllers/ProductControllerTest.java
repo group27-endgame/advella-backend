@@ -115,15 +115,6 @@ class ProductControllerTest {
     }
 
     @Test
-    void addNewProduct() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders
-                        .post("/api/products/new")
-                        .content(this.objectMapper.writeValueAsString(PRODUCT3))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
     void getProductsByLocation_Success() throws Exception {
         Mockito.when(productRepository.getProductsByLocation("England")).thenReturn(Collections.singletonList(PRODUCT1));
 

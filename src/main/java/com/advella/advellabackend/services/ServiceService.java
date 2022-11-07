@@ -125,8 +125,13 @@ public class ServiceService {
         return serviceRepository.findByTitleContaining(searchQuery);
     }
 
-    public com.advella.advellabackend.model.Service addNewService(com.advella.advellabackend.model.Service newService) {
-        return serviceRepository.save(newService);
+    public ResponseEntity<com.advella.advellabackend.model.Service> addNewService(com.advella.advellabackend.model.Service newService, String token) {
+        User userToAdd = userService.getUserFromHeader(token);
+        if (userToAdd == null) {
+            return ResponseEntity.notFound().build();
+        }
+        newService.setPosted(userToAdd);
+        return ResponseEntity.ok(serviceRepository.save(newService));
     }
 
     public Integer getServicesCount(Date startDate, Date endDate) {

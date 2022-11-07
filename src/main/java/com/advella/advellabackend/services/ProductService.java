@@ -1,6 +1,7 @@
 package com.advella.advellabackend.services;
 
 import com.advella.advellabackend.model.Product;
+import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.repositories.IProductRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -124,8 +125,13 @@ public class ProductService {
         return returnValue;
     }
 
-    public Product addNewProduct(Product newProduct) {
-        return productRepository.save(newProduct);
+    public ResponseEntity<Product> addNewProduct(Product newProduct, String token) {
+        User userToAdd = userService.getUserFromHeader(token);
+        if (userToAdd == null) {
+            ResponseEntity.notFound().build();
+        }
+        newProduct.setPosted(userToAdd);
+        return ResponseEntity.ok(productRepository.save(newProduct));
     }
 
     public Integer getProductCount(Date startDate, Date endDate) {
