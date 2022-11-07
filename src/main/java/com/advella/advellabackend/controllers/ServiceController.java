@@ -80,6 +80,18 @@ public class ServiceController {
         return ResponseEntity.ok(serviceService.getServicesCount());
     }
 
+    @ApiOperation(value = "Open service status", notes = "Sets status of this service as open")
+    @PostMapping("/services/open/{serviceId}")
+    public ResponseEntity<Void> openServiceStatus(@RequestParam int serviceId) {
+        return serviceService.openService(serviceId);
+    }
+
+    @ApiOperation(value = "Close service status", notes = "Sets status of this service as closed")
+    @PostMapping("/services/closed/{serviceId}")
+    public ResponseEntity<Void> closeServiceStatus(@RequestParam int serviceId) {
+        return serviceService.closeService(serviceId);
+    }
+
     @ApiOperation(value = "Delete service", notes = "Deletes service by serviceId")
     @DeleteMapping("/services/{serviceId}")
     public ResponseEntity<Void> deleteService(@PathVariable Integer serviceId) {

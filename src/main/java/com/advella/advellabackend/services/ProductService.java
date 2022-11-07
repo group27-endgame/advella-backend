@@ -19,6 +19,9 @@ public class ProductService {
     private final IProductRepository productRepository;
     private final UserService userService;
 
+    private static final String OPEN_PRODUCT_STATUS = "open";
+    private static final String CLOSED_PRODUCT_STATUS = "closed";
+
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
@@ -40,6 +43,26 @@ public class ProductService {
             }
         }
         return products;
+    }
+
+    public ResponseEntity<Void> openProduct(int productId) {
+        if (!doesProductExist(productId)) {
+            return ResponseEntity.notFound().build();
+        }
+        Product selectedProduct = productRepository.findById(productId).orElseThrow();
+        selectedProduct.setProductStatus(OPEN_PRODUCT_STATUS);
+        productRepository.save(selectedProduct);
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<Void> closeProduct(int productId) {
+        if (!doesProductExist(productId)) {
+            return ResponseEntity.notFound().build();
+        }
+        Product selectedProduct = productRepository.findById(productId).orElseThrow();
+        selectedProduct.setProductStatus(CLOSED_PRODUCT_STATUS);
+        productRepository.save(selectedProduct);
+        return ResponseEntity.ok().build();
     }
 
     public List<Product> getSearchedProducts(String searchedQuery) {

@@ -1,5 +1,6 @@
 package com.advella.advellabackend.services;
 
+import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.repositories.IServiceRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
@@ -17,6 +18,9 @@ import java.util.List;
 public class ServiceService {
     private final IServiceRepository serviceRepository;
     private final UserService userService;
+
+    private static final String OPEN_SERVICE_STATUS = "open";
+    private static final String CLOSED_SERVICE_STATUS = "closed";
 
     public List<com.advella.advellabackend.model.Service> getServices() {
         return serviceRepository.findAll();
@@ -95,6 +99,26 @@ public class ServiceService {
             return 0;
         }
         return returnValue;
+    }
+
+    public ResponseEntity<Void> openService(int serviceId) {
+        if (!doesServiceExist(serviceId)) {
+            return ResponseEntity.notFound().build();
+        }
+        com.advella.advellabackend.model.Service selectedProduct = serviceRepository.findById(serviceId).orElseThrow();
+        selectedProduct.setServiceStatus(OPEN_SERVICE_STATUS);
+        serviceRepository.save(selectedProduct);
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<Void> closeService(int productId) {
+        if (!doesServiceExist(productId)) {
+            return ResponseEntity.notFound().build();
+        }
+        com.advella.advellabackend.model.Service selectedProduct = serviceRepository.findById(productId).orElseThrow();
+        selectedProduct.setServiceStatus(CLOSED_SERVICE_STATUS);
+        serviceRepository.save(selectedProduct);
+        return ResponseEntity.ok().build();
     }
 
     public List<com.advella.advellabackend.model.Service> getSearchedService(String searchQuery) {

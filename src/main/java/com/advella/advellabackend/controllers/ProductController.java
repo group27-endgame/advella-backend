@@ -44,6 +44,18 @@ public class ProductController {
         return ResponseEntity.ok(productService.addNewProduct(newProduct));
     }
 
+    @ApiOperation(value = "Open product status", notes = "Sets status of this product as open")
+    @PostMapping("/products/open/{productId}")
+    public ResponseEntity<Void> openProductStatus(@RequestParam int productId) {
+        return productService.openProduct(productId);
+    }
+
+    @ApiOperation(value = "Close product status", notes = "Sets status of this product as closed")
+    @PostMapping("/products/closed/{productId}")
+    public ResponseEntity<Void> closeProductStatus(@RequestParam int productId) {
+        return productService.closeProduct(productId);
+    }
+
     @ApiOperation(value = "Set product picture", notes = "Adds or updated product picture")
     @PutMapping(value = "/products/picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> setProductPicture(@RequestParam int productId, @RequestBody MultipartFile[] picture) {
