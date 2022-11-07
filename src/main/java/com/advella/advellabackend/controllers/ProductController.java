@@ -95,8 +95,8 @@ public class ProductController {
 
     @ApiOperation(value = "Delete product", notes = "Deletes product by its productId")
     @DeleteMapping("/products/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {
-        return productService.deleteProductById(productId);
+    public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId, @RequestHeader("Authorization") String token) {
+        return productService.deleteProductById(productId, token);
     }
 
     @ApiOperation(value = "Get products between dates", notes = "Gets number of products posted between dates")

@@ -1,10 +1,12 @@
 package com.advella.advellabackend.services;
 
 import com.advella.advellabackend.model.Product;
+import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.repositories.IProductRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ public class ProductService {
 
     private static final String OPEN_PRODUCT_STATUS = "open";
     private static final String CLOSED_PRODUCT_STATUS = "closed";
+    private static final String ADMIN_ROLE = "admin";
 
     public List<Product> getProducts() {
         return productRepository.findAll();
@@ -86,11 +89,17 @@ public class ProductService {
         return ResponseEntity.ok(products);
     }
 
-    public ResponseEntity<Void> deleteProductById(Integer productId) {
-        if (!doesProductExist(productId)) {
+    public ResponseEntity<Void> deleteProductById(Integer productId, String token) {
+        User user = userService.getUserFromHeader(token);
+        if (user == null || !doesProductExist(productId)) {
             return ResponseEntity.notFound().build();
         }
         Product productToDelete = productRepository.findById(productId).orElseThrow();
+
+        if (productToDelete.getPosted().getUserId() != user.getUserId() && !isUserAdmin(user.getRoles()))
+        {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         productToDelete.getUsers().forEach(u -> u.getProducts().remove(productToDelete));
         userService.saveAllUsers(productToDelete.getUsers());
         productRepository.delete(productToDelete);
@@ -145,5 +154,14 @@ public class ProductService {
             return false;
         }
         return true;
+    }
+
+    private boolean isUserAdmin(List<Role> roles) {
+        for (Role role : roles) {
+            if (role.getName().equals(ADMIN_ROLE)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -168,26 +168,6 @@ class ServiceControllerTest {
     }
 
     @Test
-    void deleteService_Success() throws Exception {
-        Mockito.when(serviceRepository.findById(SERVICE1.getServiceId())).thenReturn(Optional.of(SERVICE1));
-
-        mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/services/1")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void deleteService_Failure() throws Exception {
-        Mockito.when(serviceRepository.getReferenceById(SERVICE1.getServiceId())).thenReturn(null);
-
-        mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/services/1")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
     void getServicesBetweenDates() throws Exception {
         Date startDate = new Date(1667390291L);
         Date endDate = new Date(1667390391L);

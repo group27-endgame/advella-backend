@@ -94,8 +94,8 @@ public class ServiceController {
 
     @ApiOperation(value = "Delete service", notes = "Deletes service by serviceId")
     @DeleteMapping("/services/{serviceId}")
-    public ResponseEntity<Void> deleteService(@PathVariable Integer serviceId) {
-        return serviceService.deleteServiceById(serviceId);
+    public ResponseEntity<Void> deleteService(@PathVariable Integer serviceId, @RequestHeader("Authorization") String token) {
+        return serviceService.deleteServiceById(serviceId, token);
     }
 
     @ApiOperation(value = "Get services between date", notes = "Gets all the services between startDate and endDate")

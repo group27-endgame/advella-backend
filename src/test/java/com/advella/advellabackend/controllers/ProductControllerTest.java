@@ -170,26 +170,6 @@ class ProductControllerTest {
     }
 
     @Test
-    void deleteProduct_Success() throws Exception {
-        Mockito.when(productRepository.findById(PRODUCT1.getProductId())).thenReturn(Optional.of(PRODUCT1));
-
-        mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/products/1")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void deleteProduct_Failure() throws Exception {
-        Mockito.when(productRepository.getReferenceById(PRODUCT1.getProductId())).thenReturn(null);
-
-        mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/products/1")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
     void getProductsBetweenDates() throws Exception {
         Date startDate = new Date(1667390291L);
         Date endDate = new Date(1667390391L);

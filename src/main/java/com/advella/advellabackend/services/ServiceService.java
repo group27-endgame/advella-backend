@@ -1,10 +1,12 @@
 package com.advella.advellabackend.services;
 
 import com.advella.advellabackend.model.Product;
+import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.repositories.IServiceRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class ServiceService {
 
     private static final String OPEN_SERVICE_STATUS = "open";
     private static final String CLOSED_SERVICE_STATUS = "closed";
+    private static final String ADMIN_ROLE = "admin";
 
     public List<com.advella.advellabackend.model.Service> getServices() {
         return serviceRepository.findAll();
@@ -61,11 +64,16 @@ public class ServiceService {
         return services;
     }
 
-    public ResponseEntity<Void> deleteServiceById(Integer serviceId) {
-        if (!doesServiceExist(serviceId)) {
+    public ResponseEntity<Void> deleteServiceById(Integer serviceId, String token) {
+        User user = userService.getUserFromHeader(token);
+        if (user == null || !doesServiceExist(serviceId)) {
             return ResponseEntity.notFound().build();
         }
         com.advella.advellabackend.model.Service serviceToDelete = serviceRepository.findById(serviceId).orElseThrow();
+
+        if (serviceToDelete.getPosted().getUserId() != user.getUserId() && !isUserAdmin(user.getRoles())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         serviceToDelete.getUsers().forEach(u -> u.getServices().remove(serviceToDelete));
         userService.saveAllUsers(serviceToDelete.getUsers());
         serviceRepository.delete(serviceToDelete);
@@ -145,5 +153,14 @@ public class ServiceService {
             return false;
         }
         return true;
+    }
+
+    private boolean isUserAdmin(List<Role> roles) {
+        for (Role role : roles) {
+            if (role.getName().equals(ADMIN_ROLE)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
