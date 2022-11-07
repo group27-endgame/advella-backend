@@ -71,7 +71,8 @@ public class ServiceService {
         }
         com.advella.advellabackend.model.Service serviceToDelete = serviceRepository.findById(serviceId).orElseThrow();
 
-        if (serviceToDelete.getPosted().getUserId() != user.getUserId() && !isUserAdmin(user.getRoles())) {
+        List<Role> roles = user.getRoles();
+        if (serviceToDelete.getPosted().getUserId() != user.getUserId() && roles != null && !isUserAdmin(roles)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         serviceToDelete.getUsers().forEach(u -> u.getServices().remove(serviceToDelete));

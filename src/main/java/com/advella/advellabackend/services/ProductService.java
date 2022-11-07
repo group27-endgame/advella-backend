@@ -96,8 +96,8 @@ public class ProductService {
         }
         Product productToDelete = productRepository.findById(productId).orElseThrow();
 
-        if (productToDelete.getPosted().getUserId() != user.getUserId() && !isUserAdmin(user.getRoles()))
-        {
+        List<Role> roles = user.getRoles();
+        if (productToDelete.getPosted().getUserId() != user.getUserId() && roles != null && !isUserAdmin(roles)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         productToDelete.getUsers().forEach(u -> u.getProducts().remove(productToDelete));
