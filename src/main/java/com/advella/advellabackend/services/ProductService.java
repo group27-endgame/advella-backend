@@ -78,6 +78,9 @@ public class ProductService {
         if (userProducts.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
+        for (Product product : userProducts) {
+            product.getPosted().setPostedProduct(null);
+        }
         return ResponseEntity.ok(userProducts);
     }
 

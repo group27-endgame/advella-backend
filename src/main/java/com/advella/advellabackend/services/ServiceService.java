@@ -42,6 +42,9 @@ public class ServiceService {
         if (services.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
+        for (com.advella.advellabackend.model.Service service : services) {
+            service.getPosted().setPostedService(null);
+        }
         return ResponseEntity.ok(services);
     }
 
