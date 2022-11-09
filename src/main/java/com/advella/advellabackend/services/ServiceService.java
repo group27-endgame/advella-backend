@@ -2,15 +2,24 @@ package com.advella.advellabackend.services;
 
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.Role;
+import com.advella.advellabackend.model.ServiceImage;
 import com.advella.advellabackend.model.User;
+import com.advella.advellabackend.repositories.IServiceImageRepository;
 import com.advella.advellabackend.repositories.IServiceRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +29,7 @@ import java.util.List;
 public class ServiceService {
     private final IServiceRepository serviceRepository;
     private final UserService userService;
+    private final IServiceImageRepository serviceImageRepository;
 
     private static final String OPEN_SERVICE_STATUS = "open";
     private static final String CLOSED_SERVICE_STATUS = "closed";
@@ -137,13 +147,19 @@ public class ServiceService {
         return serviceRepository.findByTitleContaining(searchQuery);
     }
 
-    public ResponseEntity<com.advella.advellabackend.model.Service> addNewService(com.advella.advellabackend.model.Service newService, String token) {
+    public ResponseEntity<com.advella.advellabackend.model.Service> addNewService(com.advella.advellabackend.model.Service newService, String token, MultipartFile multipartFile) {
         User userToAdd = userService.getUserFromHeader(token);
         if (userToAdd == null) {
             return ResponseEntity.notFound().build();
         }
         newService.setPosted(userToAdd);
-        return ResponseEntity.ok(serviceRepository.save(newService));
+        com.advella.advellabackend.model.Service serviceToReturn = serviceRepository.save(newService);
+        try {
+            serviceToReturn.setServiceImages(Collections.singletonList(new ServiceImage(0, serviceToReturn, saveFile(multipartFile))));
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.ok(serviceToReturn);
     }
 
     public Integer getServicesCount(Date startDate, Date endDate) {
@@ -166,5 +182,16 @@ public class ServiceService {
             }
         }
         return false;
+    }
+
+    private String saveFile(MultipartFile multipartFile) throws IOException {
+        String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+
+        long fileName = System.currentTimeMillis();
+
+        Path filePath = Paths.get("/app/static/images/" + fileName + "." + extension);
+        multipartFile.transferTo(filePath);
+
+        return "/images/" + fileName + "." + extension;
     }
 }

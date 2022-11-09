@@ -1,7 +1,5 @@
 package com.advella.advellabackend.controllers;
 
-import com.advella.advellabackend.model.Picture;
-import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.Service;
 import com.advella.advellabackend.services.ServiceService;
 import io.swagger.annotations.ApiOperation;
@@ -28,20 +26,8 @@ public class ServiceController {
 
     @ApiOperation(value = "Add new service", notes = "Adds new service")
     @PostMapping("/services/new")
-    public ResponseEntity<Service> addNewService(@RequestBody Service newService, @RequestHeader("Authorization") String token) {
-        return serviceService.addNewService(newService, token);
-    }
-
-    @ApiOperation(value = "Set service picture", notes = "Adds or updated service picture")
-    @PutMapping(value = "/services/picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> setServicePicture(@RequestParam int serviceId, @RequestBody MultipartFile[] picture) {
-        return ResponseEntity.ok().build();
-    }
-
-    @ApiOperation(value = "Get service picture", notes = "Gets picture by serviceId")
-    @GetMapping(value = "/services/picture")
-    public ResponseEntity<Picture> getServicePicture(@RequestParam int serviceId) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Service> addNewService(@RequestBody Service newService, @RequestHeader("Authorization") String token, @RequestParam("image") MultipartFile image) {
+        return serviceService.addNewService(newService, token, image);
     }
 
     @ApiOperation(value = "Get service by Id", notes = "Gets a service by its serviceId")

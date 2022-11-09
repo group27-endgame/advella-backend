@@ -1,11 +1,9 @@
 package com.advella.advellabackend.controllers;
 
-import com.advella.advellabackend.model.Picture;
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.services.ProductService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.patterns.IToken;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +39,7 @@ public class ProductController {
 
     @ApiOperation(value = "Add new product", notes = "Adds new product")
     @PostMapping("/products/new")
-    public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct, @RequestHeader("Authorization") String token, @RequestParam("image") MultipartFile image) {
         return productService.addNewProduct(newProduct, token);
     }
 
@@ -55,18 +53,6 @@ public class ProductController {
     @PostMapping("/products/closed/{productId}")
     public ResponseEntity<Void> closeProductStatus(@PathVariable int productId) {
         return productService.closeProduct(productId);
-    }
-
-    @ApiOperation(value = "Set product picture", notes = "Adds or updated product picture")
-    @PutMapping(value = "/products/picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> setProductPicture(@RequestParam int productId, @RequestBody MultipartFile[] picture) {
-        return ResponseEntity.ok().build();
-    }
-
-    @ApiOperation(value = "Get product picture", notes = "Gets picture by productId")
-    @GetMapping(value = "/products/picture")
-    public ResponseEntity<Picture> getProductPicture(@RequestParam int productId) {
-        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "Get products by location", notes = "Gets all products by location")

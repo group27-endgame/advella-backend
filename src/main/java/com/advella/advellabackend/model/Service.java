@@ -70,4 +70,6 @@ public class Service {
     private User posted;
     @OneToMany(mappedBy = "service")
     private List<ChatService> chatServices;
+    @OneToMany(mappedBy = "serviceId")
+    private List<ServiceImage> serviceImages;
 }
