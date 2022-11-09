@@ -30,6 +30,7 @@ FROM eclipse-temurin:17-jre-focal
 
 EXPOSE 8080
 ARG DEPENDENCY=/server/target/dependency
+VOLUME /app
 COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=prepare-production ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/classes /app
