@@ -20,7 +20,7 @@ RUN mkdir -p target/dependency
 WORKDIR /server/target/dependency
 RUN jar -xf ../*.jar
 
-RUN |
+RUN \
     rm -rf /app/application.properties
     rm -rf /app/com
     rm -rf /app/lib
