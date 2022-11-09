@@ -26,7 +26,7 @@ public class ServiceController {
 
     @ApiOperation(value = "Add new service", notes = "Adds new service")
     @PostMapping(path = "/services/new")
-    public ResponseEntity<Service> addNewService(@RequestParam Service newService, @RequestHeader("Authorization") String token, @RequestParam("image") MultipartFile image) {
+    public ResponseEntity<Service> addNewService(@RequestPart Service newService, @RequestHeader("Authorization") String token, @RequestPart("image") MultipartFile image) {
         return serviceService.addNewService(newService, token, image);
     }
 
