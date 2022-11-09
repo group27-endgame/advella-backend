@@ -3,6 +3,7 @@ package com.advella.advellabackend.services;
 import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.ServiceImage;
 import com.advella.advellabackend.model.User;
+import com.advella.advellabackend.repositories.IServiceImageRepository;
 import com.advella.advellabackend.repositories.IServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
@@ -25,6 +26,7 @@ import java.util.List;
 public class ServiceService {
     private final IServiceRepository serviceRepository;
     private final UserService userService;
+    private final IServiceImageRepository serviceImageRepository;
 
     private static final String OPEN_SERVICE_STATUS = "open";
     private static final String CLOSED_SERVICE_STATUS = "closed";
@@ -149,10 +151,13 @@ public class ServiceService {
         }
         newService.setPosted(userToAdd);
         com.advella.advellabackend.model.Service serviceToReturn = serviceRepository.save(newService);
-        try {
-            serviceToReturn.setServiceImages(Collections.singletonList(new ServiceImage(0, serviceToReturn, saveFile(multipartFile))));
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        if (multipartFile != null) {
+            try {
+                ServiceImage newServiceImage = serviceImageRepository.save(new ServiceImage(0, serviceToReturn, saveFile(multipartFile)));
+                serviceToReturn.setServiceImages(Collections.singletonList(newServiceImage));
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
         }
         return ResponseEntity.ok(serviceToReturn);
     }
