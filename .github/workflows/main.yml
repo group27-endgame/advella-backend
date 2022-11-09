@@ -55,6 +55,7 @@ jobs:
             --network=advella \
             -p 3000:8080 \
             --restart unless-stopped \
+            --volume advella-backend-volume:/app
             -e DB_HOST=${{ secrets.DB_HOST }} \
             -e DB_NAME=${{ secrets.DB_NAME }} \
             -e DB_USER=${{ secrets.DB_USER }} \
