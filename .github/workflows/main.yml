@@ -1,11 +1,5 @@
 name: Build, Test and Deploy
 
-env:
-  MSSQL_DB_IP: ${{ secrets.MSSQL_DB_IP }}
-  MSSQL_DB_NAME: ${{ secrets.MSSQL_DB_NAME }}
-  MSSQL_DB_USERNAME: ${{ secrets.MSSQL_DB_USERNAME }}
-  MSSQL_DB_PASSWORD: ${{ secrets.MSSQL_DB_PASSWORD }}
-
 on:
   push:
     branches: [ "main" ]
@@ -13,29 +7,29 @@ on:
     branches: [ "main" ]
     
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
+#   build-and-test:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v3
     
-    - name: Set up Java version
-      uses: actions/setup-java@v1
-      with:
-        java-version: '17'
+#     - name: Set up Java version
+#       uses: actions/setup-java@v1
+#       with:
+#         java-version: '17'
         
-    - name: Replace secrets
-      run: |
-        sed -i -e 's/${DB_HOST}/${{ secrets.DB_HOST }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
-        sed -i -e 's/${DB_NAME}/${{ secrets.DB_NAME }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
-        sed -i -e 's/${DB_PASS}/${{ secrets.DB_PASS }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
-        sed -i -e 's/${DB_USER}/${{ secrets.DB_USER }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
+#     - name: Replace secrets
+#       run: |
+#         sed -i -e 's/${DB_HOST}/${{ secrets.DB_HOST }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
+#         sed -i -e 's/${DB_NAME}/${{ secrets.DB_NAME }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
+#         sed -i -e 's/${DB_PASS}/${{ secrets.DB_PASS }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
+#         sed -i -e 's/${DB_USER}/${{ secrets.DB_USER }}/g' ${GITHUB_WORKSPACE}/src/main/resources/application.properties
 
-    - name: Test and Build
-      run: mvn clean install
+#     - name: Test and Build
+#       run: mvn clean install
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build-and-test
+#     needs: build-and-test
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@master
