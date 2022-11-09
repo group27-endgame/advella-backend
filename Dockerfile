@@ -20,13 +20,12 @@ RUN mkdir -p target/dependency
 WORKDIR /server/target/dependency
 RUN jar -xf ../*.jar
 
-RUN rm -rf /app/application.properties; rm -rf /app/com; rm -rf /app/lib; rm -rf /app/META-INF
-
 FROM eclipse-temurin:17-jre-focal
 
 EXPOSE 8080
 ARG DEPENDENCY=/server/target/dependency
 VOLUME /app
+RUN rm -rf /app/application.properties; rm -rf /app/com; rm -rf /app/lib; rm -rf /app/META-INF
 COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=prepare-production ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/classes /app
