@@ -25,8 +25,8 @@ public class ServiceController {
     }
 
     @ApiOperation(value = "Add new service", notes = "Adds new service")
-    @PostMapping("/services/new")
-    public ResponseEntity<Service> addNewService(@RequestBody Service newService, @RequestHeader("Authorization") String token, @RequestParam("image") MultipartFile image) {
+    @PostMapping(path = "/services/new", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Service> addNewService(@RequestPart Service newService, @RequestHeader("Authorization") String token, @RequestPart("image") MultipartFile image) {
         return serviceService.addNewService(newService, token, image);
     }
 
