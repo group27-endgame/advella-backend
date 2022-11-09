@@ -25,7 +25,9 @@ FROM eclipse-temurin:17-jre-focal
 EXPOSE 8080
 ARG DEPENDENCY=/server/target/dependency
 VOLUME /app
+RUN ls -a;ls -a app
 RUN rm -rf /app/application.properties; rm -rf /app/com; rm -rf /app/lib; rm -rf /app/META-INF
+RUN ls -a;ls -a app
 COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=prepare-production ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=prepare-production ${DEPENDENCY}/BOOT-INF/classes /app
