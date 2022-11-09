@@ -40,7 +40,7 @@ public class ProductController {
     @ApiOperation(value = "Add new product", notes = "Adds new product")
     @PostMapping("/products/new")
     public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct, @RequestHeader("Authorization") String token, @RequestParam("image") MultipartFile image) {
-        return productService.addNewProduct(newProduct, token);
+        return productService.addNewProduct(newProduct, token, image);
     }
 
     @ApiOperation(value = "Open product status", notes = "Sets status of this product as open")

@@ -1,17 +1,22 @@
 package com.advella.advellabackend.services;
 
-import com.advella.advellabackend.model.Product;
-import com.advella.advellabackend.model.Role;
-import com.advella.advellabackend.model.User;
+import com.advella.advellabackend.model.*;
+import com.advella.advellabackend.repositories.IProductImageRepository;
 import com.advella.advellabackend.repositories.IProductRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +25,7 @@ import java.util.List;
 @Transactional
 public class ProductService {
     private final IProductRepository productRepository;
+    private final IProductImageRepository productImageRepository;
     private final UserService userService;
 
     private static final String OPEN_PRODUCT_STATUS = "open";
@@ -139,13 +145,24 @@ public class ProductService {
         return returnValue;
     }
 
-    public ResponseEntity<Product> addNewProduct(Product newProduct, String token) {
+    public ResponseEntity<Product> addNewProduct(Product newProduct, String token, MultipartFile multipartFile) {
         User userToAdd = userService.getUserFromHeader(token);
         if (userToAdd == null) {
             ResponseEntity.notFound().build();
         }
         newProduct.setPosted(userToAdd);
-        return ResponseEntity.ok(productRepository.save(newProduct));
+        Product productToReturn = productRepository.save(newProduct);
+
+        if (multipartFile != null) {
+            try {
+                ProductImage newProductImage = productImageRepository.save(new ProductImage(0, productToReturn, saveFile(multipartFile)));
+                productToReturn.setProductImages(Collections.singletonList(newProductImage));
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+
+        return ResponseEntity.ok(productToReturn);
     }
 
     public Integer getProductCount(Date startDate, Date endDate) {
@@ -168,5 +185,16 @@ public class ProductService {
             }
         }
         return false;
+    }
+
+    private String saveFile(MultipartFile multipartFile) throws IOException {
+        String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+
+        long fileName = System.currentTimeMillis();
+
+        Path filePath = Paths.get("/app/static/images/" + fileName + "." + extension);
+        multipartFile.transferTo(filePath);
+
+        return "/images/" + fileName + "." + extension;
     }
 }
