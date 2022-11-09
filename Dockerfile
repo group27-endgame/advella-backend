@@ -20,6 +20,12 @@ RUN mkdir -p target/dependency
 WORKDIR /server/target/dependency
 RUN jar -xf ../*.jar
 
+RUN |
+    rm -rf /app/application.properties
+    rm -rf /app/com
+    rm -rf /app/lib
+    rm -rf /app/META-INF
+
 FROM eclipse-temurin:17-jre-focal
 
 EXPOSE 8080
