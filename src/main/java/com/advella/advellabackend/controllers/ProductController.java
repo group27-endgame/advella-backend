@@ -47,13 +47,13 @@ public class ProductController {
 
     @ApiOperation(value = "Open product status", notes = "Sets status of this product as open")
     @PostMapping("/products/open/{productId}")
-    public ResponseEntity<Void> openProductStatus(@RequestParam int productId) {
+    public ResponseEntity<Void> openProductStatus(@PathVariable int productId) {
         return productService.openProduct(productId);
     }
 
     @ApiOperation(value = "Close product status", notes = "Sets status of this product as closed")
     @PostMapping("/products/closed/{productId}")
-    public ResponseEntity<Void> closeProductStatus(@RequestParam int productId) {
+    public ResponseEntity<Void> closeProductStatus(@PathVariable int productId) {
         return productService.closeProduct(productId);
     }
 
