@@ -1,12 +1,9 @@
 package com.advella.advellabackend.services;
 
-import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.ServiceImage;
 import com.advella.advellabackend.model.User;
-import com.advella.advellabackend.repositories.IServiceImageRepository;
 import com.advella.advellabackend.repositories.IServiceRepository;
-import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
@@ -16,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
@@ -29,7 +25,6 @@ import java.util.List;
 public class ServiceService {
     private final IServiceRepository serviceRepository;
     private final UserService userService;
-    private final IServiceImageRepository serviceImageRepository;
 
     private static final String OPEN_SERVICE_STATUS = "open";
     private static final String CLOSED_SERVICE_STATUS = "closed";

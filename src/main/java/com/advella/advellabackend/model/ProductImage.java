@@ -20,7 +20,7 @@ public class ProductImage {
     private int id;
     @ManyToOne
     @JoinColumn(name="product_id")
-    private int productId;
+    private Product productId;
     @Column(name = "path")
     private String path;
 }
