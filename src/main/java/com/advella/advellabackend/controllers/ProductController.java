@@ -39,7 +39,7 @@ public class ProductController {
 
     @ApiOperation(value = "Add new product", notes = "Adds new product")
     @PostMapping("/products/new")
-    public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct, @RequestHeader("Authorization") String token, @RequestParam("image") MultipartFile image) {
+    public ResponseEntity<Product> addNewProduct(@RequestPart Product newProduct, @RequestHeader("Authorization") String token, @RequestPart("image") MultipartFile image) {
         return productService.addNewProduct(newProduct, token, image);
     }
 
