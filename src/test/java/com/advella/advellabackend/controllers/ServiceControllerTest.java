@@ -3,6 +3,7 @@ package com.advella.advellabackend.controllers;
 import com.advella.advellabackend.model.*;
 import com.advella.advellabackend.repositories.IProductRepository;
 import com.advella.advellabackend.repositories.IServiceRepository;
+import com.advella.advellabackend.repositories.IUserRepository;
 import com.advella.advellabackend.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
@@ -37,7 +38,16 @@ class ServiceControllerTest {
     @MockBean
     private IServiceRepository serviceRepository;
 
-    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, null, null, null, null, null, new ArrayList<>(), null, null, null, null, new ArrayList<>());
+    @MockBean
+    private IUserRepository userRepository;
+
+    private static final String TEST_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwicm9sZXMiOlsidXNlciJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL3VzZXJzL2xvZ2luIiwiZXhwIjoxNjY4MTU2NTU1fQ.kvmiR8oZUDZufTxErQgk1CmosOQVfQiz6ir8SS3q7V0";
+
+    User USER1 = new User(1, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
+    User USER2 = new User(2, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(1, "admin", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
+    User USER3 = new User(3, "somerandonEmail@gmail.com", "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
+
+    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, null, null, null, null, null, new ArrayList<>(), null, null, USER1, null, new ArrayList<>());
     Service SERVICE2 = new Service(2, "Second", "Detail", null, null, null, null, null, null, null, null, null, null, null, null, new ArrayList<>());
     Service SERVICE3 = new Service(3, "Third", "Detail", null, null, null, null, null, null, null, null, new ServiceCategory(20, null, null), null, new User(10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), null, new ArrayList<>());
 
@@ -178,5 +188,74 @@ class ServiceControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.is(1)));
+    }
+
+    @Test
+    void getServiceById_Success() throws Exception {
+        Mockito.when(serviceRepository.findById(SERVICE1.getServiceId())).thenReturn(Optional.of(SERVICE1));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/services/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", Matchers.is("First")));
+    }
+
+    @Test
+    void getServiceById_Failure() throws Exception {
+        Mockito.when(serviceRepository.findById(SERVICE1.getServiceId())).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/services/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteService_Success_Owner() throws Exception {
+        Mockito.when(serviceRepository.findById(SERVICE1.getServiceId())).thenReturn(Optional.of(SERVICE1));
+        Mockito.when(userRepository.findByUsername("Nick")).thenReturn(USER1);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/services/1")
+                        .header("Authorization", TEST_TOKEN)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteService_Success_Admin() throws Exception {
+        Mockito.when(serviceRepository.findById(SERVICE1.getServiceId())).thenReturn(Optional.of(SERVICE1));
+        Mockito.when(userRepository.findByUsername("Nick")).thenReturn(USER2);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/services/1")
+                        .header("Authorization", TEST_TOKEN)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteService_Failure_Not_Admin() throws Exception {
+        Mockito.when(serviceRepository.findById(SERVICE1.getServiceId())).thenReturn(Optional.of(SERVICE1));
+        Mockito.when(userRepository.findByUsername("Nick")).thenReturn(USER3);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/services/1")
+                        .header("Authorization", TEST_TOKEN)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void deleteService_Failure() throws Exception {
+        Mockito.when(serviceRepository.findById(SERVICE1.getServiceId())).thenReturn(null);
+        Mockito.when(userRepository.findByUsername("Nick")).thenReturn(USER1);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/services/1")
+                        .header("Authorization", TEST_TOKEN)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
