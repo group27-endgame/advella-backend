@@ -19,7 +19,6 @@ class ProductAndServiceServiceTest {
     private ServiceService serviceService;
     private ProductService productService;
 
-    @Autowired
     private ProductAndServiceService productAndServiceService;
 
     Product PRODUCT1 = new Product(1, "First", "Detail", Float.valueOf(100.0f), "England", new Date(1668156952), null, null, null, new ArrayList<>(), null, null, null, null, new ArrayList<>());

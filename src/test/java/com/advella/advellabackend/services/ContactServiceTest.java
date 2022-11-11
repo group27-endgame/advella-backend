@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ContactServiceTest {
     private IContactRepository contactRepository;
 
-    @Autowired
     private ContactService contactService;
 
     Contact CONTACT_1 = new Contact(1, new Date(1667390291L), "Contact one", false, null);
