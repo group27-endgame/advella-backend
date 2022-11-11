@@ -17,8 +17,6 @@ class ProductCategoryServiceTest {
     private ProductCategoryService productCategoryService;
 
     ProductCategory CATEGORY_1 = new ProductCategory(1, "Books", null);
-    ProductCategory CATEGORY_2 = new ProductCategory(1, "Games", null);
-    ProductCategory CATEGORY_3 = new ProductCategory(1, "Movies", null);
 
     @BeforeEach
     void setUp() {
