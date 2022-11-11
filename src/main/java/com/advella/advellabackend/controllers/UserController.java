@@ -25,7 +25,11 @@ public class UserController {
     @ApiOperation(value = "Get current user", notes = "Returns current user by token")
     @GetMapping("/users/currentUser")
     public ResponseEntity<User> getCurrentUser(@RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(userService.getUserFromHeader(token));
+        User userToReturn = userService.getUserFromHeader(token);
+        if (userToReturn == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(userToReturn);
     }
 
     @ApiOperation(value = "Register user", notes = "Registers user")
@@ -78,7 +82,7 @@ public class UserController {
 
     @ApiOperation(value = "Change user role", notes = "Changes user role if the user was admin it is no longer, if the user is not admin then he will be set as one")
     @PutMapping("/users/dash-board")
-    public ResponseEntity<Void> changeUserRole(@RequestParam Integer userId) {
+    public ResponseEntity<User> changeUserRole(@RequestParam Integer userId) {
         return userService.changeUserRole(userId);
     }
 }

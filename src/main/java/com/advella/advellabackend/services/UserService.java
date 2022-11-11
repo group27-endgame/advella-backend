@@ -117,7 +117,7 @@ public class UserService implements UserDetailsService {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> changeUserRole(Integer userId) {
+    public ResponseEntity<User> changeUserRole(Integer userId) {
         User user = userRepository.getReferenceById(userId);
         if (user != null) {
             List<Role> userRoles = user.getRoles();
@@ -125,13 +125,13 @@ public class UserService implements UserDetailsService {
                 if (role.getName().equals("admin")) {
                     userRoles.remove(role);
                     userRepository.save(user);
-                    return ResponseEntity.ok().build();
+                    return ResponseEntity.ok(user);
                 }
             }
 
             userRoles.add(roleRepository.findByRoleName("admin"));
             userRepository.save(user);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(user);
         }
         return ResponseEntity.notFound().build();
     }

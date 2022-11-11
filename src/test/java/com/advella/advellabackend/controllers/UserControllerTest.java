@@ -45,9 +45,11 @@ class UserControllerTest {
     @MockBean
     private IRoleRepository roleRepository;
 
-    User USER1 = new User(1, null, "password", "Nick", null, null, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
-    User USER2 = new User(2, null, "password1234", "Bob", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-    User USER3 = new User(3, null, "password4321", "Dan", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+    private static final String TEST_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwicm9sZXMiOlsidXNlciJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL3VzZXJzL2xvZ2luIiwiZXhwIjoxNjY4MTU2NTU1fQ.kvmiR8oZUDZufTxErQgk1CmosOQVfQiz6ir8SS3q7V0";
+
+    User USER1 = new User(1, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
+    User USER2 = new User(2, null, "password1234", "Bob", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(1, "admin", null), new Role(0, "user", null))), null, null, null, null, null, null, null, null, null, null, null, null);
+    User USER3 = new User(3, null, "password4321", "Dan", null, null, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
 
     @Test
     void getUsersByRole_Multiple() throws Exception {
@@ -75,6 +77,29 @@ class UserControllerTest {
                         .get("/api/users/dash-board")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void getCurrentUser_Success() throws Exception {
+        Mockito.when(userRepository.findByUsername("Nick")).thenReturn(USER1);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/users/currentUser")
+                        .header("Authorization", TEST_TOKEN)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", Matchers.is("Nick")));
+    }
+
+    @Test
+    void getCurrentUser_Failure() throws Exception {
+        Mockito.when(userRepository.findByUsername("Nick")).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/users/currentUser")
+                        .header("Authorization", TEST_TOKEN)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -165,20 +190,53 @@ class UserControllerTest {
 
     @Test
     void deleteUser_Success() throws Exception {
-        Mockito.when(userRepository.findById(USER1.getUserId())).thenReturn(Optional.of(USER1));
+        Mockito.when(userRepository.findById(USER3.getUserId())).thenReturn(Optional.of(USER3));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/users/dash-board/1")
+                        .delete("/api/users/dash-board/3")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
     void deleteUser_Failure() throws Exception {
+        Mockito.when(userRepository.getReferenceById(USER3.getUserId())).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/users/dash-board/3")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void changeRole_Success_Set_Admin() throws Exception {
+        Mockito.when(userRepository.getReferenceById(USER1.getUserId())).thenReturn(USER1);
+        Mockito.when(roleRepository.findByRoleName("admin")).thenReturn(new Role(0, "admin", null));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/api/users/dash-board?userId=1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.roles[1].name", Matchers.is("admin")));
+    }
+
+    @Test
+    void changeRole_Success_Unset_Admin() throws Exception {
+        Mockito.when(userRepository.getReferenceById(USER1.getUserId())).thenReturn(USER1);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/api/users/dash-board?userId=1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.roles[0].name", Matchers.is("user")));
+    }
+
+    @Test
+    void changeRole_Failure() throws Exception {
         Mockito.when(userRepository.getReferenceById(USER1.getUserId())).thenReturn(null);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/users/dash-board/1")
+                        .put("/api/users/dash-board?userId=1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
