@@ -52,9 +52,9 @@ class ContactServiceTest {
         List<Contact> results = contactService.getAllContacts();
 
         assertTrue(results.size() == 3);
-        assertEquals(results.get(0), CONTACT_1);
-        assertEquals(results.get(1), CONTACT_2);
-        assertEquals(results.get(2), CONTACT_3);
+        assertEquals(CONTACT_1, results.get(0));
+        assertEquals(CONTACT_2, results.get(1));
+        assertEquals(CONTACT_3, results.get(2));
     }
 
     @Test
@@ -65,7 +65,7 @@ class ContactServiceTest {
 
         Integer count = contactService.getUnseenContacts();
 
-        assertTrue(count == 3);
+        assertEquals(3, count);
     }
 
     @Test
@@ -74,7 +74,7 @@ class ContactServiceTest {
 
         ResponseEntity<Void> response = contactService.deleteContact(1);
 
-        assertEquals(response, ResponseEntity.ok().build());
+        assertEquals(ResponseEntity.ok().build(), response);
     }
 
     @Test
@@ -83,6 +83,6 @@ class ContactServiceTest {
 
         ResponseEntity<Void> response = contactService.deleteContact(1);
 
-        assertEquals(response, ResponseEntity.notFound().build());
+        assertEquals(ResponseEntity.notFound().build(), response);
     }
 }
