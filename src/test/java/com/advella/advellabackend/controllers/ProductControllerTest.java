@@ -1,11 +1,11 @@
 package com.advella.advellabackend.controllers;
 
-import com.advella.advellabackend.model.Contact;
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.ProductCategory;
+import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.User;
-import com.advella.advellabackend.repositories.IContactRepository;
 import com.advella.advellabackend.repositories.IProductRepository;
+import com.advella.advellabackend.repositories.IUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,15 @@ class ProductControllerTest {
     @MockBean
     private IProductRepository productRepository;
 
-    Product PRODUCT1 = new Product(1, "First", "Detail", Float.valueOf(100.0f), "England", null, null, null, null, new ArrayList<>(), null, null, null, null, new ArrayList<>());
+    @MockBean
+    private IUserRepository userRepository;
+
+    private static final String TEST_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwicm9sZXMiOlsidXNlciJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL3VzZXJzL2xvZ2luIiwiZXhwIjoxNjY4MTU2NTU1fQ.kvmiR8oZUDZufTxErQgk1CmosOQVfQiz6ir8SS3q7V0";
+
+    User USER1 = new User(1, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
+    User USER2 = new User(1, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(1, "admin", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
+
+    Product PRODUCT1 = new Product(1, "First", "Detail", Float.valueOf(100.0f), "England", null, null, null, null, new ArrayList<>(), null, null, USER1, null, new ArrayList<>());
     Product PRODUCT2 = new Product(2, "Second", "Detail", null, null, null, null, null, null, null, null, null, null, null, new ArrayList<>());
     Product PRODUCT3 = new Product(3, "Third", "Detail", null, null, null, null, null, null, null, new ProductCategory(20, null, null), null, new User(10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), null, new ArrayList<>());
 
@@ -180,5 +188,104 @@ class ProductControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.is(1)));
+    }
+
+    @Test
+    void openProductStatus_Success() throws Exception {
+        Mockito.when(productRepository.findById(1)).thenReturn(Optional.of(PRODUCT1));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/products/open/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.productStatus", Matchers.is("open")));
+    }
+
+    @Test
+    void openProductStatus_Failure() throws Exception {
+        Mockito.when(productRepository.findById(1)).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/products/open/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void closeProductStatus_Success() throws Exception {
+        Mockito.when(productRepository.findById(1)).thenReturn(Optional.of(PRODUCT1));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/products/closed/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.productStatus", Matchers.is("closed")));
+    }
+
+    @Test
+    void closeProductStatus_Failure() throws Exception {
+        Mockito.when(productRepository.findById(1)).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/products/closed/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void getProductById_Success() throws Exception {
+        Mockito.when(productRepository.findById(PRODUCT1.getProductId())).thenReturn(Optional.of(PRODUCT1));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/products/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", Matchers.is("First")));
+    }
+
+    @Test
+    void getProductById_Failure() throws Exception {
+        Mockito.when(productRepository.findById(PRODUCT1.getProductId())).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/products/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteProduct_Success_Owner() throws Exception {
+        Mockito.when(productRepository.findById(PRODUCT1.getProductId())).thenReturn(Optional.of(PRODUCT1));
+        Mockito.when(userRepository.findByUsername("Nick")).thenReturn(USER1);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/products/1")
+                        .header("Authorization", TEST_TOKEN)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteProduct_Success_Admin() throws Exception {
+        Mockito.when(productRepository.findById(PRODUCT1.getProductId())).thenReturn(Optional.of(PRODUCT1));
+        Mockito.when(userRepository.findByUsername("Nick")).thenReturn(USER2);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/products/1")
+                        .header("Authorization", TEST_TOKEN)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteProduct_Failure() throws Exception {
+        Mockito.when(productRepository.findById(PRODUCT1.getProductId())).thenReturn(null);
+        Mockito.when(userRepository.findByUsername("Nick")).thenReturn(USER1);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/products/1")
+                        .header("Authorization", TEST_TOKEN)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }

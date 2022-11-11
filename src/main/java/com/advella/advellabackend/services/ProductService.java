@@ -55,24 +55,24 @@ public class ProductService {
         return products;
     }
 
-    public ResponseEntity<Void> openProduct(int productId) {
+    public ResponseEntity<Product> openProduct(int productId) {
         if (!doesProductExist(productId)) {
             return ResponseEntity.notFound().build();
         }
         Product selectedProduct = productRepository.findById(productId).orElseThrow();
         selectedProduct.setProductStatus(OPEN_PRODUCT_STATUS);
         productRepository.save(selectedProduct);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(selectedProduct);
     }
 
-    public ResponseEntity<Void> closeProduct(int productId) {
+    public ResponseEntity<Product> closeProduct(int productId) {
         if (!doesProductExist(productId)) {
             return ResponseEntity.notFound().build();
         }
         Product selectedProduct = productRepository.findById(productId).orElseThrow();
         selectedProduct.setProductStatus(CLOSED_PRODUCT_STATUS);
         productRepository.save(selectedProduct);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(selectedProduct);
     }
 
     public List<Product> getSearchedProducts(String searchedQuery) {
