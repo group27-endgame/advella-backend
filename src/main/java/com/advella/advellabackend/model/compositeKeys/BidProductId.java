@@ -1,13 +1,18 @@
 package com.advella.advellabackend.model.compositeKeys;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
 public class BidProductId implements Serializable {
     @Column(name = "users_id")
-    private Long user;
+    private Integer user;
     @Column(name = "product_id")
-    private Long product;
+    private Integer product;
 }
