@@ -1,6 +1,7 @@
 package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.Service;
+import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.services.ServiceService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -88,5 +90,11 @@ public class ServiceController {
     @GetMapping("/services/dash-board/{startDate}/{endDate}")
     public ResponseEntity<Integer> getServicesBetweenDate(@PathVariable long startDate, @PathVariable long endDate) {
         return ResponseEntity.ok(serviceService.getServicesCount(new Date(startDate), new Date(endDate)));
+    }
+
+    @ApiOperation(value = "Get all bidders of service", notes = "Gets all bidders of services")
+    @GetMapping("/services/bidders/{serviceId}")
+    public ResponseEntity<Collection<User>> getServiceBidders(@PathVariable int serviceId) {
+        return serviceService.getServiceBidders(serviceId);
     }
 }

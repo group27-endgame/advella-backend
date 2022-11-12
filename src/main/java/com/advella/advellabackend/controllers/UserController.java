@@ -39,15 +39,15 @@ public class UserController {
     }
 
     @ApiOperation(value = "Bid on product", notes = "Bid on product by productId and token")
-    @PostMapping("/users/bid/product")
-    public ResponseEntity<Void> bidOnProduct(@RequestParam int productID, @RequestHeader("Authorization") String token) {
-        return userService.bidOnProduct(productID, token);
+    @PostMapping("/users/bid/product/{productID}")
+    public ResponseEntity<Void> bidOnProduct(@PathVariable int productID, @RequestHeader("Authorization") String token, @RequestParam int amount) {
+        return userService.bidOnProduct(productID, token, amount);
     }
 
     @ApiOperation(value = "Bid on service", notes = "Bid on service by serviceId and token")
-    @PostMapping("/users/bid/service")
-    public ResponseEntity<Void> bidOnService(@RequestParam int serviceId, @RequestHeader("Authorization") String token) {
-        return userService.bidOnService(serviceId, token);
+    @PostMapping("/users/bid/service/{serviceId}")
+    public ResponseEntity<Void> bidOnService(@PathVariable int serviceId, @RequestHeader("Authorization") String token, @RequestParam int amount) {
+        return userService.bidOnService(serviceId, token, amount);
     }
 
     @ApiOperation(value = "Get user by Id", notes = "Gets user by userId")

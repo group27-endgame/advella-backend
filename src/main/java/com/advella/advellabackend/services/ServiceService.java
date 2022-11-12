@@ -17,9 +17,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -94,6 +92,17 @@ public class ServiceService {
 
     public Integer getServicesCount() {
         return serviceRepository.getServiceCount();
+    }
+
+    public ResponseEntity<Collection<User>> getServiceBidders(int serviceId) {
+        if (!doesServiceExist(serviceId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        com.advella.advellabackend.model.Service service = serviceRepository.findById(serviceId).orElseThrow();
+        LinkedHashSet<User> users = new LinkedHashSet<>();
+        service.getBidServices().forEach(u -> users.add(u.getServiceBidder()));
+        return ResponseEntity.ok(users);
     }
 
     public ResponseEntity<com.advella.advellabackend.model.Service> getServiceByIDResponse(int serviceId) {

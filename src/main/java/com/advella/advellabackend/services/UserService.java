@@ -1,8 +1,8 @@
 package com.advella.advellabackend.services;
 
-import com.advella.advellabackend.model.Product;
-import com.advella.advellabackend.model.Role;
-import com.advella.advellabackend.model.User;
+import com.advella.advellabackend.model.*;
+import com.advella.advellabackend.model.compositeKeys.BidProductId;
+import com.advella.advellabackend.model.compositeKeys.BidServiceId;
 import com.advella.advellabackend.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -85,7 +85,7 @@ public class UserService implements UserDetailsService {
         return returnValue;
     }
 
-    public ResponseEntity<Void> bidOnProduct(int productId, String token) {
+    public ResponseEntity<Void> bidOnProduct(int productId, String token, int amount) {
         Product productToBidTo;
 
         try {
@@ -94,12 +94,11 @@ public class UserService implements UserDetailsService {
             return ResponseEntity.notFound().build();
         }
         User user = getUserFromHeader(token);
-        //user.getBidProducts().add(productToBidTo);
-        userRepository.save(user);
+        bidProductRepository.save(new BidProduct(new BidProductId(), user, productToBidTo, amount));
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> bidOnService(int serviceId, String token) {
+    public ResponseEntity<Void> bidOnService(int serviceId, String token, int amount) {
         com.advella.advellabackend.model.Service serviceToBidTo;
         try {
             serviceToBidTo = serviceRepository.findById(serviceId).orElseThrow();
@@ -107,8 +106,7 @@ public class UserService implements UserDetailsService {
             return ResponseEntity.notFound().build();
         }
         User user = getUserFromHeader(token);
-        //user.getBidServices().add(serviceToBidTo);
-        userRepository.save(user);
+        bidServiceRepository.save(new BidService(new BidServiceId(), user, serviceToBidTo, amount));
         return ResponseEntity.ok().build();
     }
 

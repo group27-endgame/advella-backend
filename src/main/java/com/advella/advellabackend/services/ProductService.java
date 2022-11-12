@@ -15,10 +15,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -121,6 +118,18 @@ public class ProductService {
 
     public Integer getProductCount() {
         return productRepository.getProductCount();
+    }
+
+
+    public ResponseEntity<Collection<User>> getProductBidders(int productId) {
+        if (!doesProductExist(productId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Product product = productRepository.findById(productId).orElseThrow();
+        LinkedHashSet<User> users = new LinkedHashSet<>();
+        product.getBidProducts().forEach(u -> users.add(u.getProductBidder()));
+        return ResponseEntity.ok(users);
     }
 
     public ResponseEntity<Product> getProductByIdResponse(int productID) {

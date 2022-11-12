@@ -1,14 +1,15 @@
 package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.Product;
+import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.services.ProductService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -89,5 +90,11 @@ public class ProductController {
     @GetMapping("/products/dash-board/{startDate}/{endDate}")
     public ResponseEntity<Integer> getProductsBetweenDates(@PathVariable long startDate, @PathVariable long endDate) {
         return ResponseEntity.ok(productService.getProductCount(new Date(startDate), new Date(endDate)));
+    }
+
+    @ApiOperation(value = "Get all bidders of product", notes = "Gets all bidders of products")
+    @GetMapping("/products/bidders/{productId}")
+    public ResponseEntity<Collection<User>> getProductBidders(@PathVariable int productId) {
+        return productService.getProductBidders(productId);
     }
 }
