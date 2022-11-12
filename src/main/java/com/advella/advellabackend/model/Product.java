@@ -1,9 +1,6 @@
 package com.advella.advellabackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -51,9 +48,9 @@ public class Product {
     @Column(name = "product_number_of_bids")
     @ApiModelProperty(notes = "Number of bids", example = "10")
     private Integer numberOfBids;
-    @ManyToMany(mappedBy = "products")
-    @JsonIgnore
-    private List<User> users;
+    @OneToMany(mappedBy = "biddedProduct")
+    @JsonManagedReference(value = "productBidProducts")
+    private List<BidProduct> bidProducts;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private ProductCategory productCategory;

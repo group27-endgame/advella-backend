@@ -3,6 +3,7 @@ package com.advella.advellabackend.services;
 import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.ServiceImage;
 import com.advella.advellabackend.model.User;
+import com.advella.advellabackend.repositories.IBidServiceRepository;
 import com.advella.advellabackend.repositories.IServiceImageRepository;
 import com.advella.advellabackend.repositories.IServiceRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class ServiceService {
     private final IServiceRepository serviceRepository;
     private final UserService userService;
     private final IServiceImageRepository serviceImageRepository;
+    private final IBidServiceRepository bidServiceRepository;
 
     private static final String OPEN_SERVICE_STATUS = "open";
     private static final String CLOSED_SERVICE_STATUS = "closed";
@@ -85,8 +87,7 @@ public class ServiceService {
         if (serviceToDelete.getPosted().getUserId() != user.getUserId() && roles != null && !isUserAdmin(roles)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        serviceToDelete.getUsers().forEach(u -> u.getServices().remove(serviceToDelete));
-        userService.saveAllUsers(serviceToDelete.getUsers());
+        serviceToDelete.getBidServices().forEach(b -> bidServiceRepository.delete(b));
         serviceRepository.delete(serviceToDelete);
         return ResponseEntity.ok().build();
     }

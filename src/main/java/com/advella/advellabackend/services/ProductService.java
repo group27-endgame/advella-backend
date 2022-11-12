@@ -1,9 +1,9 @@
 package com.advella.advellabackend.services;
 
 import com.advella.advellabackend.model.*;
+import com.advella.advellabackend.repositories.IBidProductRepository;
 import com.advella.advellabackend.repositories.IProductImageRepository;
 import com.advella.advellabackend.repositories.IProductRepository;
-import com.advella.advellabackend.repositories.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
@@ -26,6 +26,7 @@ import java.util.List;
 public class ProductService {
     private final IProductRepository productRepository;
     private final IProductImageRepository productImageRepository;
+    private final IBidProductRepository bidProductRepository;
     private final UserService userService;
 
     private static final String OPEN_PRODUCT_STATUS = "open";
@@ -111,9 +112,8 @@ public class ProductService {
         if (productToDelete.getPosted().getUserId() != user.getUserId() && roles != null && !isUserAdmin(roles)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        productToDelete.getUsers().forEach(u -> u.getProducts().remove(productToDelete));
-        userService.saveAllUsers(productToDelete.getUsers());
-        productToDelete.setUsers(null);
+        productToDelete.getBidProducts().forEach(u -> bidProductRepository.delete(u));
+        productToDelete.setBidProducts(null);
         productToDelete.setPosted(null);
         productRepository.delete(productToDelete);
         return ResponseEntity.ok().build();

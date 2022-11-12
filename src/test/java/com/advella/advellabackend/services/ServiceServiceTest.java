@@ -1,6 +1,7 @@
 package com.advella.advellabackend.services;
 
 import com.advella.advellabackend.model.*;
+import com.advella.advellabackend.repositories.IBidServiceRepository;
 import com.advella.advellabackend.repositories.IServiceImageRepository;
 import com.advella.advellabackend.repositories.IServiceRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,7 @@ class ServiceServiceTest {
     private IServiceRepository serviceRepository;
     private IServiceImageRepository serviceImageRepository;
     private UserService userService;
+    private IBidServiceRepository bidServiceRepository;
 
     private ServiceService serviceService;
 
@@ -35,7 +37,8 @@ class ServiceServiceTest {
         serviceRepository = Mockito.mock(IServiceRepository.class);
         serviceImageRepository = Mockito.mock(IServiceImageRepository.class);
         userService = Mockito.mock(UserService.class);
-        serviceService = new ServiceService(serviceRepository, userService, serviceImageRepository);
+        bidServiceRepository = Mockito.mock(IBidServiceRepository.class);
+        serviceService = new ServiceService(serviceRepository, userService, serviceImageRepository, bidServiceRepository);
     }
 
     @Test

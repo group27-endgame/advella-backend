@@ -1,9 +1,6 @@
 package com.advella.advellabackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -56,9 +53,9 @@ public class Service {
     @Column(name = "service_status")
     @ApiModelProperty(notes = "Service status", example = "open")
     private String serviceStatus;
-    @ManyToMany(mappedBy = "services")
-    @JsonIgnore
-    private List<User> users;
+    @OneToMany(mappedBy = "biddedService")
+    @JsonManagedReference(value = "serviceBidServices")
+    private List<BidService> bidServices;
     @ManyToOne
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})

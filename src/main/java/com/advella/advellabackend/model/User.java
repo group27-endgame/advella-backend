@@ -50,16 +50,12 @@ public class User {
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
-    @ManyToMany
-    @JoinTable(name = "Bids_Product",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> products;
-    @ManyToMany
-    @JoinTable(name = "Bids_Service",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "service_id"))
-    private List<Service> services;
+    @JsonManagedReference(value = "userBidProducts")
+    @OneToMany(mappedBy = "productBidder")
+    private List<BidProduct> bidProducts;
+    @OneToMany(mappedBy = "serviceBidder")
+    @JsonManagedReference(value = "userBidServices")
+    private List<BidService> bidServices;
     @OneToMany(mappedBy = "contactUser")
     private List<Contact> contact;
     @OneToMany(mappedBy = "ratingUser")

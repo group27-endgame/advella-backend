@@ -3,12 +3,8 @@ package com.advella.advellabackend.services;
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.User;
-import com.advella.advellabackend.repositories.IProductRepository;
-import com.advella.advellabackend.repositories.IRoleRepository;
-import com.advella.advellabackend.repositories.IServiceRepository;
-import com.advella.advellabackend.repositories.IUserRepository;
+import com.advella.advellabackend.repositories.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -27,6 +22,8 @@ import java.util.*;
 public class UserService implements UserDetailsService {
     private final IProductRepository productRepository;
     private final IServiceRepository serviceRepository;
+    private final IBidServiceRepository bidServiceRepository;
+    private final IBidProductRepository bidProductRepository;
     private final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -58,11 +55,9 @@ public class UserService implements UserDetailsService {
         User userToDelete = userRepository.findById(userId).orElseThrow();
         userToDelete.getPostedService().forEach(s -> s.setPosted(null));
         userToDelete.getPostedProduct().forEach(p -> p.setPosted(null));
-        userToDelete.getServices().forEach(s -> s.getUsers().remove(userToDelete));
-        userToDelete.getProducts().forEach(p -> p.getUsers().remove(userToDelete));
+        userToDelete.getBidServices().forEach(b -> bidServiceRepository.delete(b));
+        userToDelete.getBidProducts().forEach(p -> bidProductRepository.delete(p));
         userToDelete.getRoles().forEach(r -> r.getUsers().remove(userToDelete));
-        productRepository.saveAll(userToDelete.getProducts());
-        serviceRepository.saveAll(userToDelete.getServices());
         roleRepository.saveAll(userToDelete.getRoles());
         userRepository.delete(userToDelete);
         return ResponseEntity.ok().build();
@@ -99,7 +94,7 @@ public class UserService implements UserDetailsService {
             return ResponseEntity.notFound().build();
         }
         User user = getUserFromHeader(token);
-        user.getProducts().add(productToBidTo);
+        //user.getBidProducts().add(productToBidTo);
         userRepository.save(user);
         return ResponseEntity.ok().build();
     }
@@ -112,7 +107,7 @@ public class UserService implements UserDetailsService {
             return ResponseEntity.notFound().build();
         }
         User user = getUserFromHeader(token);
-        user.getServices().add(serviceToBidTo);
+        //user.getBidServices().add(serviceToBidTo);
         userRepository.save(user);
         return ResponseEntity.ok().build();
     }
