@@ -94,7 +94,12 @@ public class UserService implements UserDetailsService {
             return ResponseEntity.notFound().build();
         }
         User user = getUserFromHeader(token);
-        BidProduct bidProduct = new BidProduct();
+        BidProduct bidProduct = bidProductRepository.getBidProduct(productId, user.getUserId());
+
+        if (bidProduct == null) {
+            bidProduct = new BidProduct();
+        }
+
         bidProduct.setAmount(amount);
         bidProduct.setBiddedProduct(productToBidTo);
         bidProduct.setProductBidder(user);
@@ -110,7 +115,12 @@ public class UserService implements UserDetailsService {
             return ResponseEntity.notFound().build();
         }
         User user = getUserFromHeader(token);
-        BidService bidService = new BidService();
+        BidService bidService = bidServiceRepository.getBidService(serviceId, user.getUserId());
+
+        if (bidService == null) {
+            bidService = new BidService();
+        }
+
         bidService.setAmount(amount);
         bidService.setBiddedService(serviceToBidTo);
         bidService.setServiceBidder(user);
