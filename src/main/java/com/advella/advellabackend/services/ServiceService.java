@@ -1,8 +1,6 @@
 package com.advella.advellabackend.services;
 
-import com.advella.advellabackend.model.Role;
-import com.advella.advellabackend.model.ServiceImage;
-import com.advella.advellabackend.model.User;
+import com.advella.advellabackend.model.*;
 import com.advella.advellabackend.repositories.IBidServiceRepository;
 import com.advella.advellabackend.repositories.IServiceImageRepository;
 import com.advella.advellabackend.repositories.IServiceRepository;
@@ -103,6 +101,17 @@ public class ServiceService {
         LinkedHashSet<User> users = new LinkedHashSet<>();
         service.getBidServices().forEach(u -> users.add(u.getServiceBidder()));
         return ResponseEntity.ok(users);
+    }
+
+    public ResponseEntity<User> getHighestBidder(int serviceId) {
+        if (!doesServiceExist(serviceId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        com.advella.advellabackend.model.Service service = serviceRepository.findById(serviceId).orElseThrow();
+        List<BidService> bidsOnServices = service.getBidServices();
+        bidsOnServices.sort(Comparator.comparing(BidService::getAmount));
+        return ResponseEntity.ok(bidsOnServices.get(0).getServiceBidder());
     }
 
     public ResponseEntity<com.advella.advellabackend.model.Service> getServiceByIDResponse(int serviceId) {

@@ -97,4 +97,10 @@ public class ProductController {
     public ResponseEntity<Collection<User>> getProductBidders(@PathVariable int productId) {
         return productService.getProductBidders(productId);
     }
+
+    @ApiOperation(value = "Get highest bidder of product", notes = "Gets highest bidder of product")
+    @GetMapping("/products/bidders/highest/{productId}")
+    public ResponseEntity<User> getHighestBidder(@PathVariable int productId) {
+        return productService.getHighestBidder(productId);
+    }
 }

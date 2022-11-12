@@ -97,4 +97,10 @@ public class ServiceController {
     public ResponseEntity<Collection<User>> getServiceBidders(@PathVariable int serviceId) {
         return serviceService.getServiceBidders(serviceId);
     }
+
+    @ApiOperation(value = "Get highest bidder of service", notes = "Gets highest bidder of service")
+    @GetMapping("/services/bidders/highest/{serviceId}")
+    public ResponseEntity<User> getHighestBidder(@PathVariable int serviceId) {
+        return serviceService.getHighestBidder(serviceId);
+    }
 }

@@ -132,6 +132,17 @@ public class ProductService {
         return ResponseEntity.ok(users);
     }
 
+    public ResponseEntity<User> getHighestBidder(int productId) {
+        if (!doesProductExist(productId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Product product = productRepository.findById(productId).orElseThrow();
+        List<BidProduct> bidsOnProducts = product.getBidProducts();
+        bidsOnProducts.sort(Comparator.comparing(BidProduct::getAmount));
+        return ResponseEntity.ok(bidsOnProducts.get(0).getProductBidder());
+    }
+
     public ResponseEntity<Product> getProductByIdResponse(int productID) {
         if (!doesProductExist(productID)) {
             return ResponseEntity.notFound().build();
