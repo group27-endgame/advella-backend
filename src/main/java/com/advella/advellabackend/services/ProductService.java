@@ -85,7 +85,9 @@ public class ProductService {
             return ResponseEntity.noContent().build();
         }
         for (Product product : userProducts) {
-            product.getPosted().setPostedProduct(null);
+            if (product.getPosted() != null) {
+                product.getPosted().setPostedProduct(null);
+            }
         }
         return ResponseEntity.ok(userProducts);
     }
