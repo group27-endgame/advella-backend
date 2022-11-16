@@ -111,7 +111,7 @@ public class ServiceService {
         com.advella.advellabackend.model.Service service = serviceRepository.findById(serviceId).orElseThrow();
         List<BidService> bidsOnServices = service.getBidServices();
         bidsOnServices.sort(Comparator.comparing(BidService::getAmount));
-        return ResponseEntity.ok(bidsOnServices.get(0).getServiceBidder());
+        return ResponseEntity.ok(bidsOnServices.get(bidsOnServices.size()).getServiceBidder());
     }
 
     public ResponseEntity<com.advella.advellabackend.model.Service> getServiceByIDResponse(int serviceId) {
