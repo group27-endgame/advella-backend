@@ -140,7 +140,7 @@ public class ProductService {
         Product product = productRepository.findById(productId).orElseThrow();
         List<BidProduct> bidsOnProducts = product.getBidProducts();
         bidsOnProducts.sort(Comparator.comparing(BidProduct::getAmount));
-        return ResponseEntity.ok(bidsOnProducts.get(bidsOnProducts.size()).getProductBidder());
+        return ResponseEntity.ok(bidsOnProducts.get(bidsOnProducts.size()-1).getProductBidder());
     }
 
     public ResponseEntity<Product> getProductByIdResponse(int productID) {
