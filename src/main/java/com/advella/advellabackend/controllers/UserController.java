@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "Get user by Id", notes = "Gets user by userId")
-    @GetMapping("/users/dash-board/{userId}")
+    @GetMapping("/users/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable int userId) {
         return userService.getUserById(userId);
     }

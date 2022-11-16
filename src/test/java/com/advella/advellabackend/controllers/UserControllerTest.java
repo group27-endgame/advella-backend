@@ -129,7 +129,7 @@ class UserControllerTest {
         Mockito.when(userRepository.findById(USER1.getUserId())).thenReturn(Optional.of(USER1));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/users/dash-board/1")
+                        .get("/api/users/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -139,7 +139,7 @@ class UserControllerTest {
         Mockito.when(userRepository.getReferenceById(USER1.getUserId())).thenReturn(null);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/users/dash-board/1")
+                        .get("/api/users/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
