@@ -43,13 +43,13 @@ class ServiceControllerTest {
 
     private static final String TEST_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwicm9sZXMiOlsidXNlciJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL3VzZXJzL2xvZ2luIiwiZXhwIjoxNjY4MTU2NTU1fQ.kvmiR8oZUDZufTxErQgk1CmosOQVfQiz6ir8SS3q7V0";
 
-    User USER1 = new User(1, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
-    User USER2 = new User(2, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(1, "admin", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
-    User USER3 = new User(3, "somerandonEmail@gmail.com", "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
+    User USER1 = new User(1, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>());
+    User USER2 = new User(2, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(1, "admin", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>());
+    User USER3 = new User(3, "somerandonEmail@gmail.com", "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>());
 
-    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, null, null, null, null, null, new ArrayList<>(), null, null, USER1, null, new ArrayList<>());
-    Service SERVICE2 = new Service(2, "Second", "Detail", null, null, null, null, null, null, null, null, null, null, null, null, new ArrayList<>());
-    Service SERVICE3 = new Service(3, "Third", "Detail", null, null, null, null, null, null, null, null, new ServiceCategory(20, null, null), null, new User(10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), null, new ArrayList<>());
+    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, null, null, null, null, null, new ArrayList<>(), null, null, USER1, null);
+    Service SERVICE2 = new Service(2, "Second", "Detail", null, null, null, null, null, null, null, null, null, null, null, null);
+    Service SERVICE3 = new Service(3, "Third", "Detail", null, null, null, null, null, null, null, null, new ServiceCategory(20, null, null), null, new User(10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), null);
 
     @Test
     void getAllServices_Multiple() throws Exception {

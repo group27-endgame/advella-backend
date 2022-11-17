@@ -68,12 +68,4 @@ public class User {
     private List<Service> postedService;
     @OneToMany(mappedBy = "posted")
     private List<Product> postedProduct;
-    @OneToMany(mappedBy = "userBidder")
-    private List<ChatService> bidderChatService;
-    @OneToMany(mappedBy = "userPoster")
-    private List<ChatService> posterChatService;
-    @OneToMany(mappedBy = "userBidder")
-    private List<ChatProduct> bidderChatProduct;
-    @OneToMany(mappedBy = "userPoster")
-    private List<ChatProduct> posterChatProduct;
 }

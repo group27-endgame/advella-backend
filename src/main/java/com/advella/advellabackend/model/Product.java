@@ -59,8 +59,6 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "users_id")
     private User posted;
-    @OneToMany(mappedBy = "product")
-    private List<ChatProduct> chatProducts;
     @OneToMany(mappedBy = "productId")
     private List<ProductImage> productImages;
 }

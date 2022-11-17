@@ -47,9 +47,9 @@ class UserControllerTest {
 
     private static final String TEST_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOaWNrIiwicm9sZXMiOlsidXNlciJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL3VzZXJzL2xvZ2luIiwiZXhwIjoxNjY4MTU2NTU1fQ.kvmiR8oZUDZufTxErQgk1CmosOQVfQiz6ir8SS3q7V0";
 
-    User USER1 = new User(1, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
-    User USER2 = new User(2, null, "password1234", "Bob", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(1, "admin", null), new Role(0, "user", null))), null, null, null, null, null, null, null, null, null, null, null, null);
-    User USER3 = new User(3, null, "password4321", "Dan", null, null, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
+    User USER1 = new User(1, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>());
+    User USER2 = new User(2, null, "password1234", "Bob", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(1, "admin", null), new Role(0, "user", null))), null, null, null, null, null, null, null, null);
+    User USER3 = new User(3, null, "password4321", "Dan", null, null, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>());
 
     @Test
     void getUsersByRole_Multiple() throws Exception {

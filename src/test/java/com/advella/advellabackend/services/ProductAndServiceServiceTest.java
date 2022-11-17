@@ -21,9 +21,9 @@ class ProductAndServiceServiceTest {
 
     private ProductAndServiceService productAndServiceService;
 
-    Product PRODUCT1 = new Product(1, "First", "Detail", Float.valueOf(100.0f), "England", new Date(1668156952), null, null, null, new ArrayList<>(), null, null, null, null, new ArrayList<>());
-    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, new Date(1668156951), null, null, null, null, new ArrayList<>(), null, null, null, null, new ArrayList<>());
-    Service SERVICE2 = new Service(2, "Second", "Detail", null, null, new Date(1668156953), null, null, null, null, null, null, null, null, null, new ArrayList<>());
+    Product PRODUCT1 = new Product(1, "First", "Detail", Float.valueOf(100.0f), "England", new Date(1668156952), null, null, null, new ArrayList<>(), null, null, null, null);
+    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, new Date(1668156951), null, null, null, null, new ArrayList<>(), null, null, null, null);
+    Service SERVICE2 = new Service(2, "Second", "Detail", null, null, new Date(1668156953), null, null, null, null, null, null, null, null, null);
 
     @BeforeEach
     void setUp() {

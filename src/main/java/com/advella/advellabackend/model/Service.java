@@ -65,8 +65,6 @@ public class Service {
     @ManyToOne
     @JoinColumn(name = "users_id")
     private User posted;
-    @OneToMany(mappedBy = "service")
-    private List<ChatService> chatServices;
     @OneToMany(mappedBy = "serviceId")
     private List<ServiceImage> serviceImages;
 }
