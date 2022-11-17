@@ -1,9 +1,6 @@
 package com.advella.advellabackend.model.compositeKeys;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -14,6 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class BidServiceId implements Serializable {
     @Column(name = "users_id")
     private Integer user;

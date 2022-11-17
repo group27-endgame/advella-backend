@@ -1,5 +1,7 @@
 package com.advella.advellabackend.model;
 
+import com.advella.advellabackend.model.chat.ChatMessage;
+import com.advella.advellabackend.model.chat.ChatRoom;
 import com.fasterxml.jackson.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -68,4 +70,12 @@ public class User {
     private List<Service> postedService;
     @OneToMany(mappedBy = "posted")
     private List<Product> postedProduct;
+    @OneToMany(mappedBy = "chatMessageSender")
+    private List<ChatMessage> sendMessages;
+    @OneToMany(mappedBy = "chatMessageRecipient")
+    private List<ChatMessage> receivedMessage;
+    @OneToMany(mappedBy = "chatSender")
+    private List<ChatRoom> sendChatRoom;
+    @OneToMany(mappedBy = "chatRecipient")
+    private List<ChatRoom> receivedChatRoom;
 }
