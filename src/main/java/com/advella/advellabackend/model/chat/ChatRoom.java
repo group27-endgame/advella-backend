@@ -23,11 +23,11 @@ public class ChatRoom {
     @ApiModelProperty(notes = "Chat Id", example = "12", required = true)
     private String chatId;
     @ManyToOne
-    @JoinColumn(name = "users_id", updatable = false, insertable = false)
+    @JoinColumn(name = "chat_sender_id", updatable = false, insertable = false)
     @ApiModelProperty(notes = "Sender", example = "User model", required = true)
     private User chatSender;
     @ManyToOne
-    @JoinColumn(name = "users_id", updatable = false, insertable = false)
+    @JoinColumn(name = "chat_recipient_id", updatable = false, insertable = false)
     @ApiModelProperty(notes = "Recipient", example = "User model", required = true)
     private User chatRecipient;
 }
