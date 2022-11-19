@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE", "HEAD"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/chat/**", configuration);
+        source.registerCorsConfiguration("/ws", configuration);
         return source;
     }
 
