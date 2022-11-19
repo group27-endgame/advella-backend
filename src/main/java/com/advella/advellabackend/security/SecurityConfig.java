@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeRequests().antMatchers("/api/users/login", "/api/users/register", "/swagger-ui/**, /content/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/users/login", "/api/users/register", "/swagger-ui/**",  "/content/**", "/ws/**", "/ws").permitAll();
         http.authorizeRequests().antMatchers("/api/productsAndServices/dash-board/**",
                 "/api/users/dash-board/**",
                 "/api/services/dash-board/**",
@@ -65,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.addAllowedOriginPattern("*");
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowedMethods(Arrays.asList("*"));
