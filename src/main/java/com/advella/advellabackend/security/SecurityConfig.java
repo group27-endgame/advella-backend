@@ -73,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/chat", configuration);
         source.registerCorsConfiguration("/chat/**", configuration);
         source.registerCorsConfiguration("/ws", configuration);
+        source.registerCorsConfiguration("/ws/**", configuration);
         return source;
     }
 
