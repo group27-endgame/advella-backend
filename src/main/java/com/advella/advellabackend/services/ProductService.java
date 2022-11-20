@@ -47,9 +47,9 @@ public class ProductService {
             return ResponseEntity.noContent().build();
         }
         for (Product product : products) {
-            product.setPosted(null);
-            if (product.getProductCategory() != null) {
-                product.getProductCategory().setProducts(new ArrayList<>());
+            if (product.getPosted() != null) {
+                product.getPosted().setPostedProduct(null);
+                product.getPosted().setPostedService(null);
             }
         }
         return ResponseEntity.ok(products);
@@ -58,9 +58,9 @@ public class ProductService {
     public List<Product> getLatestProducts(int amount) {
         List<Product> products = productRepository.getLatestProducts(amount);
         for (Product product : products) {
-            product.setPosted(null);
-            if (product.getProductCategory() != null) {
-                product.getProductCategory().setProducts(new ArrayList<>());
+            if (product.getPosted() != null) {
+                product.getPosted().setPostedProduct(null);
+                product.getPosted().setPostedService(null);
             }
         }
         return products;
@@ -96,9 +96,9 @@ public class ProductService {
             return ResponseEntity.noContent().build();
         }
         for (Product product : userProducts) {
-            product.setPosted(null);
-            if (product.getProductCategory() != null) {
-                product.getProductCategory().setProducts(new ArrayList<>());
+            if (product.getPosted() != null) {
+                product.getPosted().setPostedProduct(null);
+                product.getPosted().setPostedService(null);
             }
         }
         return ResponseEntity.ok(userProducts);
@@ -111,9 +111,9 @@ public class ProductService {
         }
 
         for (Product product : products) {
-            product.setPosted(null);
-            if (product.getProductCategory() != null) {
-                product.getProductCategory().setProducts(new ArrayList<>());
+            if (product.getPosted() != null) {
+                product.getPosted().setPostedProduct(null);
+                product.getPosted().setPostedService(null);
             }
         }
         return ResponseEntity.ok(products);
