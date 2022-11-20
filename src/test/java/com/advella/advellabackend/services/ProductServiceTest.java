@@ -70,14 +70,11 @@ class ProductServiceTest {
         List<Product> response = productService.getLatestProducts(3);
 
         assertEquals(response.get(0), PRODUCT1);
-        assertEquals(null, PRODUCT1.getPosted());
         assertEquals(null, PRODUCT1.getProductCategory());
         assertEquals(response.get(1), PRODUCT2);
-        assertEquals(null, PRODUCT2.getPosted());
         assertEquals(null, PRODUCT2.getProductCategory());
         assertEquals(response.get(2), PRODUCT3);
-        assertEquals(null, PRODUCT3.getPosted());
-        assertEquals(0, PRODUCT3.getProductCategory().getProducts().size());
+        assertEquals(null, PRODUCT3.getProductCategory().getProducts());
     }
 
     @Test

@@ -71,13 +71,10 @@ class ServiceServiceTest {
         List<Service> response = serviceService.getLatestServices(3);
 
         assertEquals(response.get(0), SERVICE1);
-        assertEquals(null, SERVICE1.getPosted());
         assertEquals(null, SERVICE1.getServiceCategory());
         assertEquals(response.get(1), SERVICE2);
-        assertEquals(null, SERVICE2.getPosted());
         assertEquals(null, SERVICE2.getServiceCategory());
         assertEquals(response.get(2), SERVICE3);
-        assertEquals(null, SERVICE3.getPosted());
         assertEquals(null, SERVICE3.getServiceCategory().getServices());
     }
 
