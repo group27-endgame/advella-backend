@@ -31,6 +31,13 @@ public class ProductService {
     private static final String ADMIN_ROLE = "admin";
 
     public List<Product> getProducts() {
+        List<Product> allProducts = productRepository.findAll();
+        for (Product product : allProducts) {
+            if (product.getPosted() != null) {
+                product.getPosted().setPostedProduct(null);
+                product.getPosted().setPostedService(null);
+            }
+        }
         return productRepository.findAll();
     }
 
@@ -38,6 +45,12 @@ public class ProductService {
         List<Product> products = productRepository.getProductsByLocation(location);
         if (products.isEmpty()) {
             return ResponseEntity.noContent().build();
+        }
+        for (Product product : products) {
+            product.setPosted(null);
+            if (product.getProductCategory() != null) {
+                product.getProductCategory().setProducts(new ArrayList<>());
+            }
         }
         return ResponseEntity.ok(products);
     }
@@ -83,8 +96,9 @@ public class ProductService {
             return ResponseEntity.noContent().build();
         }
         for (Product product : userProducts) {
-            if (product.getPosted() != null) {
-                product.getPosted().setPostedProduct(null);
+            product.setPosted(null);
+            if (product.getProductCategory() != null) {
+                product.getProductCategory().setProducts(new ArrayList<>());
             }
         }
         return ResponseEntity.ok(userProducts);
@@ -94,6 +108,13 @@ public class ProductService {
         List<Product> products = productRepository.getProductsWithCategory(categoryId);
         if (products.isEmpty()) {
             return ResponseEntity.noContent().build();
+        }
+
+        for (Product product : products) {
+            product.setPosted(null);
+            if (product.getProductCategory() != null) {
+                product.getProductCategory().setProducts(new ArrayList<>());
+            }
         }
         return ResponseEntity.ok(products);
     }
@@ -140,7 +161,7 @@ public class ProductService {
         Product product = productRepository.findById(productId).orElseThrow();
         List<BidProduct> bidsOnProducts = product.getBidProducts();
         bidsOnProducts.sort(Comparator.comparing(BidProduct::getAmount));
-        return ResponseEntity.ok(bidsOnProducts.get(bidsOnProducts.size()-1).getProductBidder());
+        return ResponseEntity.ok(bidsOnProducts.get(bidsOnProducts.size() - 1).getProductBidder());
     }
 
     public ResponseEntity<Product> getProductByIdResponse(int productID) {
