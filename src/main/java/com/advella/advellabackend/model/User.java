@@ -66,7 +66,7 @@ public class User {
     private List<ReportedProduct> reportedProducts;
     @OneToMany(mappedBy = "serviceReportUser")
     private List<ReportedService> reportedServices;
-    @OneToMany(mappedBy = "posted")
+    @OneToMany(mappedBy = "posted", fetch = FetchType.EAGER)
     private List<Service> postedService;
     @OneToMany(mappedBy = "posted")
     private List<Product> postedProduct;
