@@ -59,7 +59,7 @@ public class Service {
     private ServiceCategory serviceCategory;
     @OneToMany(mappedBy = "reportedService")
     private List<ReportedService> reportedServices;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id")
     private User posted;
     @OneToMany(mappedBy = "serviceId")
