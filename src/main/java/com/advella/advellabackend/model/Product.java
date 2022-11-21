@@ -15,9 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "Products")
 @EqualsAndHashCode
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "productId")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

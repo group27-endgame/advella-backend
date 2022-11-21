@@ -17,9 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "serviceId")
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
