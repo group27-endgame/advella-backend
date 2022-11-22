@@ -32,12 +32,6 @@ public class ProductService {
 
     public List<Product> getProducts() {
         List<Product> allProducts = productRepository.findAll();
-        for (Product product : allProducts) {
-            if (product.getPosted() != null) {
-                product.getPosted().setPostedProduct(null);
-                product.getPosted().setPostedService(null);
-            }
-        }
         return productRepository.findAll();
     }
 
@@ -46,23 +40,11 @@ public class ProductService {
         if (products.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        for (Product product : products) {
-            if (product.getPosted() != null) {
-                product.getPosted().setPostedProduct(null);
-                product.getPosted().setPostedService(null);
-            }
-        }
         return ResponseEntity.ok(products);
     }
 
     public List<Product> getLatestProducts(int amount) {
         List<Product> products = productRepository.getLatestProducts(amount);
-        for (Product product : products) {
-            if (product.getPosted() != null) {
-                product.getPosted().setPostedProduct(null);
-                product.getPosted().setPostedService(null);
-            }
-        }
         return products;
     }
 
@@ -73,11 +55,6 @@ public class ProductService {
         Product selectedProduct = productRepository.findById(productId).orElseThrow();
         selectedProduct.setProductStatus(OPEN_PRODUCT_STATUS);
         productRepository.save(selectedProduct);
-
-        if (selectedProduct.getPosted() != null) {
-            selectedProduct.getPosted().setPostedProduct(null);
-            selectedProduct.getPosted().setPostedService(null);
-        }
 
         return ResponseEntity.ok(selectedProduct);
     }
@@ -90,24 +67,11 @@ public class ProductService {
         selectedProduct.setProductStatus(CLOSED_PRODUCT_STATUS);
         productRepository.save(selectedProduct);
 
-        if (selectedProduct.getPosted() != null) {
-            selectedProduct.getPosted().setPostedProduct(null);
-            selectedProduct.getPosted().setPostedService(null);
-        }
-
         return ResponseEntity.ok(selectedProduct);
     }
 
     public List<Product> getSearchedProducts(String searchedQuery) {
         List<Product> products = productRepository.findByTitleContaining(searchedQuery);
-
-        for (Product product : products) {
-            if (product.getPosted() != null) {
-                product.getPosted().setPostedProduct(null);
-                product.getPosted().setPostedService(null);
-            }
-        }
-
         return products;
     }
 
@@ -115,12 +79,6 @@ public class ProductService {
         List<Product> userProducts = productRepository.getProductsPostedByUser(userId, amount);
         if (userProducts.isEmpty()) {
             return ResponseEntity.noContent().build();
-        }
-        for (Product product : userProducts) {
-            if (product.getPosted() != null) {
-                product.getPosted().setPostedProduct(null);
-                product.getPosted().setPostedService(null);
-            }
         }
         return ResponseEntity.ok(userProducts);
     }
@@ -131,12 +89,6 @@ public class ProductService {
             return ResponseEntity.noContent().build();
         }
 
-        for (Product product : products) {
-            if (product.getPosted() != null) {
-                product.getPosted().setPostedProduct(null);
-                product.getPosted().setPostedService(null);
-            }
-        }
         return ResponseEntity.ok(products);
     }
 
@@ -172,14 +124,6 @@ public class ProductService {
         LinkedHashSet<User> users = new LinkedHashSet<>();
         product.getBidProducts().forEach(u -> users.add(u.getProductBidder()));
 
-        for (User user : users) {
-            for (Product producto : user.getPostedProduct()) {
-                producto.setPosted(null);
-            }
-            for (com.advella.advellabackend.model.Service service : user.getPostedService()) {
-                service.setPosted(null);
-            }
-        }
         return ResponseEntity.ok(users);
     }
 
@@ -193,14 +137,6 @@ public class ProductService {
         bidsOnProducts.sort(Comparator.comparing(BidProduct::getAmount));
 
         User userToReturn = bidsOnProducts.get(bidsOnProducts.size() - 1).getProductBidder();
-        if (userToReturn != null) {
-            for (Product producto : userToReturn.getPostedProduct()) {
-                producto.setPosted(null);
-            }
-            for (com.advella.advellabackend.model.Service servic : userToReturn.getPostedService()) {
-                servic.setPosted(null);
-            }
-        }
         return ResponseEntity.ok(userToReturn);
     }
 
@@ -209,11 +145,6 @@ public class ProductService {
             return ResponseEntity.notFound().build();
         }
         Product product = productRepository.findById(productID).orElseThrow();
-
-        if (product.getPosted() != null) {
-            product.getPosted().setPostedProduct(null);
-            product.getPosted().setPostedService(null);
-        }
         return ResponseEntity.ok(product);
     }
 
@@ -248,11 +179,6 @@ public class ProductService {
             } catch (IOException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
-        }
-
-        if (productToReturn.getPosted() != null) {
-            productToReturn.getPosted().setPostedProduct(null);
-            productToReturn.getPosted().setPostedService(null);
         }
 
         return ResponseEntity.ok(productToReturn);

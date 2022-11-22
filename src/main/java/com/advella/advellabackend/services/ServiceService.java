@@ -32,12 +32,6 @@ public class ServiceService {
 
     public List<com.advella.advellabackend.model.Service> getServices() {
         List<com.advella.advellabackend.model.Service> services = serviceRepository.findAll();
-        for (com.advella.advellabackend.model.Service service : services) {
-            if (service.getPosted() != null) {
-                service.getPosted().setPostedProduct(null);
-                service.getPosted().setPostedService(null);
-            }
-        }
         return services;
     }
 
@@ -45,12 +39,6 @@ public class ServiceService {
         List<com.advella.advellabackend.model.Service> services = serviceRepository.getServicesWithCategory(categoryId);
         if (services.isEmpty()) {
             return ResponseEntity.noContent().build();
-        }
-        for (com.advella.advellabackend.model.Service service : services) {
-            if (service.getPosted() != null) {
-                service.getPosted().setPostedProduct(null);
-                service.getPosted().setPostedService(null);
-            }
         }
         return ResponseEntity.ok(services);
     }
@@ -60,12 +48,6 @@ public class ServiceService {
         if (services.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        for (com.advella.advellabackend.model.Service service : services) {
-            if (service.getPosted() != null) {
-                service.getPosted().setPostedProduct(null);
-                service.getPosted().setPostedService(null);
-            }
-        }
         return ResponseEntity.ok(services);
     }
 
@@ -74,23 +56,11 @@ public class ServiceService {
         if (services.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        for (com.advella.advellabackend.model.Service service : services) {
-            if (service.getPosted() != null) {
-                service.getPosted().setPostedProduct(null);
-                service.getPosted().setPostedService(null);
-            }
-        }
         return ResponseEntity.ok(services);
     }
 
     public List<com.advella.advellabackend.model.Service> getLatestServices(int amount) {
         List<com.advella.advellabackend.model.Service> services = serviceRepository.getLatestServices(amount);
-        for (com.advella.advellabackend.model.Service service : services) {
-            if (service.getPosted() != null) {
-                service.getPosted().setPostedProduct(null);
-                service.getPosted().setPostedService(null);
-            }
-        }
         return services;
     }
 
@@ -123,15 +93,6 @@ public class ServiceService {
         LinkedHashSet<User> users = new LinkedHashSet<>();
         service.getBidServices().forEach(u -> users.add(u.getServiceBidder()));
 
-        for (User user : users) {
-            for (Product producto : user.getPostedProduct()) {
-                producto.setPosted(null);
-            }
-            for (com.advella.advellabackend.model.Service servic : user.getPostedService()) {
-                servic.setPosted(null);
-            }
-        }
-
         return ResponseEntity.ok(users);
     }
 
@@ -145,14 +106,6 @@ public class ServiceService {
         bidsOnServices.sort(Comparator.comparing(BidService::getAmount));
 
         User userToReturn = bidsOnServices.get(bidsOnServices.size() - 1).getServiceBidder();
-        if (userToReturn != null) {
-            for (Product product : userToReturn.getPostedProduct()) {
-                product.setPosted(null);
-            }
-            for (com.advella.advellabackend.model.Service servic : userToReturn.getPostedService()) {
-                servic.setPosted(null);
-            }
-        }
         return ResponseEntity.ok(userToReturn);
     }
 
@@ -162,11 +115,6 @@ public class ServiceService {
         }
 
         com.advella.advellabackend.model.Service service = serviceRepository.findById(serviceId).orElseThrow();
-
-        if (service.getPosted() != null) {
-            service.getPosted().setPostedProduct(null);
-            service.getPosted().setPostedService(null);
-        }
 
         return ResponseEntity.ok(service);
     }
@@ -210,13 +158,6 @@ public class ServiceService {
     public List<com.advella.advellabackend.model.Service> getSearchedService(String searchQuery) {
         List<com.advella.advellabackend.model.Service> services = serviceRepository.findByTitleContaining(searchQuery);
 
-        for (com.advella.advellabackend.model.Service service : services) {
-            if (service.getPosted() != null) {
-                service.getPosted().setPostedProduct(null);
-                service.getPosted().setPostedService(null);
-            }
-        }
-
         return services;
     }
 
@@ -234,11 +175,6 @@ public class ServiceService {
             } catch (IOException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
-        }
-
-        if (serviceToReturn.getPosted() != null) {
-            serviceToReturn.getPosted().setPostedProduct(null);
-            serviceToReturn.getPosted().setPostedService(null);
         }
 
         return ResponseEntity.ok(serviceToReturn);

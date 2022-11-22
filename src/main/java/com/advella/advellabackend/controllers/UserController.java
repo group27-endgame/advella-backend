@@ -31,17 +31,6 @@ public class UserController {
         if (userToReturn == null) {
             return ResponseEntity.notFound().build();
         }
-
-        if (userToReturn != null) {
-            for (Product product : userToReturn.getPostedProduct()) {
-                product.setPosted(null);
-            }
-
-            for (Service service : userToReturn.getPostedService()) {
-                service.setPosted(null);
-            }
-        }
-
         return ResponseEntity.ok(userToReturn);
     }
 

@@ -38,26 +38,6 @@ public class UserService implements UserDetailsService {
 
     public List<User> getLatestUsers(int amount) {
         List<User> usersToReturn = userRepository.getLatestUsers(amount);
-        for (User userToReturn : usersToReturn) {
-
-            if (userToReturn.getPostedProduct() != null) {
-                for (Product product : userToReturn.getPostedProduct()) {
-                    product.setPosted(null);
-                }
-            }
-
-            if (userToReturn.getPostedService() != null) {
-                for (com.advella.advellabackend.model.Service service : userToReturn.getPostedService()) {
-                    service.setPosted(null);
-                }
-            }
-
-            if (userToReturn.getRoles() != null) {
-                for (Role userRole : userToReturn.getRoles()) {
-                    userRole.setUsers(null);
-                }
-            }
-        }
         return usersToReturn;
     }
 
@@ -82,15 +62,6 @@ public class UserService implements UserDetailsService {
         }
         User user = userRepository.getReferenceById(userId);
 
-        if (user != null) {
-            for (Product product : user.getPostedProduct()) {
-                product.setPosted(null);
-            }
-            for (com.advella.advellabackend.model.Service service : user.getPostedService()) {
-                service.setPosted(null);
-            }
-        }
-
         return ResponseEntity.ok(user);
     }
 
@@ -99,16 +70,6 @@ public class UserService implements UserDetailsService {
             return ResponseEntity.noContent().build();
         }
         List<User> usersToReturn = userRepository.getUsersByLocation(location);
-
-        for (User user : usersToReturn) {
-            for (Product product : user.getPostedProduct()) {
-                product.setPosted(null);
-            }
-
-            for (com.advella.advellabackend.model.Service service : user.getPostedService()) {
-                service.setPosted(null);
-            }
-        }
 
         return ResponseEntity.ok(usersToReturn);
     }
@@ -172,26 +133,12 @@ public class UserService implements UserDetailsService {
                 if (role.getName().equals("admin")) {
                     userRoles.remove(role);
                     userRepository.save(user);
-
-                    for (Product product : user.getPostedProduct()) {
-                        product.setPosted(null);
-                    }
-                    for (com.advella.advellabackend.model.Service service : user.getPostedService()) {
-                        service.setPosted(null);
-                    }
                     return ResponseEntity.ok(user);
                 }
             }
 
             userRoles.add(roleRepository.findByRoleName("admin"));
             userRepository.save(user);
-
-            for (Product product : user.getPostedProduct()) {
-                product.setPosted(null);
-            }
-            for (com.advella.advellabackend.model.Service service : user.getPostedService()) {
-                service.setPosted(null);
-            }
 
             return ResponseEntity.ok(user);
         }
@@ -238,16 +185,6 @@ public class UserService implements UserDetailsService {
         String[] userArray = payloadDecode.split("\"");
         String userName = userArray[3];
         User user = userRepository.findByUsername(userName);
-        if (user != null) {
-            for (Product product : user.getPostedProduct()) {
-                product.setPosted(null);
-            }
-
-            for (com.advella.advellabackend.model.Service service : user.getPostedService()) {
-                service.setPosted(null);
-            }
-        }
-
         return user;
     }
 }
