@@ -133,7 +133,17 @@ public class ServiceService {
         com.advella.advellabackend.model.Service service = serviceRepository.findById(serviceId).orElseThrow();
         List<BidService> bidsOnServices = service.getBidServices();
         bidsOnServices.sort(Comparator.comparing(BidService::getAmount));
-        return ResponseEntity.ok(bidsOnServices.get(bidsOnServices.size() - 1).getServiceBidder());
+
+        User userToReturn = bidsOnServices.get(bidsOnServices.size() - 1).getServiceBidder();
+        if (userToReturn != null) {
+            for (Product product : userToReturn.getPostedProduct()) {
+                product.setPosted(null);
+            }
+            for (com.advella.advellabackend.model.Service servic : userToReturn.getPostedService()) {
+                servic.setPosted(null);
+            }
+        }
+        return ResponseEntity.ok(userToReturn);
     }
 
     public ResponseEntity<com.advella.advellabackend.model.Service> getServiceByIDResponse(int serviceId) {

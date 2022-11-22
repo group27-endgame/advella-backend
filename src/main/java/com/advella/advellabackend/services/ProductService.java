@@ -173,7 +173,17 @@ public class ProductService {
         Product product = productRepository.findById(productId).orElseThrow();
         List<BidProduct> bidsOnProducts = product.getBidProducts();
         bidsOnProducts.sort(Comparator.comparing(BidProduct::getAmount));
-        return ResponseEntity.ok(bidsOnProducts.get(bidsOnProducts.size() - 1).getProductBidder());
+
+        User userToReturn = bidsOnProducts.get(bidsOnProducts.size() - 1).getProductBidder();
+        if (userToReturn != null) {
+            for (Product producto : userToReturn.getPostedProduct()) {
+                producto.setPosted(null);
+            }
+            for (com.advella.advellabackend.model.Service servic : userToReturn.getPostedService()) {
+                servic.setPosted(null);
+            }
+        }
+        return ResponseEntity.ok(userToReturn);
     }
 
     public ResponseEntity<Product> getProductByIdResponse(int productID) {
