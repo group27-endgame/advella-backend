@@ -162,6 +162,15 @@ public class ProductService {
         Product product = productRepository.findById(productId).orElseThrow();
         LinkedHashSet<User> users = new LinkedHashSet<>();
         product.getBidProducts().forEach(u -> users.add(u.getProductBidder()));
+
+        for (User user: users) {
+            for (Product producto : user.getPostedProduct()) {
+                producto.setPosted(null);
+            }
+            for (com.advella.advellabackend.model.Service service : user.getPostedService()) {
+                service.setPosted(null);
+            }
+        }
         return ResponseEntity.ok(users);
     }
 

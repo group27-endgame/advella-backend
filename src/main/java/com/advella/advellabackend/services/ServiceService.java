@@ -122,6 +122,16 @@ public class ServiceService {
         com.advella.advellabackend.model.Service service = serviceRepository.findById(serviceId).orElseThrow();
         LinkedHashSet<User> users = new LinkedHashSet<>();
         service.getBidServices().forEach(u -> users.add(u.getServiceBidder()));
+
+        for (User user: users) {
+            for (Product producto : user.getPostedProduct()) {
+                producto.setPosted(null);
+            }
+            for (com.advella.advellabackend.model.Service servic : user.getPostedService()) {
+                servic.setPosted(null);
+            }
+        }
+
         return ResponseEntity.ok(users);
     }
 
