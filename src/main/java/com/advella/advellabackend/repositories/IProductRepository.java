@@ -2,6 +2,7 @@ package com.advella.advellabackend.repositories;
 
 import com.advella.advellabackend.model.Product;
 import com.advella.advellabackend.model.Service;
+import com.advella.advellabackend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -38,4 +39,7 @@ public interface IProductRepository extends JpaRepository<Product,Integer> {
 
     @Query(value = "SELECT TOP (:amount) * FROM Products WHERE users_id = :userId ORDER BY product_posted_datetime DESC", nativeQuery = true)
     List<Product> getProductsPostedByUser(Integer userId, int amount);
+
+    @Query(value = "SELECT users_id FROM Products WHERE product_id = :productId", nativeQuery = true)
+    int findPostedByProductId(int productId);
 }

@@ -103,4 +103,10 @@ public class ProductController {
     public ResponseEntity<User> getHighestBidder(@PathVariable int productId) {
         return productService.getHighestBidder(productId);
     }
+
+    @ApiOperation(value = "Get poster of product", notes = "Gets poster of product")
+    @GetMapping("/products/posted/{productId}")
+    public ResponseEntity<User> getPoster(@PathVariable int productId) {
+        return productService.getPoster(productId);
+    }
 }

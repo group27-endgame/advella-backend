@@ -53,8 +53,9 @@ public class Product {
     private ProductCategory productCategory;
     @OneToMany(mappedBy = "reportedProduct")
     private List<ReportedProduct> reportedProducts;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id")
+    @JsonBackReference
     private User posted;
     @OneToMany(mappedBy = "productId")
     private List<ProductImage> productImages;

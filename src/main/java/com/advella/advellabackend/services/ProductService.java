@@ -140,6 +140,21 @@ public class ProductService {
         return ResponseEntity.ok(userToReturn);
     }
 
+    public ResponseEntity<User> getPoster(int productId) {
+        if (!doesProductExist(productId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        int userId = productRepository.findPostedByProductId(productId);
+        User userToReturn = userService.getUserById(userId).getBody();
+
+        if (userToReturn == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(userToReturn);
+    }
+
     public ResponseEntity<Product> getProductByIdResponse(int productID) {
         if (!doesProductExist(productID)) {
             return ResponseEntity.notFound().build();
