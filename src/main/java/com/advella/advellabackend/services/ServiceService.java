@@ -142,6 +142,12 @@ public class ServiceService {
         }
 
         com.advella.advellabackend.model.Service service = serviceRepository.findById(serviceId).orElseThrow();
+
+        if (service.getPosted() != null) {
+            service.getPosted().setPostedProduct(null);
+            service.getPosted().setPostedService(null);
+        }
+
         return ResponseEntity.ok(service);
     }
 
@@ -200,6 +206,12 @@ public class ServiceService {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
+
+        if (serviceToReturn.getPosted() != null) {
+            serviceToReturn.getPosted().setPostedProduct(null);
+            serviceToReturn.getPosted().setPostedService(null);
+        }
+
         return ResponseEntity.ok(serviceToReturn);
     }
 

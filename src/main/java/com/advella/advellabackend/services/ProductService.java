@@ -73,6 +73,12 @@ public class ProductService {
         Product selectedProduct = productRepository.findById(productId).orElseThrow();
         selectedProduct.setProductStatus(OPEN_PRODUCT_STATUS);
         productRepository.save(selectedProduct);
+
+        if (selectedProduct.getPosted() != null) {
+            selectedProduct.getPosted().setPostedProduct(null);
+            selectedProduct.getPosted().setPostedService(null);
+        }
+
         return ResponseEntity.ok(selectedProduct);
     }
 
@@ -83,6 +89,12 @@ public class ProductService {
         Product selectedProduct = productRepository.findById(productId).orElseThrow();
         selectedProduct.setProductStatus(CLOSED_PRODUCT_STATUS);
         productRepository.save(selectedProduct);
+
+        if (selectedProduct.getPosted() != null) {
+            selectedProduct.getPosted().setPostedProduct(null);
+            selectedProduct.getPosted().setPostedService(null);
+        }
+
         return ResponseEntity.ok(selectedProduct);
     }
 
@@ -169,6 +181,11 @@ public class ProductService {
             return ResponseEntity.notFound().build();
         }
         Product product = productRepository.findById(productID).orElseThrow();
+
+        if (product.getPosted() != null) {
+            product.getPosted().setPostedProduct(null);
+            product.getPosted().setPostedService(null);
+        }
         return ResponseEntity.ok(product);
     }
 
@@ -203,6 +220,11 @@ public class ProductService {
             } catch (IOException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
+        }
+
+        if (productToReturn.getPosted() != null) {
+            productToReturn.getPosted().setPostedProduct(null);
+            productToReturn.getPosted().setPostedService(null);
         }
 
         return ResponseEntity.ok(productToReturn);
