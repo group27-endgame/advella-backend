@@ -99,7 +99,16 @@ public class ProductService {
     }
 
     public List<Product> getSearchedProducts(String searchedQuery) {
-        return productRepository.findByTitleContaining(searchedQuery);
+        List<Product> products = productRepository.findByTitleContaining(searchedQuery);
+
+        for (Product product : products) {
+            if (product.getPosted() != null) {
+                product.getPosted().setPostedProduct(null);
+                product.getPosted().setPostedService(null);
+            }
+        }
+
+        return products;
     }
 
     public ResponseEntity<List<Product>> getProductsInPostedByUser(Integer userId, int amount) {
@@ -163,7 +172,7 @@ public class ProductService {
         LinkedHashSet<User> users = new LinkedHashSet<>();
         product.getBidProducts().forEach(u -> users.add(u.getProductBidder()));
 
-        for (User user: users) {
+        for (User user : users) {
             for (Product producto : user.getPostedProduct()) {
                 producto.setPosted(null);
             }

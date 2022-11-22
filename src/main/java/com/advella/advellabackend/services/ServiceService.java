@@ -123,7 +123,7 @@ public class ServiceService {
         LinkedHashSet<User> users = new LinkedHashSet<>();
         service.getBidServices().forEach(u -> users.add(u.getServiceBidder()));
 
-        for (User user: users) {
+        for (User user : users) {
             for (Product producto : user.getPostedProduct()) {
                 producto.setPosted(null);
             }
@@ -208,7 +208,16 @@ public class ServiceService {
     }
 
     public List<com.advella.advellabackend.model.Service> getSearchedService(String searchQuery) {
-        return serviceRepository.findByTitleContaining(searchQuery);
+        List<com.advella.advellabackend.model.Service> services = serviceRepository.findByTitleContaining(searchQuery);
+
+        for (com.advella.advellabackend.model.Service service : services) {
+            if (service.getPosted() != null) {
+                service.getPosted().setPostedProduct(null);
+                service.getPosted().setPostedService(null);
+            }
+        }
+
+        return services;
     }
 
     public ResponseEntity<com.advella.advellabackend.model.Service> addNewService(com.advella.advellabackend.model.Service newService, String token, MultipartFile multipartFile) {

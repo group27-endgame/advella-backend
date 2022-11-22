@@ -32,11 +32,14 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        for (Product product : userToReturn.getPostedProduct()) {
-            product.setPosted(null);
-        }
-        for (Service service : userToReturn.getPostedService()) {
-            service.setPosted(null);
+        if (userToReturn != null) {
+            for (Product product : userToReturn.getPostedProduct()) {
+                product.setPosted(null);
+            }
+
+            for (Service service : userToReturn.getPostedService()) {
+                service.setPosted(null);
+            }
         }
 
         return ResponseEntity.ok(userToReturn);
