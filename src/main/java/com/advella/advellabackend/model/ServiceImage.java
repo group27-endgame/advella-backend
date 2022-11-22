@@ -1,5 +1,6 @@
 package com.advella.advellabackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class ServiceImage {
     @Column(name = "image_id")
     private int id;
     @ManyToOne
+    @JsonIgnoreProperties("serviceImages")
     @JoinColumn(name="service_id")
     private Service serviceId;
     @Column(name = "path")
