@@ -1,5 +1,7 @@
 package com.advella.advellabackend.controllers;
 
+import com.advella.advellabackend.model.Product;
+import com.advella.advellabackend.model.Service;
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.services.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +31,14 @@ public class UserController {
         if (userToReturn == null) {
             return ResponseEntity.notFound().build();
         }
+
+        for (Product product : userToReturn.getPostedProduct()) {
+            product.setPosted(null);
+        }
+        for (Service service : userToReturn.getPostedService()) {
+            service.setPosted(null);
+        }
+
         return ResponseEntity.ok(userToReturn);
     }
 

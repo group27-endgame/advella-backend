@@ -67,7 +67,18 @@ public class UserService implements UserDetailsService {
         if (!doesUserExist(userId)) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(userRepository.getReferenceById(userId));
+        User user = userRepository.getReferenceById(userId);
+
+        if (user != null) {
+            for (Product product : user.getPostedProduct()) {
+                product.setPosted(null);
+            }
+            for (com.advella.advellabackend.model.Service service : user.getPostedService()) {
+                service.setPosted(null);
+            }
+        }
+
+        return ResponseEntity.ok(user);
     }
 
     public ResponseEntity<List<User>> getUsersByLocation(String location) {
@@ -136,12 +147,27 @@ public class UserService implements UserDetailsService {
                 if (role.getName().equals("admin")) {
                     userRoles.remove(role);
                     userRepository.save(user);
+
+                    for (Product product : user.getPostedProduct()) {
+                        product.setPosted(null);
+                    }
+                    for (com.advella.advellabackend.model.Service service : user.getPostedService()) {
+                        service.setPosted(null);
+                    }
                     return ResponseEntity.ok(user);
                 }
             }
 
             userRoles.add(roleRepository.findByRoleName("admin"));
             userRepository.save(user);
+
+            for (Product product : user.getPostedProduct()) {
+                product.setPosted(null);
+            }
+            for (com.advella.advellabackend.model.Service service : user.getPostedService()) {
+                service.setPosted(null);
+            }
+
             return ResponseEntity.ok(user);
         }
         return ResponseEntity.notFound().build();
