@@ -63,10 +63,8 @@ public class User {
     private List<ReportedProduct> reportedProducts;
     @OneToMany(mappedBy = "serviceReportUser")
     private List<ReportedService> reportedServices;
-    @JsonManagedReference
     @OneToMany(mappedBy = "posted", fetch = FetchType.EAGER)
     private List<Service> postedService;
-    @JsonManagedReference
     @OneToMany(mappedBy = "posted")
     private List<Product> postedProduct;
     @OneToMany(mappedBy = "chatMessageSender")

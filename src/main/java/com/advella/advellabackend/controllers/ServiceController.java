@@ -103,10 +103,4 @@ public class ServiceController {
     public ResponseEntity<User> getHighestBidder(@PathVariable int serviceId) {
         return serviceService.getHighestBidder(serviceId);
     }
-
-    @ApiOperation(value = "Get poster of service", notes = "Gets poster of service")
-    @GetMapping("/services/posted/{serviceId}")
-    public ResponseEntity<User> getPoster(@PathVariable int serviceId) {
-        return serviceService.getPoster(serviceId);
-    }
 }

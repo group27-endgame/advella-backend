@@ -109,21 +109,6 @@ public class ServiceService {
         return ResponseEntity.ok(userToReturn);
     }
 
-    public ResponseEntity<User> getPoster(int serviceId) {
-        if (!doesServiceExist(serviceId)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        int userId = serviceRepository.findPostedByServiceId(serviceId);
-        User userToReturn = userService.getUserById(userId).getBody();
-
-        if (userToReturn == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(userToReturn);
-    }
-
     public ResponseEntity<com.advella.advellabackend.model.Service> getServiceByIDResponse(int serviceId) {
         if (!doesServiceExist(serviceId)) {
             return ResponseEntity.notFound().build();

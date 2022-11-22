@@ -38,7 +38,4 @@ public interface IServiceRepository extends JpaRepository<Service,Integer> {
 
     @Query(value = "SELECT TOP (:amount) * FROM Task_Services WHERE users_id = :userId ORDER BY service_posted_datetime DESC", nativeQuery = true)
     List<Service> getServicesPostedByUser(Integer userId, int amount);
-
-    @Query(value = "SELECT users_id FROM Task_Services WHERE service_id = :serviceId", nativeQuery = true)
-    int findPostedByServiceId(int serviceId);
 }

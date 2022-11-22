@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -55,7 +56,7 @@ public class Product {
     private List<ReportedProduct> reportedProducts;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id")
-    @JsonBackReference
+    @JsonIgnoreProperties({"postedProduct","postedService"})
     private User posted;
     @OneToMany(mappedBy = "productId")
     private List<ProductImage> productImages;

@@ -59,9 +59,9 @@ public class Service {
     private ServiceCategory serviceCategory;
     @OneToMany(mappedBy = "reportedService")
     private List<ReportedService> reportedServices;
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id")
+    @JsonIgnoreProperties({"postedProduct","postedService"})
     private User posted;
     @OneToMany(mappedBy = "serviceId")
     private List<ServiceImage> serviceImages;
