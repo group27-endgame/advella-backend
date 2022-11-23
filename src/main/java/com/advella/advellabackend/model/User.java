@@ -75,4 +75,9 @@ public class User {
     private List<ChatRoom> sendChatRoom;
     @OneToMany(mappedBy = "chatRecipient")
     private List<ChatRoom> receivedChatRoom;
+
+    public User(int userId, String username) {
+        this.userId = userId;
+        this.username = username;
+    }
 }

@@ -32,6 +32,15 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public List<User> getBasicUserInfos() {
+        List<Object[]>objectRecords = userRepository.getUsersIdAndUsername();
+        List<User> users = new ArrayList<>();
+        for (Object[] object:objectRecords) {
+            users.add(new User(Integer.valueOf((Integer) object[0]),String.valueOf(object[1])));
+        }
+        return users;
+    }
+
     public void saveAllUsers(List<User> usersToSave) {
         userRepository.saveAll(usersToSave);
     }

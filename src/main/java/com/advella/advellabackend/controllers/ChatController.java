@@ -1,9 +1,12 @@
 package com.advella.advellabackend.controllers;
 
+import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.model.chat.ChatMessage;
 import com.advella.advellabackend.model.chat.ChatNotification;
 import com.advella.advellabackend.services.ChatMessageService;
 import com.advella.advellabackend.services.ChatRoomService;
+import com.advella.advellabackend.services.UserService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -12,6 +15,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,6 +26,7 @@ public class ChatController {
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatMessageService chatMessageService;
     private final ChatRoomService chatRoomService;
+    private final UserService userService;
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessage chatMessage) {
@@ -47,5 +55,11 @@ public class ChatController {
     @GetMapping("/messages/{id}")
     public ResponseEntity<?> findMessage(@PathVariable Integer id) {
         return ResponseEntity.ok(chatMessageService.findById(id));
+    }
+
+    @ApiOperation(value = "Gets only basic user info", notes = "Gets only id and name of all users")
+    @GetMapping("/api/users/infos")
+    public ResponseEntity<List<User>> getAllUsersBasicInfo() {
+        return ResponseEntity.ok(userService.getBasicUserInfos());
     }
 }
