@@ -15,3 +15,6 @@ https://api.advella.popal.dev/swagger-ui.html#/
 Each service is unit tested, with sunny scenarios as well as failure setups. All external things are mocked to test each specific cases.
 ### Integration tests
 More complex tests, which start the whole application and are mocking API calls. In these scenarios it is important how the API controllers work with Services and Repositories. Main objective of these is to test the flow throughout the backend, in a sense of how do the different components behave together.
+
+## Github Actions
+There are two actions present. First one build the project and runs all the tests when some new code is merged onto main branch. After the first action is successful, it will proceed with second action in form of deploying the app onto the server, after which it will be hosted and accesible from all the client apps on this URL: https://advella.popal.dev/
