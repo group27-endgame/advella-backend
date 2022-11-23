@@ -2,7 +2,9 @@
 Backend application for Advella application as part of bachelor project at VIA University College.
 
 ## Structure
-This project is divided into 3 main parts. Controllers, which expose the REST API endpoints. Services that apply all the needed logic and Repositories which are calling the database.
+This project is divided into 3 main parts. Controllers, which expose the REST API endpoints. Services that apply all the needed logic and Repositories which are calling the database. In this context it is the middleware a bridge between all the client applications and database.
+
+![Middleware](https://user-images.githubusercontent.com/62397372/203567811-0fda64db-b5aa-406b-9377-b28cd257f89f.png)
 
 ## Rest api documentation
 To increase the efficiency communicating between backend and frontend Swagger documentation was exposed to specify which endpoints are available. All the forms of models, descriptions, error codes and examples are also present.
