@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -32,12 +33,15 @@ public class ChatController {
     public void processMessage(@Payload ChatMessage chatMessage) {
         var chatId = chatRoomService.getChatId(chatMessage.getChatMessageSender().getUserId(), chatMessage.getChatMessageRecipient().getUserId(), true);
         chatMessage.setChatId(chatId.get());
+        chatMessage.setChatMessageSender(userService.getUserById(chatMessage.getChatMessageSender().getUserId()).getBody());
+        chatMessage.setChatMessageRecipient(userService.getUserById(chatMessage.getChatMessageRecipient().getUserId()).getBody());
+        chatMessage.setSentTime(new Date(System.currentTimeMillis()));
 
         ChatMessage saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
                 String.valueOf(chatMessage.getChatMessageRecipient().getUserId()), "/queue/messages",
                 new ChatNotification(
-                        saved.getId(),
+                        saved.getId().toString(),
                         saved.getChatMessageSender().getUserId(),
                         saved.getChatMessageSender().getUsername()));
     }
@@ -54,7 +58,8 @@ public class ChatController {
 
     @GetMapping("api/messages/{id}")
     public ResponseEntity<?> findMessage(@PathVariable Integer id) {
-        return ResponseEntity.ok(chatMessageService.findById(id));
+        ChatMessage chatMessage = chatMessageService.findById(id);
+        return ResponseEntity.ok(chatMessage);
     }
 
     @ApiOperation(value = "Gets only basic user info", notes = "Gets only id and name of all users")

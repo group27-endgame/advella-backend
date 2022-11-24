@@ -18,7 +18,7 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @ApiModelProperty(notes = "ID", example = "1", required = true)
-    private String id;
+    private Integer id;
     @Column(name = "chat_id")
     @ApiModelProperty(notes = "Chat Id", example = "12", required = true)
     private String chatId;

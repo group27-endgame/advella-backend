@@ -20,5 +20,4 @@ public interface IChatMessageRepository extends JpaRepository<ChatMessage, Integ
             update ChatMessage c set c.chatStatus = ?1
             where c.chatMessageSender.userId = ?2 and c.chatMessageRecipient.userId = ?3""")
     void updateChatStatusByChatMessageSender_UserIdAndChatMessageRecipient_UserId(MessageStatus chatStatus, int userId, int userId1);
-
 }
