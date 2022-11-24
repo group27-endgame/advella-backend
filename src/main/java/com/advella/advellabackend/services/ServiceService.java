@@ -167,6 +167,7 @@ public class ServiceService {
             return ResponseEntity.notFound().build();
         }
         newService.setPosted(userToAdd);
+        newService.setPostedDateTime(new java.sql.Date(System.currentTimeMillis()));
         com.advella.advellabackend.model.Service serviceToReturn = serviceRepository.save(newService);
         if (multipartFile != null) {
             try {

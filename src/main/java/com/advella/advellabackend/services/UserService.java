@@ -167,6 +167,7 @@ public class UserService implements UserDetailsService {
         if (userRepository.findByUsername(userToRegister.getUsername()) == null) {
             userToRegister.setRoles(Collections.singletonList(roleRepository.findByRoleName("user")));
             userToRegister.setPassword(passwordEncoder.encode(userToRegister.getPassword()));
+            userToRegister.setRegistrationDateTime(new Date(System.currentTimeMillis()));
             userRepository.save(userToRegister);
             return ResponseEntity.ok().build();
         }

@@ -170,6 +170,7 @@ public class ProductService {
             ResponseEntity.notFound().build();
         }
         newProduct.setPosted(userToAdd);
+        newProduct.setPostedDateTime(new java.sql.Date(System.currentTimeMillis()));
         Product productToReturn = productRepository.save(newProduct);
 
         if (multipartFile != null) {
