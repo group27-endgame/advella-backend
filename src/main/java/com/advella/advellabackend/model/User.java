@@ -56,6 +56,7 @@ public class User {
     @JsonManagedReference(value = "userBidServices")
     private List<BidService> bidServices;
     @OneToMany(mappedBy = "contactUser")
+    @JsonIgnoreProperties({"contactUser"})
     private List<Contact> contact;
     @OneToMany(mappedBy = "ratingUser")
     private List<Rating> ratings;
