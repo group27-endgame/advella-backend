@@ -48,6 +48,7 @@ jobs:
             --name=advella-backend \
             --network=advella \
             -p 3000:8080 \
+            -v advella-backend-vol:/app/static
             --restart unless-stopped \
             -e DB_HOST=${{ secrets.DB_HOST }} \
             -e DB_NAME=${{ secrets.DB_NAME }} \
