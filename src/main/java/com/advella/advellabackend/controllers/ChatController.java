@@ -33,10 +33,17 @@ public class ChatController {
     public void processMessage(@Payload ChatMessage chatMessage) {
         var chatId = chatRoomService.getChatId(chatMessage.getChatMessageSender().getUserId(), chatMessage.getChatMessageRecipient().getUserId(), true);
         chatMessage.setChatId(chatId.get());
-        chatMessage.setChatMessageSender(userService.getUserById(chatMessage.getChatMessageSender().getUserId()).getBody());
-        chatMessage.setChatMessageRecipient(userService.getUserById(chatMessage.getChatMessageRecipient().getUserId()).getBody());
-        chatMessage.setSentTime(new Date(System.currentTimeMillis()));
+        User messageSender = userService.getUserById(chatMessage.getChatMessageSender().getUserId()).getBody();
+        User messageRecipient = userService.getUserById(chatMessage.getChatMessageRecipient().getUserId()).getBody();
+        chatMessage.setChatMessageSender(messageSender);
+        chatMessage.setChatMessageRecipient(messageRecipient);
 
+        chatMessage.setSentTime(new Date(System.currentTimeMillis()));
+        messageSender.getSendMessages().add(chatMessage);
+        messageRecipient.getReceivedMessage().add(chatMessage);
+
+        userService.save(messageSender);
+        userService.save(messageRecipient);
         ChatMessage saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
                 String.valueOf(chatMessage.getChatMessageRecipient().getUserId()), "/queue/messages",

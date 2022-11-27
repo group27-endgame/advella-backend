@@ -33,6 +33,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public void save(User userToSave) {
+        userRepository.save(userToSave);
+    }
+
     public List<User> getBasicUserInfos() {
         List<Object[]> objectRecords = userRepository.getUsersIdAndUsername();
         List<User> users = new ArrayList<>();
