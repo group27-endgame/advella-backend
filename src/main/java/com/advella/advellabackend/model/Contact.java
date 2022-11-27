@@ -31,6 +31,6 @@ public class Contact {
     private Boolean isSeen;
     @ManyToOne
     @JoinColumn(name="users_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer"})
+    @JsonIgnoreProperties({"contact", "postedProduct", "postedService", "sendMessages", "receivedMessage", "sendChatRoom", "receivedChatRoom", "bidProducts", "bidServices"})
     private User contactUser;
 }

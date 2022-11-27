@@ -139,17 +139,6 @@ public class UserService implements UserDetailsService {
         return ResponseEntity.ok().build();
     }
 
-    public void addContactToUser(Integer contactUserId, Integer userId) {
-        User userToAddToContact = userRepository.findById(contactUserId).get();
-        User user = userRepository.findById(userId).get();
-
-        user.getContact().add(new Contact(0, null, null, false, userToAddToContact));
-    }
-
-    public List<Contact> getUsersContacts(Integer userId) {
-        return contactRepository.findByContactUser_UserId(userId);
-    }
-
     public ResponseEntity<User> changeUserRole(Integer userId) {
         User user = userRepository.getReferenceById(userId);
         if (user != null) {

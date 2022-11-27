@@ -29,6 +29,4 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "select u.users_id, u.username from Users u", nativeQuery = true)
     List<Object[]> getUsersIdAndUsername();
-
-    List<Contact> findByUserId(int userId);
 }

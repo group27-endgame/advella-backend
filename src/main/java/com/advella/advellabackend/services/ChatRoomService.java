@@ -19,6 +19,10 @@ public class ChatRoomService {
     private final IChatRoomRepository chatRoomRepository;
     private final IUserRepository userRepository;
 
+    public List<ChatRoom> getUsersChatRooms(Integer userId) {
+        return chatRoomRepository.findByChatSender_UserId(userId);
+    }
+
     public Optional<String> getChatId(Integer senderId, Integer recipientId, boolean createIfNotExist) {
         User sender;
         User recipient;

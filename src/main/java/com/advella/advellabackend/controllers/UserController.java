@@ -1,9 +1,6 @@
 package com.advella.advellabackend.controllers;
 
-import com.advella.advellabackend.model.Contact;
-import com.advella.advellabackend.model.Product;
-import com.advella.advellabackend.model.Service;
-import com.advella.advellabackend.model.User;
+import com.advella.advellabackend.model.*;
 import com.advella.advellabackend.services.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -87,18 +84,5 @@ public class UserController {
     @PutMapping("/users/dash-board")
     public ResponseEntity<User> changeUserRole(@RequestParam Integer userId) {
         return userService.changeUserRole(userId);
-    }
-
-    @ApiOperation(value = "Add contact to user", notes = "Adds one contact to user")
-    @PutMapping("/users/contact/{userId}")
-    public ResponseEntity<Void> addContact(@RequestParam Integer userContactId, @PathVariable Integer userId) {
-        userService.addContactToUser(userContactId, userId);
-        return ResponseEntity.ok().build();
-    }
-
-    @ApiOperation(value = "Gets all contacts of user", notes = "Gets all contacts of user by userId")
-    @GetMapping("/users/contact")
-    public ResponseEntity<List<Contact>> getAllContacts(@RequestParam Integer userId) {
-        return ResponseEntity.ok(userService.getUsersContacts(userId));
     }
 }

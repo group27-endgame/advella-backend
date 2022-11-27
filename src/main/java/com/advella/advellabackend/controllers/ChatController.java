@@ -3,6 +3,7 @@ package com.advella.advellabackend.controllers;
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.model.chat.ChatMessage;
 import com.advella.advellabackend.model.chat.ChatNotification;
+import com.advella.advellabackend.model.chat.ChatRoom;
 import com.advella.advellabackend.services.ChatMessageService;
 import com.advella.advellabackend.services.ChatRoomService;
 import com.advella.advellabackend.services.UserService;
@@ -61,6 +62,11 @@ public class ChatController {
     public ResponseEntity<?> findMessage(@PathVariable Integer id) {
         ChatMessage chatMessage = chatMessageService.findById(id);
         return ResponseEntity.ok(chatMessage);
+    }
+
+    @GetMapping("api/chatrooms/{userId}")
+    public ResponseEntity<List<ChatRoom>> getUsersChatRoom(@PathVariable Integer userId) {
+        return ResponseEntity.ok(chatRoomService.getUsersChatRooms(userId));
     }
 
     @ApiOperation(value = "Gets only basic user info", notes = "Gets only id and name of all users")
