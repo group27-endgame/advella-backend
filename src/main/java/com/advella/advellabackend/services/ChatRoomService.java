@@ -41,6 +41,9 @@ public class ChatRoomService {
 
                     ChatRoom recipientSender = new ChatRoom(null, chatId, recipient, sender);
 
+                    sender.getSendChatRoom().add(senderRecipient);
+                    recipient.getReceivedChatRoom().add(recipientSender);
+
                     chatRoomRepository.save(senderRecipient);
                     chatRoomRepository.save(recipientSender);
 
