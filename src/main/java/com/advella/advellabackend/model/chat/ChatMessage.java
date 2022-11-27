@@ -1,6 +1,7 @@
 package com.advella.advellabackend.model.chat;
 
 import com.advella.advellabackend.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -24,12 +25,14 @@ public class ChatMessage {
     @ApiModelProperty(notes = "Chat ID", example = "12", required = true)
     private String chatId;
     @ManyToOne
-    @JoinColumn(name="chat_sender_id", updatable = false, insertable = false)
+    @JoinColumn(name="chat_sender_id", updatable = false, insertable = true)
     @ApiModelProperty(notes = "Message sender", example = "User model", required = true)
+    @JsonIgnoreProperties({"sendChatRoom", "receivedChatRoom", "receivedMessage", "sendMessages"})
     private User chatMessageSender;
     @ManyToOne
-    @JoinColumn(name="chat_recipient_id", updatable = false, insertable = false)
+    @JoinColumn(name="chat_recipient_id", updatable = false, insertable = true)
     @ApiModelProperty(notes = "Message recipient", example = "User model", required = true)
+    @JsonIgnoreProperties({"sendChatRoom", "receivedChatRoom", "receivedMessage", "sendMessages"})
     private User chatMessageRecipient;
     @Column(name = "chat_content")
     @ApiModelProperty(notes = "Content of message", example = "Hello", required = true)

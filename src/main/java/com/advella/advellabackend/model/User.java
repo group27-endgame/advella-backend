@@ -69,12 +69,16 @@ public class User {
     @OneToMany(mappedBy = "posted")
     private List<Product> postedProduct;
     @OneToMany(mappedBy = "chatMessageSender")
+    @JsonIgnoreProperties({"chatMessageRecipient", "chatMessageSender"})
     private List<ChatMessage> sendMessages;
     @OneToMany(mappedBy = "chatMessageRecipient")
+    @JsonIgnoreProperties({"chatMessageRecipient", "chatMessageSender"})
     private List<ChatMessage> receivedMessage;
     @OneToMany(mappedBy = "chatSender")
+    @JsonIgnoreProperties({"chatRecipient", "chatSender"})
     private List<ChatRoom> sendChatRoom;
     @OneToMany(mappedBy = "chatRecipient")
+    @JsonIgnoreProperties({"chatRecipient", "chatSender"})
     private List<ChatRoom> receivedChatRoom;
 
     public User(int userId, String username) {

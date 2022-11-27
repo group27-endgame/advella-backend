@@ -13,10 +13,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.List;
@@ -31,10 +28,11 @@ public class ChatController {
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessage chatMessage) {
-        var chatId = chatRoomService.getChatId(chatMessage.getChatMessageSender().getUserId(), chatMessage.getChatMessageRecipient().getUserId(), true);
-        chatMessage.setChatId(chatId.get());
         User messageSender = userService.getUserById(chatMessage.getChatMessageSender().getUserId()).getBody();
         User messageRecipient = userService.getUserById(chatMessage.getChatMessageRecipient().getUserId()).getBody();
+
+        var chatId = chatRoomService.getChatId(chatMessage.getChatMessageSender().getUserId(), chatMessage.getChatMessageRecipient().getUserId(), true);
+        chatMessage.setChatId(chatId.get());
         chatMessage.setChatMessageSender(messageSender);
         chatMessage.setChatMessageRecipient(messageRecipient);
 
