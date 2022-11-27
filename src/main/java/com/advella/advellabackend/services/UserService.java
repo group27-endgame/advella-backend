@@ -24,6 +24,7 @@ public class UserService implements UserDetailsService {
     private final IServiceRepository serviceRepository;
     private final IBidServiceRepository bidServiceRepository;
     private final IBidProductRepository bidProductRepository;
+    private final IContactRepository contactRepository;
     private final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -33,10 +34,10 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getBasicUserInfos() {
-        List<Object[]>objectRecords = userRepository.getUsersIdAndUsername();
+        List<Object[]> objectRecords = userRepository.getUsersIdAndUsername();
         List<User> users = new ArrayList<>();
-        for (Object[] object:objectRecords) {
-            users.add(new User(Integer.valueOf((Integer) object[0]),String.valueOf(object[1])));
+        for (Object[] object : objectRecords) {
+            users.add(new User(Integer.valueOf((Integer) object[0]), String.valueOf(object[1])));
         }
         return users;
     }
@@ -132,6 +133,17 @@ public class UserService implements UserDetailsService {
         bidService.setServiceBidder(user);
         bidServiceRepository.save(bidService);
         return ResponseEntity.ok().build();
+    }
+
+    public void addContactToUser(Integer contactUserId, Integer userId) {
+        User userToAddToContact = userRepository.findById(contactUserId).get();
+        User user = userRepository.findById(userId).get();
+
+        user.getContact().add(new Contact(0, null, null, false, userToAddToContact));
+    }
+
+    public List<Contact> getUsersContacts(Integer userId) {
+        return contactRepository.findByContactUser_UserId(userId);
     }
 
     public ResponseEntity<User> changeUserRole(Integer userId) {

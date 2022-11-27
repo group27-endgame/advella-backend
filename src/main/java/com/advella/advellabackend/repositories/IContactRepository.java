@@ -18,4 +18,6 @@ public interface IContactRepository extends JpaRepository<Contact, Integer> {
     @Modifying
     @Query(value = "UPDATE Contact_Us SET seen = 1", nativeQuery = true)
     void setAllUnseenToSeen();
+
+    List<Contact> findByContactUser_UserId(int userId);
 }
