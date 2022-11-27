@@ -25,6 +25,7 @@ public class ChatRoomService {
             sender = userRepository.findById(senderId).orElseThrow();
             recipient = userRepository.findById(recipientId).orElseThrow();
         } catch (Exception e) {
+            System.out.println("Did not find sender or recipient! RecipientId: "+recipientId+" SenderId: "+senderId);
             return Optional.empty();
         }
 

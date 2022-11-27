@@ -35,6 +35,7 @@ public class ChatMessageService {
         try {
             chatId = chatRoomService.getChatId(senderId, recipientId, false).orElseThrow();
         } catch (Exception e) {
+            System.out.println("Some exception happened in getting chatId");
             return Collections.emptyList();
         }
 
