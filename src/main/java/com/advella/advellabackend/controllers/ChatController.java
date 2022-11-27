@@ -39,11 +39,7 @@ public class ChatController {
         chatMessage.setChatMessageRecipient(messageRecipient);
 
         chatMessage.setSentTime(new Date(System.currentTimeMillis()));
-        messageSender.getSendMessages().add(chatMessage);
-        messageRecipient.getReceivedMessage().add(chatMessage);
 
-        userService.save(messageSender);
-        userService.save(messageRecipient);
         ChatMessage saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
                 String.valueOf(chatMessage.getChatMessageRecipient().getUserId()), "/queue/messages",
