@@ -26,7 +26,6 @@ public class ChatRoomService {
             sender = userRepository.findById(senderId).orElseThrow();
             recipient = userRepository.findById(recipientId).orElseThrow();
         } catch (Exception e) {
-            System.out.println("Did not find sender or recipient! RecipientId: "+recipientId+" SenderId: "+senderId);
             return Optional.empty();
         }
 
@@ -36,11 +35,12 @@ public class ChatRoomService {
                     if (!createIfNotExist) {
                         return Optional.empty();
                     }
-                    String chatId = String.format("%s_%s", sender.getUserId(), recipient.getUserId());
+                    String senderChatId = String.format("%s_%s", sender.getUserId(), recipient.getUserId());
+                    String recipientChatId = String.format("%s_%s", recipient.getUserId(), sender.getUserId());
 
-                    ChatRoom senderRecipient = new ChatRoom(null, chatId, sender, recipient);
+                    ChatRoom senderRecipient = new ChatRoom(null, senderChatId, sender, recipient);
 
-                    ChatRoom recipientSender = new ChatRoom(null, chatId, recipient, sender);
+                    ChatRoom recipientSender = new ChatRoom(null, recipientChatId, recipient, sender);
 
                     sender.getSendChatRoom().add(senderRecipient);
                     recipient.getReceivedChatRoom().add(recipientSender);
@@ -48,7 +48,7 @@ public class ChatRoomService {
                     chatRoomRepository.save(senderRecipient);
                     chatRoomRepository.save(recipientSender);
 
-                    return Optional.of(chatId);
+                    return Optional.of(senderChatId);
                 });
     }
 }
