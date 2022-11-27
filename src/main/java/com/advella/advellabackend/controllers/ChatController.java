@@ -36,7 +36,7 @@ public class ChatController {
         chatMessage.setChatMessageSender(messageSender);
         chatMessage.setChatMessageRecipient(messageRecipient);
 
-        chatMessage.setSentTime(new Date(System.currentTimeMillis()));
+        chatMessage.setSentTime(chatMessage.getSentTime());
 
         ChatMessage saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
