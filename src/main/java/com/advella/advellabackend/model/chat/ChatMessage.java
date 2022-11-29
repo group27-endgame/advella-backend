@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "Chats_Message")
@@ -37,6 +37,7 @@ public class ChatMessage {
     @Column(name = "chat_content")
     @ApiModelProperty(notes = "Content of message", example = "Hello", required = true)
     private String chatContent;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "chat_datetime")
     private Date sentTime;
     @Column(name = "chat_status")
