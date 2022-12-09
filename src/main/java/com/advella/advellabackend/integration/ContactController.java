@@ -21,6 +21,13 @@ public class ContactController {
         return ResponseEntity.ok(contactService.getAllContacts());
     }
 
+    @PostMapping("/contacts")
+    public ResponseEntity<Void> postNewContact(@RequestHeader("Authorization") String token, @RequestBody Contact contact)
+    {
+        contactService.postContact(token, contact);
+        return ResponseEntity.ok().build();
+    }
+
     @ApiOperation(value = "Get unseen product number", notes = "Gets count of all unseen contacts")
     @GetMapping("/contacts/dash-board/unseen")
     public ResponseEntity<Integer> getUnseenContactNumber() {

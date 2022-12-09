@@ -1,6 +1,7 @@
 package com.advella.advellabackend.unit;
 
 import com.advella.advellabackend.model.Contact;
+import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.repositories.IContactRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ContactService {
     private final IContactRepository contactRepository;
+    private final UserService userService;
 
     public List<Contact> getAllContacts() {
         return contactRepository.findAll();
@@ -29,6 +31,13 @@ public class ContactService {
         }
         contactRepository.deleteById(contactId);
         return ResponseEntity.ok().build();
+    }
+
+    public void postContact(String token, Contact contact)
+    {
+        User user = userService.getUserFromHeader(token);
+        contact.setContactUser(user);
+        contactRepository.save(contact);
     }
 
     public void setAllUnseenContactsToSeen() {
