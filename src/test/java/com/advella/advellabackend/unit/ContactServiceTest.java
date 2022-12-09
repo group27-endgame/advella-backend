@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ContactServiceTest {
     private IContactRepository contactRepository;
+    private UserService userService;
 
     private ContactService contactService;
 
@@ -27,7 +28,8 @@ class ContactServiceTest {
     @BeforeEach
     void setUp() {
         contactRepository = Mockito.mock(IContactRepository.class);
-        contactService = new ContactService(contactRepository);
+        userService = Mockito.mock(UserService.class);
+        contactService = new ContactService(contactRepository, userService);
     }
 
     @Test
