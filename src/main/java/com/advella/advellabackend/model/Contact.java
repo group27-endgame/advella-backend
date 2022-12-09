@@ -28,7 +28,7 @@ public class Contact {
     private String content;
     @Column(name = "seen")
     @ApiModelProperty(notes = "Is seen", example = "false")
-    private Boolean isSeen;
+    private Boolean isSeen = false;
     @ManyToOne
     @JoinColumn(name="users_id")
     @JsonIgnoreProperties({"contact", "postedProduct", "postedService", "sendMessages", "receivedMessage", "sendChatRoom", "receivedChatRoom", "bidProducts", "bidServices"})
