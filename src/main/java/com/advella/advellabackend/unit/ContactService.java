@@ -39,7 +39,6 @@ public class ContactService {
         User user = userService.getUserFromHeader(token);
         contact.setContactUser(user);
         contact.setMessageDateTime(new Date(new java.util.Date().getTime()));
-        contact.setSeen(false);
 
         contactRepository.save(contact);
     }
