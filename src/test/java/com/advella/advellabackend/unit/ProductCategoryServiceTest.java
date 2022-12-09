@@ -2,6 +2,7 @@ package com.advella.advellabackend.unit;
 
 import com.advella.advellabackend.model.ProductCategory;
 import com.advella.advellabackend.repositories.IProductCategoryRepository;
+import com.advella.advellabackend.services.ProductCategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

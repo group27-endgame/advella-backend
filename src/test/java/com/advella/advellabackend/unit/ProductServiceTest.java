@@ -4,6 +4,8 @@ import com.advella.advellabackend.model.*;
 import com.advella.advellabackend.repositories.IBidProductRepository;
 import com.advella.advellabackend.repositories.IProductImageRepository;
 import com.advella.advellabackend.repositories.IProductRepository;
+import com.advella.advellabackend.services.ProductService;
+import com.advella.advellabackend.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

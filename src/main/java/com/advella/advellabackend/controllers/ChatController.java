@@ -1,12 +1,12 @@
-package com.advella.advellabackend.integration;
+package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.model.chat.ChatMessage;
 import com.advella.advellabackend.model.chat.ChatNotification;
 import com.advella.advellabackend.model.chat.ChatRoom;
-import com.advella.advellabackend.unit.ChatMessageService;
-import com.advella.advellabackend.unit.ChatRoomService;
-import com.advella.advellabackend.unit.UserService;
+import com.advella.advellabackend.services.ChatMessageService;
+import com.advella.advellabackend.services.ChatRoomService;
+import com.advella.advellabackend.services.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -72,5 +72,22 @@ public class ChatController {
     @GetMapping("/api/users/infos")
     public ResponseEntity<List<User>> getAllUsersBasicInfo() {
         return ResponseEntity.ok(userService.getBasicUserInfos());
+    }
+
+    @ApiOperation(value = "Post message", notes = "Posts message")
+    @PostMapping("/api/messages/")
+    public ResponseEntity<Void> postMessage(@RequestBody ChatMessage chatMessage) {
+        User messageSender = userService.getUserById(chatMessage.getChatMessageSender().getUserId()).getBody();
+        User messageRecipient = userService.getUserById(chatMessage.getChatMessageRecipient().getUserId()).getBody();
+
+        var chatId = chatRoomService.getChatId(chatMessage.getChatMessageSender().getUserId(), chatMessage.getChatMessageRecipient().getUserId(), true);
+        chatMessage.setChatId(chatId.get());
+        chatMessage.setChatMessageSender(messageSender);
+        chatMessage.setChatMessageRecipient(messageRecipient);
+
+        chatMessage.setSentTime(chatMessage.getSentTime());
+
+        chatMessageService.save(chatMessage);
+        return ResponseEntity.ok().build();
     }
 }

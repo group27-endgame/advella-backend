@@ -1,4 +1,4 @@
-package com.advella.advellabackend.unit;
+package com.advella.advellabackend.services;
 
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.model.chat.ChatRoom;

@@ -1,7 +1,7 @@
-package com.advella.advellabackend.integration;
+package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.Contact;
-import com.advella.advellabackend.unit.ContactService;
+import com.advella.advellabackend.services.ContactService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

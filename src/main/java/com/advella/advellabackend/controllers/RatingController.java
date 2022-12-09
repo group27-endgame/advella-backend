@@ -1,7 +1,7 @@
-package com.advella.advellabackend.integration;
+package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.Rating;
-import com.advella.advellabackend.unit.RatingService;
+import com.advella.advellabackend.services.RatingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

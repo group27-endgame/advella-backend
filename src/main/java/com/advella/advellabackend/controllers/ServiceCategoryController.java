@@ -1,7 +1,7 @@
-package com.advella.advellabackend.integration;
+package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.ServiceCategory;
-import com.advella.advellabackend.unit.ServiceCategoryService;
+import com.advella.advellabackend.services.ServiceCategoryService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

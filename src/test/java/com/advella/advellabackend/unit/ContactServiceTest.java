@@ -2,6 +2,8 @@ package com.advella.advellabackend.unit;
 
 import com.advella.advellabackend.model.Contact;
 import com.advella.advellabackend.repositories.IContactRepository;
+import com.advella.advellabackend.services.ContactService;
+import com.advella.advellabackend.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

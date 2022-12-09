@@ -4,7 +4,7 @@ import com.advella.advellabackend.model.Role;
 import com.advella.advellabackend.model.User;
 import com.advella.advellabackend.repositories.IRoleRepository;
 import com.advella.advellabackend.repositories.IUserRepository;
-import com.advella.advellabackend.unit.ProductService;
+import com.advella.advellabackend.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;

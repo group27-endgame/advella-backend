@@ -1,8 +1,8 @@
-package com.advella.advellabackend.integration;
+package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.Service;
 import com.advella.advellabackend.model.User;
-import com.advella.advellabackend.unit.ServiceService;
+import com.advella.advellabackend.services.ServiceService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

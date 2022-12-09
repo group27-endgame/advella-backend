@@ -1,7 +1,7 @@
-package com.advella.advellabackend.integration;
+package com.advella.advellabackend.controllers;
 
 import com.advella.advellabackend.model.ReportedService;
-import com.advella.advellabackend.unit.ReportedServiceService;
+import com.advella.advellabackend.services.ReportedServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
