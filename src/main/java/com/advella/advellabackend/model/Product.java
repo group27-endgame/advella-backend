@@ -45,7 +45,7 @@ public class Product {
     private String productStatus;
     @Column(name = "product_number_of_bids")
     @ApiModelProperty(notes = "Number of bids", example = "10")
-    private Integer numberOfBids;
+    private Integer numberOfBids = 0;
     @OneToMany(mappedBy = "biddedProduct")
     @JsonManagedReference(value = "productBidProducts")
     private List<BidProduct> bidProducts;
