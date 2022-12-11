@@ -46,7 +46,7 @@ public class Service {
     private String location;
     @Column(name = "service_number_of_bids")
     @ApiModelProperty(notes = "Number od bids", example = "10")
-    private Integer numberOfBids;
+    private Integer numberOfBids = 0;
     @Column(name = "service_status")
     @ApiModelProperty(notes = "Service status", example = "open")
     private String serviceStatus;
