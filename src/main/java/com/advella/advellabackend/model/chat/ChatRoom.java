@@ -26,11 +26,11 @@ public class ChatRoom {
     @ManyToOne
     @JoinColumn(name = "chat_sender_id", updatable = false, insertable = true)
     @ApiModelProperty(notes = "Sender", example = "User model", required = true)
-    @JsonIgnoreProperties({"sendChatRoom", "receivedChatRoom", "receivedMessage", "sendMessages"})
+    @JsonIgnoreProperties({"sendChatRoom", "receivedChatRoom", "receivedMessage", "sendMessages", "postedService", "postedProduct"})
     private User chatSender;
     @ManyToOne
     @JoinColumn(name = "chat_recipient_id", updatable = false, insertable = true)
     @ApiModelProperty(notes = "Recipient", example = "User model", required = true)
-    @JsonIgnoreProperties({"sendChatRoom", "receivedChatRoom", "receivedMessage", "sendMessages"})
+    @JsonIgnoreProperties({"sendChatRoom", "receivedChatRoom", "receivedMessage", "sendMessages", "postedService", "postedProduct"})
     private User chatRecipient;
 }
