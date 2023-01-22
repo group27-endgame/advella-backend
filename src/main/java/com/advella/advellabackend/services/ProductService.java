@@ -103,9 +103,11 @@ public class ProductService {
         if (productToDelete.getPosted().getUserId() != user.getUserId() && roles != null && !isUserAdmin(roles)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        productToDelete.getBidProducts().forEach(u -> bidProductRepository.delete(u));
+        if (productToDelete.getBidProducts() != null)
+            productToDelete.getBidProducts().forEach(u -> bidProductRepository.delete(u));
         productToDelete.setBidProducts(null);
-        productToDelete.getProductImages().forEach(p -> p.setProductId(null));
+        if (productToDelete.getProductImages() != null)
+            productToDelete.getProductImages().forEach(p -> p.setProductId(null));
         productToDelete.setPosted(null);
         productRepository.delete(productToDelete);
         return ResponseEntity.ok().build();

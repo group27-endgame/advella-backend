@@ -78,9 +78,11 @@ public class ServiceService {
 
         serviceToDelete.getBidServices().forEach(bidService -> bidServiceRepository.deleteById(bidService.getId()));
         serviceToDelete.setBidServices(null);
-        serviceToDelete.getServiceImages().forEach(i -> i.setServiceId(null));
+        if (serviceToDelete.getServiceImages() != null)
+            serviceToDelete.getServiceImages().forEach(i -> i.setServiceId(null));
         serviceToDelete.setPosted(null);
-        serviceToDelete.getBidServices().forEach(b -> bidServiceRepository.delete(b));
+        if (serviceToDelete.getBidServices() != null)
+            serviceToDelete.getBidServices().forEach(b -> bidServiceRepository.delete(b));
         serviceRepository.delete(serviceToDelete);
         return ResponseEntity.ok().build();
     }

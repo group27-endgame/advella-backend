@@ -45,9 +45,9 @@ class ServiceIntegrationTest {
     User USER2 = new User(2, null, "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(1, "admin", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
     User USER3 = new User(3, "somerandonEmail@gmail.com", "password", "Nick", null, null, null, new ArrayList<Role>(Arrays.asList(new Role(0, "user", null))), new ArrayList<>(), new ArrayList<>(), null, null, null, null, new ArrayList<>(), new ArrayList<>(), null, null, null, null);
 
-    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, null, null, null, null, null, new ArrayList<>(), null, null, USER1, null);
-    Service SERVICE2 = new Service(2, "Second", "Detail", null, null, null, null, null, null, null, null, null, null, null, null);
-    Service SERVICE3 = new Service(3, "Third", "Detail", null, null, null, null, null, null, null, null, new ServiceCategory(20, null, null), null, new User(10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), null);
+    Service SERVICE1 = new Service(1, "First", "Detail", Float.valueOf(100.0f), null, null, null, null, null, null, Collections.EMPTY_LIST, null, Collections.EMPTY_LIST, USER1, Collections.EMPTY_LIST);
+    Service SERVICE2 = new Service(2, "Second", "Detail", null, null, null, null, null, null, null, Collections.EMPTY_LIST, null, Collections.EMPTY_LIST, null, Collections.EMPTY_LIST);
+    Service SERVICE3 = new Service(3, "Third", "Detail", null, null, null, null, null, null, null, Collections.EMPTY_LIST, new ServiceCategory(20, null, null), Collections.EMPTY_LIST, new User(10, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), Collections.EMPTY_LIST);
 
     @Test
     void getAllServices_Multiple() throws Exception {
