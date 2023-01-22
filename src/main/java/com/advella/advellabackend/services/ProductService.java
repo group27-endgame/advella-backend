@@ -105,6 +105,7 @@ public class ProductService {
         }
         productToDelete.getBidProducts().forEach(u -> bidProductRepository.delete(u));
         productToDelete.setBidProducts(null);
+        productToDelete.getProductImages().forEach(p -> p.setProductId(null));
         productToDelete.setPosted(null);
         productRepository.delete(productToDelete);
         return ResponseEntity.ok().build();

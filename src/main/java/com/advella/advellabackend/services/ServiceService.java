@@ -75,6 +75,11 @@ public class ServiceService {
         if (serviceToDelete.getPosted().getUserId() != user.getUserId() && roles != null && !isUserAdmin(roles)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
+        serviceToDelete.getBidServices().forEach(bidService -> bidServiceRepository.deleteById(bidService.getId()));
+        serviceToDelete.setBidServices(null);
+        serviceToDelete.getServiceImages().forEach(i -> i.setServiceId(null));
+        serviceToDelete.setPosted(null);
         serviceToDelete.getBidServices().forEach(b -> bidServiceRepository.delete(b));
         serviceRepository.delete(serviceToDelete);
         return ResponseEntity.ok().build();
